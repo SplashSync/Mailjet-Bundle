@@ -1,0 +1,15 @@
+services:
+    ################################################################################
+    # SPLASH Mailjet Connector Service
+    splash.connectors.mailjet:
+        class: Splash\Connectors\Mailjet\Services\MailjetConnector
+        arguments:  [ "@event_dispatcher", "@logger" ]
+        tags:       
+            - { name: "splash.connector"}
+
+    ################################################################################
+    # Enables Dependency Injection in Controller Actions
+    Splash\Connectors\Mailjet\Controller\:
+        resource: '../../Controller'
+        public: true
+        tags: ['controller.service_arguments']
