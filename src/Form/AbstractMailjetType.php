@@ -58,6 +58,8 @@ abstract class AbstractMailjetType extends AbstractType
      * @param array                $options
      *
      * @return self
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function addSecretKeyField(FormBuilderInterface $builder, array $options)
     {

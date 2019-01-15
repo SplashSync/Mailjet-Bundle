@@ -31,7 +31,6 @@ class MailjetHelper
     /**
      * @var string
      */
-//    const ENDPOINT = "https://api.mailjet.com/v3.1/send";
     const ENDPOINT = "https://api.mailjet.com/v3/REST/";
     
     /**
@@ -50,7 +49,7 @@ class MailjetHelper
     }
     
     /**
-     * Congigure Mailjet REST API
+     * Configure Mailjet REST API
      *
      * @param string $apiKey
      * @param string $secretKey
@@ -253,26 +252,27 @@ class MailjetHelper
         if (true == SPLASH_DEBUG) {
             Splash::log()->www("[Mailjet] Full Response", $response);
         }
-        if (!$response->hasBody()) {
-            return false;
-        }
-        $body = $response->body;
-        
-        //====================================================================//
-        // Store Mailjet Errors if present
-        if (isset($body->ErrorMessage)) {
-            Splash::log()->err($body->ErrorMessage);
-        }
-        if (isset($body->ErrorInfo) && !empty($body->ErrorInfo)) {
-            Splash::log()->err($response->body->ErrorInfo);
-        }
-        
-        //====================================================================//
-        // Detect Mailjet Errors Details
-        if (isset($body->Errors) && is_array($body->Errors)) {
-            foreach ($body->Errors->Errors as $mjError) {
-                Splash::log()->err($mjError->ErrorMessage);
+        if ($response->hasBody()) {
+            $body = $response->body;
+
+            //====================================================================//
+            // Store Mailjet Errors if present
+            // @codingStandardsIgnoreStart
+            if (isset($body->ErrorMessage)) {
+                Splash::log()->err($body->ErrorMessage);
             }
+            if (isset($body->ErrorInfo) && !empty($body->ErrorInfo)) {
+                Splash::log()->err($response->body->ErrorInfo);
+            }
+            // @codingStandardsIgnoreEnd
+
+//            //====================================================================//
+//            // Detect Mailjet Errors Details
+//            if (isset($body->Errors) && is_array($body->Errors)) {
+//                foreach ($body->Errors->Errors as $mjError) {
+//                    Splash::log()->err($mjError->ErrorMessage);
+//                }
+//            }
         }
 
         return false;

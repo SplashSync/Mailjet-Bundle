@@ -54,8 +54,8 @@ trait ObjectsListTrait
         );
         //====================================================================//
         // Parse Data in response
+        // @codingStandardsIgnoreStart
         foreach ($rawData->Data as $member) {
-            // @codingStandardsIgnoreStart
             $response[]   = array(
                 'id'                        =>      $member->ID,
                 'Email'                     =>      $member->Email,
@@ -63,8 +63,8 @@ trait ObjectsListTrait
                 'CreatedAt'                 =>      $member->CreatedAt,
                 'LastUpdateAt'              =>      $member->LastUpdateAt,
             );
-            // @codingStandardsIgnoreEnd
         }
+        // @codingStandardsIgnoreEnd
 
         return $response;
     }
@@ -82,17 +82,19 @@ trait ObjectsListTrait
         // Prepare Parameters
         $body     =    array(
             'ContactsList' => API::getList(),
-            'countOnly' => true
+            'countOnly' => true,
         );
         //====================================================================//
         // Get User Lists from Api
         $rawData  =   API::get('contact', $body);
         //====================================================================//
         // Request Failed
+        // @codingStandardsIgnoreStart
         if ((null == $rawData) || (!is_numeric($rawData->Count))) {
             return 0;
         }
 
-        return $rawData->Count;
+        return (int) $rawData->Count;
+        // @codingStandardsIgnoreEnd
     }
 }

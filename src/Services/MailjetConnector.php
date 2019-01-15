@@ -224,7 +224,7 @@ class MailjetConnector extends AbstractConnector
             'title'     =>      'profile.card.title',                   // Public short name
             'label'     =>      'profile.card.label',                   // Public long name
             'domain'    =>      'MailjetBundle',                        // Translation domain for names
-            'ico'       =>      '/bundles/mailjet/img/MailJet-Icon.png',// Public Icon path
+            'ico'       =>      '/bundles/mailjet/img/MailJet-Icon.png', // Public Icon path
             'www'       =>      'www.mailjet.com',                      // Website Url
         );
     }
@@ -422,6 +422,7 @@ class MailjetConnector extends AbstractConnector
         if (is_null($response)) {
             return false;
         }
+        // @codingStandardsIgnoreStart
         if (!isset($response->Data)) {
             return false;
         }
@@ -437,6 +438,7 @@ class MailjetConnector extends AbstractConnector
         // Store in Connector Settings
         $this->setParameter("ApiListsIndex", $listIndex);
         $this->setParameter("ApiListsDetails", $response->Data);
+        // @codingStandardsIgnoreEnd
         //====================================================================//
         // Update Connector Settings
         $this->updateConfiguration();
@@ -453,18 +455,18 @@ class MailjetConnector extends AbstractConnector
     {
         //====================================================================//
         // Get User Lists from Api
-        $data = new \stdClass();
-        $data->Name = "";
         $response  =   API::get('contactmetadata');
         if (is_null($response)) {
             return false;
         }
+        // @codingStandardsIgnoreStart
         if (!isset($response->Data)) {
             return false;
         }
         //====================================================================//
         // Store in Connector Settings
         $this->setParameter("MembersAttributes", $response->Data);
+        // @codingStandardsIgnoreEnd
         //====================================================================//
         // Update Connector Settings
         $this->updateConfiguration();

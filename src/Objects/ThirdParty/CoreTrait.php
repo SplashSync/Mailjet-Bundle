@@ -63,25 +63,25 @@ trait CoreTrait
     /**
      * Read requested Field
      *
-     * @param string $Key       Input List Key
-     * @param string $FieldName Field Identifier / Name
+     * @param string $key       Input List Key
+     * @param string $fieldName Field Identifier / Name
      *
      * @return none
      */
-    protected function getCoreFields($Key, $FieldName)
+    protected function getCoreFields($key, $fieldName)
     {
-        switch ($FieldName) {
+        switch ($fieldName) {
             case 'Email':
-                $this->getSimple($FieldName);
+                $this->getSimple($fieldName);
 
                 break;
             case 'IsSubscribed':
-                $this->out[$FieldName] = $this->getIsSubscribed() ;
+                $this->out[$fieldName] = $this->isSubscribed() ;
 
                 break;
             case 'IsExcludedFromCampaigns':
             case 'IsOptInPending':
-                $this->getSimpleBool($FieldName);
+                $this->getSimpleBool($fieldName);
 
                 break;
             default:
@@ -89,42 +89,47 @@ trait CoreTrait
         }
         //====================================================================//
         // Clear Key Flag
-        unset($this->in[$Key]);
+        unset($this->in[$key]);
     }
     
     /**
      * Write Given Fields
      *
-     * @param string $FieldName Field Identifier / Name
-     * @param mixed  $Data      Field Data
+     * @param string $fieldName Field Identifier / Name
+     * @param mixed  $data      Field Data
      *
      * @return none
      */
-    protected function setCoreFields($FieldName, $Data)
+    protected function setCoreFields($fieldName, $data)
     {
-        switch ($FieldName) {
+        switch ($fieldName) {
             case 'Email':
-                $this->setSimple($FieldName, $Data);
+                $this->setSimple($fieldName, $data);
 
                 break;
             case 'IsSubscribed':
-                if ($this->getIsSubscribed() == $Data) {
+                if ($this->isSubscribed() == $data) {
                     break;
                 }
-                $this->setIsSubscribed($Data);
+                $this->setIsSubscribed($data);
 
                 break;
             case 'IsExcludedFromCampaigns':
-                $this->setSimple($FieldName, $Data);
+                $this->setSimple($fieldName, $data);
 
                 break;
             default:
                 return;
         }
-        unset($this->in[$FieldName]);
+        unset($this->in[$fieldName]);
     }
     
-    protected function getIsSubscribed()
+    /**
+     * Check if Member is Part of Current List
+     *
+     * @return boolean
+     */
+    private function isSubscribed()
     {
         $listId =   API::getList();
                 
@@ -132,13 +137,15 @@ trait CoreTrait
             return false;
         }
         
-        foreach ($this->contactLists as $List) {
-            if (!isset($List->IsUnsub) || $List->IsUnsub) {
+        foreach ($this->contactLists as $list) {
+            // @codingStandardsIgnoreStart
+            if (!isset($list->IsUnsub) || $list->IsUnsub) {
                 continue;
             }
-            if ($List->ListID != $listId) {
+            if (!isset($list->ListID) || ($list->ListID != $listId)) {
                 continue;
             }
+            // @codingStandardsIgnoreEnd
 
             return true;
         }
@@ -146,7 +153,14 @@ trait CoreTrait
         return false;
     }
     
-    protected function setIsSubscribed($data)
+    /**
+     * Update Member Status on Current List
+     *
+     * @param bool $data
+     *
+     * @return boolean
+     */
+    private function setIsSubscribed($data)
     {
         //====================================================================//
         // If Contact has no Id => Exit
@@ -156,12 +170,12 @@ trait CoreTrait
        
         //====================================================================//
         // Re-Set As Subscribed
-        if (!$this->getIsSubscribed() && $data) {
+        if (!$this->isSubscribed() && $data) {
             $this->updateListStatus($this->object->ID, 'addforce');
         }
         //====================================================================//
         // UnSubscribe
-        if ($this->getIsSubscribed() && !$data) {
+        if ($this->isSubscribed() && !$data) {
             $this->updateListStatus($this->object->ID, 'unsub');
         }
         

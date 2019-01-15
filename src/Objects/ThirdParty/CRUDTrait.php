@@ -50,6 +50,7 @@ trait CRUDTrait
         if (null == $core) {
             return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to load Contact (".$objectId.").");
         }
+        /** @codingStandardsIgnoreStart */
         $mjObject = $core->Data[0];
         
         //====================================================================//
@@ -72,6 +73,7 @@ trait CRUDTrait
             return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to load Contact Properties (".$objectId.").");
         }
         $this->contactData = $infos->Data[0]->Data;
+        // @codingStandardsIgnoreEnd
 
         return $mjObject;
     }
@@ -100,11 +102,13 @@ trait CRUDTrait
         //====================================================================//
         // Create Object
         $response = API::post(self::getUri(), $this->object);
+        // @codingStandardsIgnoreStart
         if (is_null($response) || empty($response->Data[0]->ID)) {
             return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to Create Member (".$this->object->Email.").");
         }
         
         return $this->load($response->Data[0]->ID);
+        // @codingStandardsIgnoreEnd
     }
     
     /**
@@ -125,9 +129,11 @@ trait CRUDTrait
         // Update Member Properties
         if ($this->isToUpdate("contactData")) {
             $data = new stdClass();
+            // @codingStandardsIgnoreStart
             $data->Data = $this->contactData;
             $response = API::put(self::getDataUri($this->object->ID), $data);
             if (is_null($response) || ($response->Data[0]->ID != $this->object->ID)) {
+                // @codingStandardsIgnoreEnd
                 return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to Update Member Properties (".$this->object->Email.").");
             }
         }
@@ -142,9 +148,11 @@ trait CRUDTrait
             //====================================================================//
             // Update Object
             $response = API::put(self::getUri($this->object->ID), (object) $data);
+            // @codingStandardsIgnoreStart
             if (is_null($response) || ($response->Data[0]->ID != $this->object->ID)) {
                 return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to Update Member (".$this->object->Email.").");
             }
+            // @codingStandardsIgnoreEnd
         }
 
         return $this->object->ID;
@@ -183,12 +191,16 @@ trait CRUDTrait
         //====================================================================//
         // Prepare Parameters
         $body     =    new stdClass();
+        // @codingStandardsIgnoreStart
         $body->ContactsLists = array(array(
             'ListID' => API::getList(),
-            'Action' => $status
-        ));
-        //====================================================================//
-        // Update Object
+            'Action' => $status,
+        ), );
+        /**
+         * @codingStandardsIgnoreEnd
+         *====================================================================//
+         * Update Object
+         */
         $response = API::post(self::getSubscribeUri($objectId), $body);
         if (null === $response) {
             return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to Change Contact Subscription (".$objectId.").");
@@ -207,10 +219,12 @@ trait CRUDTrait
         if (!isset($this->contactLists) || !is_array($this->contactLists)) {
             return false;
         }
-        foreach ($this->contactLists as $List) {
-            if ($List->ListID != API::getList()) {
+        foreach ($this->contactLists as $list) {
+            // @codingStandardsIgnoreStart
+            if ($list->ListID != API::getList()) {
                 continue;
             }
+            // @codingStandardsIgnoreEnd
 
             return true;
         }
@@ -244,7 +258,7 @@ trait CRUDTrait
      */
     private static function getListUri(string $objectId) : string
     {
-        return 'contact/' . $objectId . "/getcontactslists";
+        return 'contact/'.$objectId."/getcontactslists";
     }
     
     /**
@@ -273,6 +287,6 @@ trait CRUDTrait
      */
     private static function getSubscribeUri(string $objectId) : string
     {
-        return 'contact/' . $objectId . "/managecontactslists";
+        return 'contact/'.$objectId."/managecontactslists";
     }
 }

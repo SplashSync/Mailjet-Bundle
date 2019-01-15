@@ -59,7 +59,7 @@ trait MetaTrait
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      *
-     * @return none
+     * @return void
      */
     protected function getMetaFields($key, $fieldName)
     {
