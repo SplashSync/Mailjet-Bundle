@@ -103,6 +103,7 @@ trait CRUDTrait
         // Create Object
         $response = API::post(self::getUri(), $this->object);
         // @codingStandardsIgnoreStart
+        dump($response);
         if (is_null($response) || empty($response->Data[0]->ID)) {
             return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to Create Member (".$this->object->Email.").");
         }
