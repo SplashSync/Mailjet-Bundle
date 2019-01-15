@@ -35,12 +35,14 @@ trait PropertiesTrait
         "firstname" => array("http://schema.org/Person", "familyName"),
         "lastname" => array("http://schema.org/Person", "givenName"),
     );
+    
     /**
      * Storage for Members Properties
      *
      * @var array
      */
     protected $contactData = array();
+    
     /**
      * Base Attributes Metadata Item Name
      *
@@ -109,7 +111,7 @@ trait PropertiesTrait
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      *
-     * @return none
+     * @return void
      */
     protected function getAttributesFields($key, $fieldName)
     {
@@ -135,7 +137,7 @@ trait PropertiesTrait
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
      *
-     * @return none
+     * @return void
      */
     protected function setAttributesFields($fieldName, $fieldData)
     {
