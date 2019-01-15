@@ -14,4 +14,5 @@ splash:
             config:  
                 WsHost:         http://localhost:8000
                 ApiKey:         ThisIsSecretApiKey
+                ApiKey:         ThisIsSecretApiPwd
                 ApiList:        ThisIsSecretApiList
