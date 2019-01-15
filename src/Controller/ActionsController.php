@@ -43,15 +43,16 @@ class ActionsController extends Controller
     public function webhooksAction(Request $request, AbstractConnector $connector)
     {
         $result = false;
-//        //====================================================================//
-//        // Connector SelfTest
-//        if (($connector instanceof MailjetConnector) && $connector->selfTest()) {
+        //====================================================================//
+        // Connector SelfTest
+        if (($connector instanceof MailjetConnector) && $connector->selfTest()) {
 //            /** @var RouterInterface $router */
 //            $router = $this->get('router');
-//            //====================================================================//
-//            // Update WebHooks Config
+            //====================================================================//
+            // Update WebHooks Config
+            $result =   true;
 //            $result =   $connector->updateWebHooks($router);
-//        }
+        }
         //====================================================================//
         // Inform User
         /** @var Translator $translator */
