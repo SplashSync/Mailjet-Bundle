@@ -1,0 +1,32 @@
+
+## Node Variables 
+var:
+    apikey:
+        label:  Clé API
+        desc:   "Votre clé d'API principale vous offre un accès complet à votre compte."
+        
+    secretkey:
+        label:  Clé Secrète
+        desc:   "Gardez votre clé secrète et utilisez-la pour protéger votre compte."
+
+    list:
+        label:  Liste
+        desc:   "La liste MailJet que vous voulez synchroniser avec Splash."
+
+## Node Profile
+profile:
+    connection:
+        title:  Connexion API
+    card:   
+        title:  MailJet API V3
+        label:  Connectez votre compte MailJet pour synchroniser vos clients avec vos listes d'abonnés
+
+## Node Api Actions
+admin:
+    selftest:   Configuration du Connecteur Mailjet
+    connect:    Connexion a l'API Mailjet    
+    webhooks:
+        label:  Configuration des WebHooks
+        desc:   Détecte et Configure les WebHooks pour Splash Sync
+        msg:    Configuration des WebHooks est Réussie
+        err:    La Configuration des WebHooks a échouée
