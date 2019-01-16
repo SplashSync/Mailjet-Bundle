@@ -95,21 +95,28 @@ trait CRUDTrait
         }
         //====================================================================//
         // Init Object
-        $this->object = new stdClass();
+        $postData = array(
+            'Email' => $this->in["Email"],
+            'IsExcludedFromCampaigns' => isset($this->in["IsExcludedFromCampaigns"])
+                ? $this->in["IsExcludedFromCampaigns"]
+                : false
+        );
         //====================================================================//
-        // Pre-Setup of Member
-        $this->setSimple("Email", $this->in["Email"]);
-        //====================================================================//
-        // Create Object
-        $response = API::post(self::getUri(), $this->object);
+        // Create New Contact
+        $response = API::post(self::getUri(), (object) $postData);
         // @codingStandardsIgnoreStart
-        dump($response);
         if (is_null($response) || empty($response->Data[0]->ID)) {
             return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to Create Member (".$this->object->Email.").");
         }
-        
-        return $this->load($response->Data[0]->ID);
+        $objectId = $response->Data[0]->ID;
         // @codingStandardsIgnoreEnd
+        //====================================================================//
+        // Add Contact to Current List
+        if (!$this->updateListStatus($objectId, 'addnoforce')) {
+            return false;
+        }
+        
+        return $this->load($objectId);
     }
     
     /**
@@ -156,7 +163,7 @@ trait CRUDTrait
             // @codingStandardsIgnoreEnd
         }
 
-        return $this->object->ID;
+        return (string) $this->object->ID;
     }
     
     /**
@@ -193,15 +200,14 @@ trait CRUDTrait
         // Prepare Parameters
         $body     =    new stdClass();
         // @codingStandardsIgnoreStart
-        $body->ContactsLists = array(array(
+        $body->ContactsLists = array( (object) array(
+            // @codingStandardsIgnoreEnd
             'ListID' => API::getList(),
             'Action' => $status,
         ), );
-        /**
-         * @codingStandardsIgnoreEnd
-         *====================================================================//
-         * Update Object
-         */
+        
+        //====================================================================//
+        // Update Object
         $response = API::post(self::getSubscribeUri($objectId), $body);
         if (null === $response) {
             return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to Change Contact Subscription (".$objectId.").");

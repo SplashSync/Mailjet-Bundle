@@ -37,6 +37,13 @@ trait CoreTrait
             ->isListed();
         
         //====================================================================//
+        // Name
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->Identifier("Name")
+            ->Name("Username")
+            ->MicroData("http://schema.org/Organization", "legalName");
+        
+        //====================================================================//
         // Subscribed
         $this->fieldsFactory()->create(SPL_T_BOOL)
             ->Identifier("IsSubscribed")
@@ -72,6 +79,7 @@ trait CoreTrait
     {
         switch ($fieldName) {
             case 'Email':
+            case 'Name':
                 $this->getSimple($fieldName);
 
                 break;
@@ -104,6 +112,7 @@ trait CoreTrait
     {
         switch ($fieldName) {
             case 'Email':
+            case 'Name':
                 $this->setSimple($fieldName, $data);
 
                 break;
