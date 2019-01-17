@@ -58,7 +58,7 @@ class WebHooksController extends Controller
 
         //====================================================================//
         // Log MailJet Request
-        $logger->error(__CLASS__.'::'.__FUNCTION__.' MailJet WebHook Received ', (is_array($eventData) ? $eventData : array()));
+        $logger->info(__CLASS__.'::'.__FUNCTION__.' MailJet WebHook Received ', (is_array($eventData) ? $eventData : array()));
         
         //==============================================================================
         // Commit Changes
