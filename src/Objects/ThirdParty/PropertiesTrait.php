@@ -31,7 +31,6 @@ trait PropertiesTrait
      * @var array
      */
     public static $knowAttributes  =   array(
-        "name" => array("http://schema.org/Organization", "legalName"),
         "firstname" => array("http://schema.org/Person", "familyName"),
         "lastname" => array("http://schema.org/Person", "givenName"),
     );

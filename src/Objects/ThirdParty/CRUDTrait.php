@@ -99,7 +99,7 @@ trait CRUDTrait
             'Email' => $this->in["Email"],
             'IsExcludedFromCampaigns' => isset($this->in["IsExcludedFromCampaigns"])
                 ? $this->in["IsExcludedFromCampaigns"]
-                : false
+                : false,
         );
         //====================================================================//
         // Create New Contact

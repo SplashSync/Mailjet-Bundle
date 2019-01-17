@@ -26,6 +26,8 @@ use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Mailjet REST API Connector for Splash
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class MailjetConnector extends AbstractConnector
 {
@@ -96,8 +98,6 @@ class MailjetConnector extends AbstractConnector
         
     /**
      * {@inheritdoc}
-     *
-     * @SuppressWarnings(PHPMD.ElseExpression)
      */
     public function informations(ArrayObject  $informations) : ArrayObject
     {
@@ -275,7 +275,7 @@ class MailjetConnector extends AbstractConnector
     public function getPublicActions() : array
     {
         return array(
-            //            "index" => "MailjetBundle:WebHooks:index",
+            "index" => "MailjetBundle:WebHooks:index",
         );
     }
 
@@ -285,7 +285,7 @@ class MailjetConnector extends AbstractConnector
     public function getSecuredActions() : array
     {
         return array(
-            //            "webhooks" => "MailjetBundle:Actions:webhooks",
+            "webhooks" => "MailjetBundle:Actions:webhooks",
         );
     }
     
@@ -293,117 +293,117 @@ class MailjetConnector extends AbstractConnector
     //  HIGH LEVEL WEBSERVICE CALLS
     //====================================================================//
     
-//    /**
-//     * Check & Update Mailjet Api Account WebHooks.
-//     *
-//     * @return bool
-//     */
-//    public function verifyWebHooks() : bool
-//    {
-//        //====================================================================//
-//        // Connector SelfTest
-//        if (!$this->selfTest()) {
-//            return false;
-//        }
-//        //====================================================================//
-//        // Generate WebHook Url
-//        $webHookServer  =   filter_input(INPUT_SERVER, 'SERVER_NAME');
-//        //====================================================================//
-//        // When Running on a Local Server
-//        if (false !== strpos("localhost", $webHookServer)) {
-//            $webHookServer  =   "www.splashsync.com";
-//        }
-//        //====================================================================//
-//        // Create Object Class
-//        $webHookManager = new WebHook($this);
-//        $webHookManager->configure("webhook", $this->getWebserviceId(), $this->getConfiguration());
-//        //====================================================================//
-//        // Get List Of WebHooks for this List
-//        $webHooks       =   $webHookManager->objectsList();
-//        if (isset($webHooks["meta"])) {
-//            unset($webHooks["meta"]);
-//        }
-//        //====================================================================//
-//        // Filter & Clean List Of WebHooks
-//        foreach ($webHooks as $webHook) {
-//            //====================================================================//
-//            // This is a Splash WebHooks
-//            if (false !== strpos(trim($webHook['url']), $webHookServer)) {
-//                return true;
-//            }
-//        }
-//        //====================================================================//
-//        // Splash WebHooks was NOT Found
-//        return false;
-//    }
-//
-//    /**
-//     * Check & Update Mailjet Api Account WebHooks.
-//     *
-//     * @param RouterInterface $router
-//     *
-//     * @return bool
-//     */
-//    public function updateWebHooks(RouterInterface $router) : bool
-//    {
-//        //====================================================================//
-//        // Connector SelfTest
-//        if (!$this->selfTest()) {
-//            return false;
-//        }
-//        //====================================================================//
-//        // Generate WebHook Url
-//        $webHookServer  =   filter_input(INPUT_SERVER, 'SERVER_NAME');
-//        $webHookUrl     =   $router->generate(
-//            'splash_connector_action',
-//            array(
-//                'connectorName' => $this->getProfile()["name"],
-//                'webserviceId' => $this->getWebserviceId(),
-//            ),
-//            RouterInterface::ABSOLUTE_URL
-//        );
-//        //====================================================================//
-//        // When Running on a Local Server
-//        if (false !== strpos("localhost", $webHookServer)) {
-//            $webHookServer  =   "www.splashsync.com";
-//            $webHookUrl     =   "https://www.splashsync.com/en/ws/Mailjet/123456";
-//        }
-//        //====================================================================//
-//        // Create Object Class
-//        $webHookManager = new WebHook($this);
-//        $webHookManager->configure("webhook", $this->getWebserviceId(), $this->getConfiguration());
-//        //====================================================================//
-//        // Get List Of WebHooks for this List
-//        $webHooks       =   $webHookManager->objectsList();
-//        if (isset($webHooks["meta"])) {
-//            unset($webHooks["meta"]);
-//        }
-//        //====================================================================//
-//        // Filter & Clean List Of WebHooks
-//        $foundWebHook   =    false;
-//        foreach ($webHooks as $webHook) {
-//            //====================================================================//
-//            // This is Current Node WebHooks
-//            if (trim($webHook['url']) ==  $webHookUrl) {
-//                $foundWebHook   =   true;
-//
-//                continue;
-//            }
-//            //====================================================================//
-//            // This is a Splash WebHooks
-//            if (false !== strpos(trim($webHook['url']), $webHookServer)) {
-//                $webHookManager->delete($webHook['id']);
-//            }
-//        }
-//        //====================================================================//
-//        // Splash WebHooks was Found
-//        if ($foundWebHook) {
-//            return true;
-//        }
-//        //====================================================================//
-//        // Add Splash WebHooks
-//        return (false !== $webHookManager->create($webHookUrl));
-//    }
+    /**
+     * Check & Update Mailjet Api Account WebHooks.
+     *
+     * @return bool
+     */
+    public function verifyWebHooks() : bool
+    {
+        //====================================================================//
+        // Connector SelfTest
+        if (!$this->selfTest()) {
+            return false;
+        }
+        //====================================================================//
+        // Generate WebHook Url
+        $webHookServer  =   filter_input(INPUT_SERVER, 'SERVER_NAME');
+        //====================================================================//
+        // When Running on a Local Server
+        if (false !== strpos("localhost", $webHookServer)) {
+            $webHookServer  =   "www.splashsync.com";
+        }
+        //====================================================================//
+        // Create Object Class
+        $webHookManager = new WebHook($this);
+        $webHookManager->configure("webhook", $this->getWebserviceId(), $this->getConfiguration());
+        //====================================================================//
+        // Get List Of WebHooks for this List
+        $webHooks       =   $webHookManager->objectsList();
+        if (isset($webHooks["meta"])) {
+            unset($webHooks["meta"]);
+        }
+        //====================================================================//
+        // Filter & Clean List Of WebHooks
+        foreach ($webHooks as $webHook) {
+            //====================================================================//
+            // This is a Splash WebHooks
+            if (false !== strpos(trim($webHook['Url']), $webHookServer)) {
+                return true;
+            }
+        }
+        //====================================================================//
+        // Splash WebHooks was NOT Found
+        return false;
+    }
+
+    /**
+     * Check & Update Mailjet Api Account WebHooks.
+     *
+     * @param RouterInterface $router
+     *
+     * @return bool
+     */
+    public function updateWebHooks(RouterInterface $router) : bool
+    {
+        //====================================================================//
+        // Connector SelfTest
+        if (!$this->selfTest()) {
+            return false;
+        }
+        //====================================================================//
+        // Generate WebHook Url
+        $webHookServer  =   filter_input(INPUT_SERVER, 'SERVER_NAME');
+        $webHookUrl     =   $router->generate(
+            'splash_connector_action',
+            array(
+                'connectorName' => $this->getProfile()["name"],
+                'webserviceId' => $this->getWebserviceId(),
+            ),
+            RouterInterface::ABSOLUTE_URL
+        );
+        //====================================================================//
+        // When Running on a Local Server
+        if (false !== strpos("localhost", $webHookServer)) {
+            $webHookServer  =   "www.splashsync.com";
+            $webHookUrl     =   "https://www.splashsync.com/en/ws/mailjet/123456";
+        }
+        //====================================================================//
+        // Create Object Class
+        $webHookManager = new WebHook($this);
+        $webHookManager->configure("webhook", $this->getWebserviceId(), $this->getConfiguration());
+        //====================================================================//
+        // Get List Of WebHooks for this List
+        $webHooks       =   $webHookManager->objectsList();
+        if (isset($webHooks["meta"])) {
+            unset($webHooks["meta"]);
+        }
+        //====================================================================//
+        // Filter & Clean List Of WebHooks
+        $foundWebHook   =    false;
+        foreach ($webHooks as $webHook) {
+            //====================================================================//
+            // This is Current Node WebHooks
+            if (trim($webHook['Url']) ==  $webHookUrl) {
+                $foundWebHook   =   true;
+
+                continue;
+            }
+            //====================================================================//
+            // This is a Splash WebHooks
+            if (false !== strpos(trim($webHook['Url']), $webHookServer)) {
+                $webHookManager->delete($webHook['id']);
+            }
+        }
+        //====================================================================//
+        // Splash WebHooks was Found
+        if ($foundWebHook) {
+            return true;
+        }
+        //====================================================================//
+        // Add Splash WebHooks
+        return (false !== $webHookManager->create($webHookUrl));
+    }
     
     //====================================================================//
     //  LOW LEVEL PRIVATE FUNCTIONS

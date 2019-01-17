@@ -46,12 +46,11 @@ class ActionsController extends Controller
         //====================================================================//
         // Connector SelfTest
         if (($connector instanceof MailjetConnector) && $connector->selfTest()) {
-//            /** @var RouterInterface $router */
-//            $router = $this->get('router');
+            /** @var RouterInterface $router */
+            $router = $this->get('router');
             //====================================================================//
             // Update WebHooks Config
-            $result =   true;
-//            $result =   $connector->updateWebHooks($router);
+            $result =   $connector->updateWebHooks($router);
         }
         //====================================================================//
         // Inform User
