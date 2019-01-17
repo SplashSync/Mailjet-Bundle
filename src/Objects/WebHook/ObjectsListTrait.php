@@ -41,7 +41,7 @@ trait ObjectsListTrait
         // Compute Totals
         $response   =   array(
             // @codingStandardsIgnoreStart
-            'meta'  => array('current' => count($rawData->Count), 'total' => $rawData->Total),
+            'meta'  => array('current' => $rawData->Count, 'total' => $rawData->Total),
         );
         //====================================================================//
         // Parse Data in response
