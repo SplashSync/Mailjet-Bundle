@@ -163,7 +163,7 @@ trait CRUDTrait
             // @codingStandardsIgnoreEnd
         }
 
-        return (string) $this->object->ID;
+        return $this->getObjectIdentifier();
     }
     
     /**
@@ -181,6 +181,18 @@ trait CRUDTrait
         //====================================================================//
         // Delete Object
         return $this->updateListStatus($objectId, 'remove');
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getObjectIdentifier()
+    {
+        if (!isset($this->object->ID)) {
+            return false;
+        }
+
+        return (string) $this->object->ID;
     }
     
     /**
