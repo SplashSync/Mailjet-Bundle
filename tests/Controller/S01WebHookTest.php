@@ -15,7 +15,6 @@
 
 namespace Splash\Connectors\Mailjet\Test\Controller;
 
-use Splash\Connectors\Mailjet\Objects\ThirdParty;
 use Splash\Connectors\Mailjet\Services\MailjetConnector;
 use Splash\Tests\Tools\TestCase;
 
@@ -27,7 +26,7 @@ class S01WebHookTest extends TestCase
     const PING_RESPONSE = '{"success":true}';
     const MEMBER = "ThirdParty";
     const FAKE_EMAIL = "fake@exemple.com";
-   
+
     /**
      * Test WebHook For Ping
      */
@@ -37,12 +36,12 @@ class S01WebHookTest extends TestCase
         // Load Connector
         $connector = $this->getConnector("mailjet");
         $this->assertInstanceOf(MailjetConnector::class, $connector);
-        
+
         //====================================================================//
         // Ping Action -> GET -> OK
         $this->assertPublicActionWorks($connector);
         $this->assertEquals(self::PING_RESPONSE, $this->getResponseContents());
-        
+
         //====================================================================//
         // Ping Action -> POST -> KO
         $this->assertPublicActionFail($connector, null, array(), "POST");
@@ -66,7 +65,7 @@ class S01WebHookTest extends TestCase
         //====================================================================//
 
         $this->assertPublicActionFail($connector, null, array(), "POST");
-        
+
         //====================================================================//
         // GOOD LIST ID BUT GET METHOD
         //====================================================================//
@@ -78,7 +77,7 @@ class S01WebHookTest extends TestCase
             "GET"
         );
         $this->assertEquals(self::PING_RESPONSE, $this->getResponseContents());
-        
+
         //====================================================================//
         // WRONG LIST ID
         //====================================================================//
@@ -101,7 +100,7 @@ class S01WebHookTest extends TestCase
             array("mj_list_id" => $connector->getParameter("ApiList")),
             "POST"
         );
-        
+
         //====================================================================//
         // GOOD LIST ID, GOOD EVENT, BUT NO CONTACT ID
         //====================================================================//
@@ -131,10 +130,10 @@ class S01WebHookTest extends TestCase
         // Load Connector
         $connector = $this->getConnector("mailjet");
         $this->assertInstanceOf(MailjetConnector::class, $connector);
-        
+
         //====================================================================//
         // Prepare Request
-        $post  = array_replace_recursive(
+        $post = array_replace_recursive(
             array("mj_list_id" => $connector->getParameter("ApiList")),
             $data
         );
@@ -160,7 +159,7 @@ class S01WebHookTest extends TestCase
     public function webHooksInputsProvider()
     {
         $hooks = array();
-        
+
         //====================================================================//
         // Generate Subscribe Events
         for ($i = 0; $i < 10; $i++) {
@@ -180,7 +179,7 @@ class S01WebHookTest extends TestCase
                 md5($randEmail),
             );
         }
-        
+
         return $hooks;
     }
 }
