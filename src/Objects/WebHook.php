@@ -17,7 +17,6 @@ namespace Splash\Connectors\Mailjet\Objects;
 
 use Splash\Bundle\Models\AbstractStandaloneObject;
 use Splash\Connectors\Mailjet\Services\MailjetConnector;
-use Splash\Models\AbstractObject;
 use Splash\Models\Objects\IntelParserTrait;
 use Splash\Models\Objects\SimpleFieldsTrait;
 
@@ -31,29 +30,29 @@ class WebHook extends AbstractStandaloneObject
     use WebHook\CRUDTrait;
     use WebHook\CoreTrait;
     use WebHook\ObjectsListTrait;
-    
+
     /**
      *  Object Disable Flag. Override this flag to disable Object.
      */
-    protected static $DISABLED        =  true;
+    protected static $DISABLED = true;
     /**
      *  Object Name
      */
-    protected static $NAME            =  "WebHook";
+    protected static $NAME = "WebHook";
     /**
      *  Object Description
      */
-    protected static $DESCRIPTION     =  "Mailjet WebHook";
+    protected static $DESCRIPTION = "Mailjet WebHook";
     /**
      *  Object Icon (FontAwesome or Glyph ico tag)
      */
-    protected static $ICO     =  "fa fa-cogs";
-    
+    protected static $ICO = "fa fa-cogs";
+
     /**
      * @var MailjetConnector
      */
     protected $connector;
-    
+
     /**
      * Class Constructor
      *
@@ -61,6 +60,6 @@ class WebHook extends AbstractStandaloneObject
      */
     public function __construct(MailjetConnector $parentConnector)
     {
-        $this->connector  =   $parentConnector;
+        $this->connector = $parentConnector;
     }
 }
