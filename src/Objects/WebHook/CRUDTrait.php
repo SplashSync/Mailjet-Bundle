@@ -35,7 +35,7 @@ trait CRUDTrait
     {
         //====================================================================//
         // Stack Trace
-        Splash::log()->trace(__CLASS__, __FUNCTION__);
+        Splash::log()->trace();
         //====================================================================//
         // Execute Read Request
         $mjWebHook = API::get(self::getUri($objectId));
@@ -60,7 +60,7 @@ trait CRUDTrait
     {
         //====================================================================//
         // Stack Trace
-        Splash::log()->trace(__CLASS__, __FUNCTION__);
+        Splash::log()->trace();
         //====================================================================//
         // Check Customer Name is given
         if (empty($url) && empty($this->in["Url"])) {
@@ -86,7 +86,7 @@ trait CRUDTrait
         return $response->Data[0];
         // @codingStandardsIgnoreEnd
     }
-    
+
     /**
      * Update Request Object
      *
@@ -98,18 +98,18 @@ trait CRUDTrait
     {
         //====================================================================//
         // Stack Trace
-        Splash::log()->trace(__CLASS__, __FUNCTION__);
+        Splash::log()->trace();
         if (!$needed) {
             return (string) $this->object->ID;
         }
-        
+
         //====================================================================//
         // Update Not Allowed
         Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " WebHook Update is diasbled.");
-        
+
         return $this->getObjectIdentifier();
     }
-    
+
     /**
      * Delete requested Object
      *
@@ -121,7 +121,7 @@ trait CRUDTrait
     {
         //====================================================================//
         // Stack Trace
-        Splash::log()->trace(__CLASS__, __FUNCTION__);
+        Splash::log()->trace();
         //====================================================================//
         // Delete Object
         $response = API::delete(self::getUri($objectId));
@@ -131,7 +131,7 @@ trait CRUDTrait
 
         return true;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -143,7 +143,7 @@ trait CRUDTrait
 
         return (string) $this->object->ID;
     }
-    
+
     /**
      * Get Object CRUD Uri
      *

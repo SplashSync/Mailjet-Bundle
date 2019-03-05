@@ -30,7 +30,7 @@ trait CRUDTrait
      * @var array
      */
     protected $contactLists = array();
-    
+
     /**
      * Load Request Object
      *
@@ -42,8 +42,8 @@ trait CRUDTrait
     {
         //====================================================================//
         // Stack Trace
-        Splash::log()->trace(__CLASS__, __FUNCTION__);
-        
+        Splash::log()->trace();
+
         //====================================================================//
         // Get Members Core Infos from Api
         $core = API::get(self::getUri($objectId));
@@ -52,7 +52,7 @@ trait CRUDTrait
         }
         /** @codingStandardsIgnoreStart */
         $mjObject = $core->Data[0];
-        
+
         //====================================================================//
         // Get Members Attached Lists from Api
         $lists = API::get(self::getListUri($objectId));
@@ -65,7 +65,7 @@ trait CRUDTrait
         if (!$this->isInCurrentList()) {
             return false;
         }
-        
+
         //====================================================================//
         // Get Members Properties Infos from Api
         $infos = API::get(self::getDataUri($objectId));
@@ -87,7 +87,7 @@ trait CRUDTrait
     {
         //====================================================================//
         // Stack Trace
-        Splash::log()->trace(__CLASS__, __FUNCTION__);
+        Splash::log()->trace();
         //====================================================================//
         // Check Customer Name is given
         if (empty($this->in["Email"])) {
@@ -115,24 +115,23 @@ trait CRUDTrait
         if (!$this->updateListStatus($objectId, 'addnoforce')) {
             return false;
         }
-        
+
         return $this->load($objectId);
     }
-    
+
     /**
      * Update Request Object
      *
      * @param bool $needed Is This Update Needed
      *
      * @return false|string Object Id of False if Failed to Update
-     *
      */
     public function update(bool $needed)
     {
         //====================================================================//
         // Stack Trace
-        Splash::log()->trace(__CLASS__, __FUNCTION__);
-        
+        Splash::log()->trace();
+
         //====================================================================//
         // Update Member Properties
         if ($this->isToUpdate("contactData")) {
@@ -145,7 +144,7 @@ trait CRUDTrait
                 return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to Update Member Properties (".$this->object->Email.").");
             }
         }
-        
+
         //====================================================================//
         // Update Member Core Data
         if ($needed) {
@@ -165,7 +164,7 @@ trait CRUDTrait
 
         return $this->getObjectIdentifier();
     }
-    
+
     /**
      * Delete requested Object
      *
@@ -177,12 +176,12 @@ trait CRUDTrait
     {
         //====================================================================//
         // Stack Trace
-        Splash::log()->trace(__CLASS__, __FUNCTION__);
+        Splash::log()->trace();
         //====================================================================//
         // Delete Object
         return $this->updateListStatus($objectId, 'remove');
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -194,7 +193,7 @@ trait CRUDTrait
 
         return (string) $this->object->ID;
     }
-    
+
     /**
      * Update MailJet Contact Status in a List
      *
@@ -210,14 +209,14 @@ trait CRUDTrait
         }
         //====================================================================//
         // Prepare Parameters
-        $body     =    new stdClass();
+        $body = new stdClass();
         // @codingStandardsIgnoreStart
         $body->ContactsLists = array( (object) array(
             // @codingStandardsIgnoreEnd
             'ListID' => API::getList(),
             'Action' => $status,
         ), );
-        
+
         //====================================================================//
         // Update Object
         $response = API::post(self::getSubscribeUri($objectId), $body);
@@ -227,7 +226,7 @@ trait CRUDTrait
 
         return true;
     }
-    
+
     /**
      * Verify Contact is In Current Selected List
      *
@@ -250,7 +249,7 @@ trait CRUDTrait
 
         return false;
     }
-    
+
     /**
      * Get Object CRUD Base Uri
      *
@@ -267,7 +266,7 @@ trait CRUDTrait
 
         return $baseUri;
     }
-    
+
     /**
      * Get Object CRUD List Uri
      *
@@ -279,7 +278,7 @@ trait CRUDTrait
     {
         return 'contact/'.$objectId."/getcontactslists";
     }
-    
+
     /**
      * Get Object CRUD Properties Uri
      *
@@ -296,7 +295,7 @@ trait CRUDTrait
 
         return $baseUri;
     }
-    
+
     /**
      * Get Object CRUD List Subscribe Uri
      *

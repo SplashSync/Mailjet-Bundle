@@ -30,7 +30,7 @@ class WebHooksController extends Controller
     //====================================================================//
     //  MAILJET WEBHOOKS MANAGEMENT
     //====================================================================//
-   
+
     /**
      * Execute WebHook Actions for A Mailjet Connector
      *
@@ -51,7 +51,7 @@ class WebHooksController extends Controller
 
             return $this->prepareResponse(200);
         }
-        
+
         //====================================================================//
         // Read, Validate & Extract Request Parameters
         $eventData = $this->extractData($request);
@@ -59,21 +59,19 @@ class WebHooksController extends Controller
         //====================================================================//
         // Log MailJet Request
         $logger->info(__CLASS__.'::'.__FUNCTION__.' MailJet WebHook Received ', (is_array($eventData) ? $eventData : array()));
-        
+
         //==============================================================================
         // Commit Changes
         $this->executeCommits($connector, $eventData);
-        
+
         return $this->prepareResponse(200);
     }
-    
+
     /**
      * Execute Changes Commits
      *
      * @param AbstractConnector $connector
      * @param array             $eventData
-     *
-     * @return void
      */
     private function executeCommits(AbstractConnector $connector, $eventData) : void
     {
@@ -96,7 +94,7 @@ class WebHooksController extends Controller
         // Commit Changes to Splash
         $connector->commit('ThirdParty', (string) $eventData['mj_contact_id'], SPL_A_UPDATE, "Mailjet API", "MailJet Contact has Unsubscribed");
     }
-    
+
     /**
      * Extract Data from Resquest
      *
@@ -105,7 +103,6 @@ class WebHooksController extends Controller
      * @throws BadRequestHttpException
      *
      * @return array
-     *
      */
     private function extractData(Request $request): array
     {
@@ -126,7 +123,7 @@ class WebHooksController extends Controller
         // Return Request Data
         return $requestData;
     }
-    
+
     /**
      * Preapare REST Json Response
      *

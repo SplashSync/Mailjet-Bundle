@@ -16,7 +16,6 @@
 namespace   Splash\Connectors\Mailjet\Objects\ThirdParty;
 
 use Splash\Connectors\Mailjet\Models\MailjetHelper as API;
-use stdClass;
 
 /**
  * Mailjet Users Objects List Functions
@@ -32,43 +31,43 @@ trait ObjectsListTrait
     {
         //====================================================================//
         // Prepare Parameters
-        $body     =    array('ContactsList' => API::getList());
+        $body = array('ContactsList' => API::getList());
         if (isset($params["max"], $params["offset"])) {
-            $body['Limit']    =   $params["max"];
-            $body['Offset']   =   $params["offset"];
+            $body['Limit'] = $params["max"];
+            $body['Offset'] = $params["offset"];
         }
         //====================================================================//
         // Get User Lists from Api
-        $rawData  =   API::get('contact', $body);
+        $rawData = API::get('contact', $body);
         //====================================================================//
         // Request Failed
         if (null == $rawData) {
-            return array( 'meta'    => array('Count' => 0, 'total' => 0));
+            return array( 'meta' => array('Count' => 0, 'total' => 0));
         }
         //====================================================================//
         // Compute Totals
-        $response   =   array(
+        $response = array(
             // @codingStandardsIgnoreStart
-            'meta'  => array('current' => $rawData->Count, 'total' => $this->countContacts()),
+            'meta' => array('current' => $rawData->Count, 'total' => $this->countContacts()),
             // @codingStandardsIgnoreEnd
         );
         //====================================================================//
         // Parse Data in response
         // @codingStandardsIgnoreStart
         foreach ($rawData->Data as $member) {
-            $response[]   = array(
-                'id'                        =>      $member->ID,
-                'Email'                     =>      $member->Email,
-                'IsExcludedFromCampaigns'   =>      $member->IsExcludedFromCampaigns,
-                'CreatedAt'                 =>      $member->CreatedAt,
-                'LastUpdateAt'              =>      $member->LastUpdateAt,
+            $response[] = array(
+                'id' => $member->ID,
+                'Email' => $member->Email,
+                'IsExcludedFromCampaigns' => $member->IsExcludedFromCampaigns,
+                'CreatedAt' => $member->CreatedAt,
+                'LastUpdateAt' => $member->LastUpdateAt,
             );
         }
         // @codingStandardsIgnoreEnd
 
         return $response;
     }
-    
+
     /**
      * Count Number of Contacts in Current List
      *
@@ -80,13 +79,13 @@ trait ObjectsListTrait
     {
         //====================================================================//
         // Prepare Parameters
-        $body     =    array(
+        $body = array(
             'ContactsList' => API::getList(),
             'countOnly' => true,
         );
         //====================================================================//
         // Get User Lists from Api
-        $rawData  =   API::get('contact', $body);
+        $rawData = API::get('contact', $body);
         //====================================================================//
         // Request Failed
         // @codingStandardsIgnoreStart

@@ -33,7 +33,7 @@ class MailjetConnector extends AbstractConnector
 {
     use \Splash\Bundle\Models\Connectors\GenericObjectMapperTrait;
     use \Splash\Bundle\Models\Connectors\GenericWidgetMapperTrait;
-    
+
     /**
      * Objects Type Class Map
      *
@@ -92,10 +92,10 @@ class MailjetConnector extends AbstractConnector
         if (!$this->fetchPropertiesLists()) {
             return false;
         }
-        
+
         return true;
     }
-        
+
     /**
      * {@inheritdoc}
      */
@@ -109,51 +109,51 @@ class MailjetConnector extends AbstractConnector
         }
         //====================================================================//
         // Get List Detailed Informations
-        $details  =   API::get('myprofile');
+        $details = API::get('myprofile');
         if (is_null($details)) {
             return $informations;
         }
 
         //====================================================================//
         // Server General Description
-        $informations->shortdesc        =   "Mailjet";
-        $informations->longdesc         =   "Splash Integration for Mailjet's Api V3.0";
+        $informations->shortdesc = "Mailjet";
+        $informations->longdesc = "Splash Integration for Mailjet's Api V3.0";
         //====================================================================//
         // Company Informations
         // @codingStandardsIgnoreStart
-        $informations->company          =   $details->Data[0]->CompanyName;
-        $informations->address          =   $details->Data[0]->AddressStreet;
-        $informations->zip              =   $details->Data[0]->AddressPostalCode;
-        $informations->town             =   $details->Data[0]->AddressCity;
-        $informations->country          =   $details->Data[0]->AddressCountry;
-        $informations->www              =   $details->Data[0]->Website;
-        $informations->email            =   " ";
-        $informations->phone            =   $details->Data[0]->ContactPhone;
+        $informations->company = $details->Data[0]->CompanyName;
+        $informations->address = $details->Data[0]->AddressStreet;
+        $informations->zip = $details->Data[0]->AddressPostalCode;
+        $informations->town = $details->Data[0]->AddressCity;
+        $informations->country = $details->Data[0]->AddressCountry;
+        $informations->www = $details->Data[0]->Website;
+        $informations->email = " ";
+        $informations->phone = $details->Data[0]->ContactPhone;
         // @codingStandardsIgnoreEnd
         //====================================================================//
         // Server Logo & Ico
-        $informations->icoraw           =   Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Icon.png");
-        $informations->logourl          =   null;
-        $informations->logoraw          =   Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Logo-Small.png");
+        $informations->icoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Icon.png");
+        $informations->logourl = null;
+        $informations->logoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Logo-Small.png");
         //====================================================================//
         // Server Informations
-        $informations->servertype       =   "Mailjet REST Api V3";
-        $informations->serverurl        =   API::ENDPOINT;
+        $informations->servertype = "Mailjet REST Api V3";
+        $informations->serverurl = API::ENDPOINT;
         //====================================================================//
         // Module Informations
-        $informations->moduleauthor     =   SPLASH_AUTHOR;
-        $informations->moduleversion    =   "master";
+        $informations->moduleauthor = SPLASH_AUTHOR;
+        $informations->moduleversion = "master";
 
         return $informations;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function selfTest() : bool
     {
         $config = $this->getConfiguration();
-        
+
         //====================================================================//
         // Verify Api Key is Set
         //====================================================================//
@@ -171,7 +171,7 @@ class MailjetConnector extends AbstractConnector
 
             return false;
         }
-        
+
         //====================================================================//
         // Configure Rest API
         return API::configure(
@@ -180,15 +180,15 @@ class MailjetConnector extends AbstractConnector
             isset($config["ApiList"]) ? $config["ApiList"] : null
         );
     }
-    
+
     //====================================================================//
     // Objects Interfaces
     //====================================================================//
-    
+
     //====================================================================//
     // Files Interfaces
     //====================================================================//
-    
+
     /**
      * {@inheritdoc}
      */
@@ -203,11 +203,11 @@ class MailjetConnector extends AbstractConnector
 
         return false;
     }
-    
+
     //====================================================================//
     // Profile Interfaces
     //====================================================================//
-    
+
     /**
      * @abstract   Get Connector Profile Informations
      *
@@ -216,19 +216,19 @@ class MailjetConnector extends AbstractConnector
     public function getProfile() : array
     {
         return array(
-            'enabled'   =>      true,                                   // is Connector Enabled
-            'beta'      =>      false,                                  // is this a Beta release
-            'type'      =>      self::TYPE_ACCOUNT,                     // Connector Type or Mode
-            'name'      =>      'mailjet',                              // Connector code (lowercase, no space allowed)
-            'connector' =>      'splash.connectors.mailjet',            // Connector Symfony Service
-            'title'     =>      'profile.card.title',                   // Public short name
-            'label'     =>      'profile.card.label',                   // Public long name
-            'domain'    =>      'MailjetBundle',                        // Translation domain for names
-            'ico'       =>      '/bundles/mailjet/img/MailJet-Icon.png', // Public Icon path
-            'www'       =>      'www.mailjet.com',                      // Website Url
+            'enabled' => true,                                   // is Connector Enabled
+            'beta' => false,                                  // is this a Beta release
+            'type' => self::TYPE_ACCOUNT,                     // Connector Type or Mode
+            'name' => 'mailjet',                              // Connector code (lowercase, no space allowed)
+            'connector' => 'splash.connectors.mailjet',            // Connector Symfony Service
+            'title' => 'profile.card.title',                   // Public short name
+            'label' => 'profile.card.label',                   // Public long name
+            'domain' => 'MailjetBundle',                        // Translation domain for names
+            'ico' => '/bundles/mailjet/img/MailJet-Icon.png', // Public Icon path
+            'www' => 'www.mailjet.com',                      // Website Url
         );
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -252,7 +252,7 @@ class MailjetConnector extends AbstractConnector
     {
         return "@Mailjet/Profile/new.html.twig";
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -268,7 +268,7 @@ class MailjetConnector extends AbstractConnector
     {
         return null;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -288,11 +288,11 @@ class MailjetConnector extends AbstractConnector
             "webhooks" => "MailjetBundle:Actions:webhooks",
         );
     }
-    
+
     //====================================================================//
     //  HIGH LEVEL WEBSERVICE CALLS
     //====================================================================//
-    
+
     /**
      * Check & Update Mailjet Api Account WebHooks.
      *
@@ -307,11 +307,11 @@ class MailjetConnector extends AbstractConnector
         }
         //====================================================================//
         // Generate WebHook Url
-        $webHookServer  =   filter_input(INPUT_SERVER, 'SERVER_NAME');
+        $webHookServer = filter_input(INPUT_SERVER, 'SERVER_NAME');
         //====================================================================//
         // When Running on a Local Server
         if (false !== strpos("localhost", $webHookServer)) {
-            $webHookServer  =   "www.splashsync.com";
+            $webHookServer = "www.splashsync.com";
         }
         //====================================================================//
         // Create Object Class
@@ -319,7 +319,7 @@ class MailjetConnector extends AbstractConnector
         $webHookManager->configure("webhook", $this->getWebserviceId(), $this->getConfiguration());
         //====================================================================//
         // Get List Of WebHooks for this List
-        $webHooks       =   $webHookManager->objectsList();
+        $webHooks = $webHookManager->objectsList();
         if (isset($webHooks["meta"])) {
             unset($webHooks["meta"]);
         }
@@ -353,8 +353,8 @@ class MailjetConnector extends AbstractConnector
         }
         //====================================================================//
         // Generate WebHook Url
-        $webHookServer  =   filter_input(INPUT_SERVER, 'SERVER_NAME');
-        $webHookUrl     =   $router->generate(
+        $webHookServer = filter_input(INPUT_SERVER, 'SERVER_NAME');
+        $webHookUrl = $router->generate(
             'splash_connector_action',
             array(
                 'connectorName' => $this->getProfile()["name"],
@@ -365,8 +365,8 @@ class MailjetConnector extends AbstractConnector
         //====================================================================//
         // When Running on a Local Server
         if (false !== strpos("localhost", $webHookServer)) {
-            $webHookServer  =   "www.splashsync.com";
-            $webHookUrl     =   "https://www.splashsync.com/en/ws/mailjet/123456";
+            $webHookServer = "www.splashsync.com";
+            $webHookUrl = "https://www.splashsync.com/en/ws/mailjet/123456";
         }
         //====================================================================//
         // Create Object Class
@@ -374,18 +374,18 @@ class MailjetConnector extends AbstractConnector
         $webHookManager->configure("webhook", $this->getWebserviceId(), $this->getConfiguration());
         //====================================================================//
         // Get List Of WebHooks for this List
-        $webHooks       =   $webHookManager->objectsList();
+        $webHooks = $webHookManager->objectsList();
         if (isset($webHooks["meta"])) {
             unset($webHooks["meta"]);
         }
         //====================================================================//
         // Filter & Clean List Of WebHooks
-        $foundWebHook   =    false;
+        $foundWebHook = false;
         foreach ($webHooks as $webHook) {
             //====================================================================//
             // This is Current Node WebHooks
-            if (trim($webHook['Url']) ==  $webHookUrl) {
-                $foundWebHook   =   true;
+            if (trim($webHook['Url']) == $webHookUrl) {
+                $foundWebHook = true;
 
                 continue;
             }
@@ -404,11 +404,11 @@ class MailjetConnector extends AbstractConnector
         // Add Splash WebHooks
         return (false !== $webHookManager->create($webHookUrl));
     }
-    
+
     //====================================================================//
     //  LOW LEVEL PRIVATE FUNCTIONS
     //====================================================================//
-    
+
     /**
      * Get Mailjet User Lists
      *
@@ -418,7 +418,7 @@ class MailjetConnector extends AbstractConnector
     {
         //====================================================================//
         // Get User Lists from Api
-        $response  =   API::get('contactslist');
+        $response = API::get('contactslist');
         if (is_null($response)) {
             return false;
         }
@@ -432,7 +432,7 @@ class MailjetConnector extends AbstractConnector
         foreach ($response->Data as $listDetails) {
             //====================================================================//
             // Add List Index
-            $listIndex[$listDetails->ID]  =   $listDetails->Name;
+            $listIndex[$listDetails->ID] = $listDetails->Name;
         }
         //====================================================================//
         // Store in Connector Settings
@@ -442,10 +442,10 @@ class MailjetConnector extends AbstractConnector
         //====================================================================//
         // Update Connector Settings
         $this->updateConfiguration();
-        
+
         return true;
     }
-    
+
     /**
      * Get Mailjet User Properties Lists
      *
@@ -455,7 +455,7 @@ class MailjetConnector extends AbstractConnector
     {
         //====================================================================//
         // Get User Lists from Api
-        $response  =   API::get('contactmetadata');
+        $response = API::get('contactmetadata');
         if (is_null($response)) {
             return false;
         }
@@ -470,7 +470,7 @@ class MailjetConnector extends AbstractConnector
         //====================================================================//
         // Update Connector Settings
         $this->updateConfiguration();
-        
+
         return true;
     }
 }

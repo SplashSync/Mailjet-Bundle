@@ -35,21 +35,21 @@ trait CoreTrait
             ->MicroData("http://schema.org/ContactPoint", "email")
             ->isRequired()
             ->isListed();
-        
+
         //====================================================================//
         // Name
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Name")
             ->Name("Username")
             ->MicroData("http://schema.org/Organization", "legalName");
-        
+
         //====================================================================//
         // Subscribed
         $this->fieldsFactory()->create(SPL_T_BOOL)
             ->Identifier("IsSubscribed")
             ->Name("Is Subscribed in List")
             ->MicroData("http://schema.org/Organization", "newsletter");
-        
+
         //====================================================================//
         // Is Opt In
         $this->fieldsFactory()->create(SPL_T_BOOL)
@@ -57,7 +57,7 @@ trait CoreTrait
             ->Name("Is Opt-In")
             ->MicroData("http://schema.org/Organization", "advertising")
             ->isReadOnly();
-        
+
         //====================================================================//
         // Excluded from Campaigns
         $this->fieldsFactory()->create(SPL_T_BOOL)
@@ -72,8 +72,6 @@ trait CoreTrait
      *
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
-     *
-     * @return void
      */
     protected function getCoreFields($key, $fieldName)
     {
@@ -99,14 +97,12 @@ trait CoreTrait
         // Clear Key Flag
         unset($this->in[$key]);
     }
-    
+
     /**
      * Write Given Fields
      *
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $data      Field Data
-     *
-     * @return void
      */
     protected function setCoreFields($fieldName, $data)
     {
@@ -132,7 +128,7 @@ trait CoreTrait
         }
         unset($this->in[$fieldName]);
     }
-    
+
     /**
      * Check if Member is Part of Current List
      *
@@ -140,12 +136,12 @@ trait CoreTrait
      */
     private function isSubscribed()
     {
-        $listId =   API::getList();
-                
+        $listId = API::getList();
+
         if (!isset($this->contactLists) || !is_array($this->contactLists)) {
             return false;
         }
-        
+
         foreach ($this->contactLists as $list) {
             // @codingStandardsIgnoreStart
             if (!isset($list->IsUnsub) || $list->IsUnsub) {
@@ -158,10 +154,10 @@ trait CoreTrait
 
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
      * Update Member Status on Current List
      *
@@ -176,7 +172,7 @@ trait CoreTrait
         if (!isset($this->object->ID) || empty($this->object->ID)) {
             return false;
         }
-       
+
         //====================================================================//
         // Re-Set As Subscribed
         if (!$this->isSubscribed() && $data) {
@@ -187,7 +183,7 @@ trait CoreTrait
         if ($this->isSubscribed() && !$data) {
             $this->updateListStatus($this->object->ID, 'unsub');
         }
-        
+
         return true;
     }
 }

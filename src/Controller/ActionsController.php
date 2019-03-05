@@ -31,7 +31,7 @@ use Symfony\Component\Translation\Translator;
 class ActionsController extends Controller
 {
     use ActionsTrait;
-    
+
     /**
      * Update User Connector WebHooks List
      *
@@ -50,7 +50,7 @@ class ActionsController extends Controller
             $router = $this->get('router');
             //====================================================================//
             // Update WebHooks Config
-            $result =   $connector->updateWebHooks($router);
+            $result = $connector->updateWebHooks($router);
         }
         //====================================================================//
         // Inform User

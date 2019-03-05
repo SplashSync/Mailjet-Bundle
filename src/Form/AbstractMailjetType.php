@@ -41,13 +41,13 @@ abstract class AbstractMailjetType extends AbstractType
             //==============================================================================
             // Mailjet Api Key Option Authentification
             ->add('ApiKey', TextType::class, array(
-                'label'                     => "var.apikey.label",
-                'help_block'                => "var.apikey.desc",
-                'required'                  => true,
-                'translation_domain'        => "MailjetBundle",
+                'label' => "var.apikey.label",
+                'help_block' => "var.apikey.desc",
+                'required' => true,
+                'translation_domain' => "MailjetBundle",
             ))
         ;
-        
+
         return $this;
     }
 
@@ -67,16 +67,16 @@ abstract class AbstractMailjetType extends AbstractType
             //==============================================================================
             // Mailjet Secret Key Option Authentification
             ->add('SecretKey', TextType::class, array(
-                'label'                     => "var.secretkey.label",
-                'help_block'                => "var.secretkey.desc",
-                'required'                  => true,
-                'translation_domain'        => "MailJetBundle",
+                'label' => "var.secretkey.label",
+                'help_block' => "var.secretkey.desc",
+                'required' => true,
+                'translation_domain' => "MailJetBundle",
             ))
         ;
-        
+
         return $this;
     }
-    
+
     /**
      * Add List Selector Field to FormBuilder
      *
@@ -92,17 +92,17 @@ abstract class AbstractMailjetType extends AbstractType
         if (empty($options["data"]["ApiListsIndex"])) {
             return $this;
         }
-        
+
         $builder
             //==============================================================================
             // Mailjet List Option Selector
             ->add('ApiList', ChoiceType::class, array(
-                'label'                     => "var.list.label",
-                'help_block'                => "var.list.desc",
-                'required'                  => true,
-                'translation_domain'        => "MailjetBundle",
+                'label' => "var.list.label",
+                'help_block' => "var.list.desc",
+                'required' => true,
+                'translation_domain' => "MailjetBundle",
                 'choice_translation_domain' => false,
-                'choices'                   => array_flip($options["data"]["ApiListsIndex"]),
+                'choices' => array_flip($options["data"]["ApiListsIndex"]),
             ))
         ;
 

@@ -32,12 +32,12 @@ class MailjetHelper
      * @var string
      */
     const ENDPOINT = "https://api.mailjet.com/v3/REST/";
-    
+
     /**
      * @var string
      */
     private static $apiList;
-    
+
     /**
      * Get Current Mailjet List
      *
@@ -47,7 +47,7 @@ class MailjetHelper
     {
         return self::$apiList;
     }
-    
+
     /**
      * Configure Mailjet REST API
      *
@@ -75,7 +75,7 @@ class MailjetHelper
 
         return true;
     }
-    
+
     /**
      * Ping Mailjet API Url as Annonymous User
      *
@@ -93,14 +93,14 @@ class MailjetHelper
 
             return false;
         }
-        
+
         if (($response->code >= 200) && ($response->code < 500)) {
             return true;
         }
 
         return false;
     }
-    
+
     /**
      * Ping Mailjet API Url with API Key (Logged User)
      *
@@ -125,7 +125,7 @@ class MailjetHelper
         // Return Connect Result
         return (200 == $response->code);
     }
-    
+
     /**
      * Mailjet API GET Request
      *
@@ -152,12 +152,12 @@ class MailjetHelper
 
             return null;
         }
-        
+
         //====================================================================//
         // Catch Errors inResponse
         return self::catchErrors($response) ? $response->body : null;
     }
-    
+
     /**
      * Mailjet API PUT Request
      *
@@ -183,7 +183,7 @@ class MailjetHelper
         // Catch Errors inResponse
         return self::catchErrors($response) ? $response->body : null;
     }
-    
+
     /**
      * Mailjet API POST Request
      *
@@ -209,7 +209,7 @@ class MailjetHelper
         // Catch Errors inResponse
         return self::catchErrors($response) ? $response->body : null;
     }
-    
+
     /**
      * Mailjet API DELETE Request
      *
@@ -232,7 +232,7 @@ class MailjetHelper
         // Catch Errors in Response
         return self::catchErrors($response) ? true : false;
     }
-    
+
     /**
      * Analyze Mailjet Api Response & Push Errors to Splash Log
      *

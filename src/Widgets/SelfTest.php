@@ -27,32 +27,32 @@ class SelfTest extends AbstractStandaloneWidget
     //====================================================================//
     // Define Standard Options for this Widget
     // Override this array to change default options for your widget
-    public static $OPTIONS       = array(
-        "Width"     =>      self::SIZE_DEFAULT,
-        'UseCache'      =>  true,
-        'CacheLifeTime' =>  1,
+    public static $OPTIONS = array(
+        "Width" => self::SIZE_DEFAULT,
+        'UseCache' => true,
+        'CacheLifeTime' => 1,
     );
-    
+
     /**
      * Widget Name
      */
-    protected static $NAME            =  "Server SelfTest";
-    
+    protected static $NAME = "Server SelfTest";
+
     /**
      * Widget Description
      */
-    protected static $DESCRIPTION     =  "Results of your Server SelfTests";
-    
+    protected static $DESCRIPTION = "Results of your Server SelfTests";
+
     /**
      * Widget Icon (FontAwesome or Glyph ico tag)
      */
-    protected static $ICO     =  "fa fa-info-circle";
+    protected static $ICO = "fa fa-info-circle";
 
     /**
      * @var MailjetConnector
      */
     protected $connector;
-    
+
     /**
      * Class Constructor
      *
@@ -60,9 +60,9 @@ class SelfTest extends AbstractStandaloneWidget
      */
     public function __construct(MailjetConnector $connector)
     {
-        $this->connector  =   $connector;
+        $this->connector = $connector;
     }
-    
+
     /**
      * Return requested Customer Data
      *
@@ -76,20 +76,20 @@ class SelfTest extends AbstractStandaloneWidget
     {
         //====================================================================//
         // Stack Trace
-        Splash::log()->trace(__CLASS__, __FUNCTION__);
-        
+        Splash::log()->trace();
+
         //====================================================================//
         // Setup Widget Core Informations
         //====================================================================//
 
         $this->setTitle($this->getName());
         $this->setIcon($this->getIcon());
-        
+
         //====================================================================//
         // Build Intro Text Block
         //====================================================================//
         $this->buildIntroBlock();
-        
+
         //====================================================================//
         // Build SlefTest Results Block
         //====================================================================//
@@ -117,7 +117,7 @@ class SelfTest extends AbstractStandaloneWidget
         // Into Text Block
         $this->blocksFactory()->addTextBlock("This widget summarize SelfTest of your Mailjet Account Config");
     }
-    
+
     /**
      * Block Building - Notifications Parameters
      */

@@ -30,25 +30,25 @@ trait PropertiesTrait
      *
      * @var array
      */
-    public static $knowAttributes  =   array(
+    public static $knowAttributes = array(
         "firstname" => array("http://schema.org/Person", "familyName"),
         "lastname" => array("http://schema.org/Person", "givenName"),
     );
-    
+
     /**
      * Storage for Members Properties
      *
      * @var array
      */
     protected $contactData = array();
-    
+
     /**
      * Base Attributes Metadata Item Name
      *
      * @var string
      */
     private static $baseProp = "http://meta.schema.org/additionalType";
-    
+
     /**
      * Attributes Type <> Splash Type Mapping
      *
@@ -63,7 +63,7 @@ trait PropertiesTrait
     );
 
     private $attrCache;
-    
+
     /**
      * Build Fields using FieldFactory
      */
@@ -87,7 +87,7 @@ trait PropertiesTrait
                 ->Identifier(strtolower($attr->Name))
                 ->Name($attr->Name)
                 ->Group("Attributes");
-            
+
             //====================================================================//
             // Add Attribute MicroData
             $attrCode = strtolower($attr->Name);
@@ -109,14 +109,12 @@ trait PropertiesTrait
      *
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
-     *
-     * @return void
      */
     protected function getAttributesFields($key, $fieldName)
     {
         //====================================================================//
         // Field is not an Attribute
-        $attr   =   $this->isAttribute($fieldName);
+        $attr = $this->isAttribute($fieldName);
         if (is_null($attr) || !isset($this->contactData)) {
             return;
         }
@@ -129,20 +127,18 @@ trait PropertiesTrait
         // Clear Key Flag
         unset($this->in[$key]);
     }
-    
+
     /**
      * Write Given Fields
      *
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
-     *
-     * @return void
      */
     protected function setAttributesFields($fieldName, $fieldData)
     {
         //====================================================================//
         // Field is not an Attribute
-        $attr   =   $this->isAttribute($fieldName);
+        $attr = $this->isAttribute($fieldName);
         if (is_null($attr) || !isset($this->contactData)) {
             return;
         }
@@ -171,7 +167,7 @@ trait PropertiesTrait
         // @codingStandardsIgnoreEnd
         unset($this->in[$fieldName]);
     }
-    
+
     /**
      * Read requested Field Data
      *
@@ -222,8 +218,6 @@ trait PropertiesTrait
      *
      * @param string $name      Input List Key
      * @param mixed  $fieldData Field Data
-     *
-     * @return void
      */
     private function setAttributeValue($name, $fieldData)
     {
@@ -254,13 +248,13 @@ trait PropertiesTrait
 
             return;
         }
-        
+
         //====================================================================//
         // Add Attribute Value
         $this->contactData[] = $newAttr;
         $this->needUpdate("contactData");
     }
-    
+
     /**
      * Check if this Attribute Exists
      *
@@ -278,7 +272,7 @@ trait PropertiesTrait
                 return null;
             }
         }
-        
+
         foreach ($this->attrCache as $attr) {
             // @codingStandardsIgnoreStart
             if ($fieldName == strtolower($attr->Name)) {
@@ -289,7 +283,7 @@ trait PropertiesTrait
 
         return null;
     }
-    
+
     /**
      * Get Splash Attribute Type Name
      *
