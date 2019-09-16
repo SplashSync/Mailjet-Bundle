@@ -20,6 +20,8 @@ use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
 /**
  * Symfony Kernel for testing
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Kernel extends BaseKernel
 {
@@ -27,6 +29,8 @@ class Kernel extends BaseKernel
      * Register System Bundle
      *
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.MissingImport)
      */
     public function registerBundles()
     {
@@ -44,6 +48,7 @@ class Kernel extends BaseKernel
         //==============================================================================
         // SPLASH PHP BUNDLE
         $bundles[] = new Splash\Bundle\SplashBundle();
+        $bundles[] = new Splash\Console\ConsoleBundle();
 
         //==============================================================================
         // SPLASH CONNECTORS BUNDLE
