@@ -47,7 +47,7 @@
         "splash/console":                               "dev-master",
         
         "symfony/symfony":                              "~3.4",
-        "symfony/monolog-bundle":                       "*",
+        "symfony/monolog-bundle":                       "^1.0*",
         "symfony/phpunit-bridge":                       "*",
         "symfony/browser-kit":                          "*", 
         
