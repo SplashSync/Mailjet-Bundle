@@ -249,7 +249,7 @@ class MailjetHelper
         }
         //====================================================================//
         //  Debug Informations
-        if (true == SPLASH_DEBUG) {
+        if (Splash::isDebugMode()) {
             Splash::log()->www("[Mailjet] Full Response", $response);
         }
         if ($response->hasBody()) {
@@ -265,14 +265,6 @@ class MailjetHelper
                 Splash::log()->err($response->body->ErrorInfo);
             }
             // @codingStandardsIgnoreEnd
-
-//            //====================================================================//
-//            // Detect Mailjet Errors Details
-//            if (isset($body->Errors) && is_array($body->Errors)) {
-//                foreach ($body->Errors->Errors as $mjError) {
-//                    Splash::log()->err($mjError->ErrorMessage);
-//                }
-//            }
         }
 
         return false;

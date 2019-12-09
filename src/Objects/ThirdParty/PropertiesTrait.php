@@ -62,10 +62,15 @@ trait PropertiesTrait
         "datetime" => SPL_T_DATETIME,
     );
 
+    /**
+     * @var array
+     */
     private $attrCache;
 
     /**
      * Build Fields using FieldFactory
+     *
+     * @return void
      */
     protected function buildPropertiesFields()
     {
@@ -109,6 +114,8 @@ trait PropertiesTrait
      *
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
+     *
+     * @return void
      */
     protected function getAttributesFields($key, $fieldName)
     {
@@ -133,6 +140,8 @@ trait PropertiesTrait
      *
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
+     *
+     * @return void
      */
     protected function setAttributesFields($fieldName, $fieldData)
     {
@@ -218,6 +227,8 @@ trait PropertiesTrait
      *
      * @param string $name      Input List Key
      * @param mixed  $fieldData Field Data
+     *
+     * @return void
      */
     private function setAttributeValue($name, $fieldData)
     {

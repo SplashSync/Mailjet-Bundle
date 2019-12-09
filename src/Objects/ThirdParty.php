@@ -34,19 +34,24 @@ class ThirdParty extends AbstractStandaloneObject
     use ThirdParty\MetaTrait;
 
     /**
-     *  Object Disable Flag. Override this flag to disable Object.
+     * Object Disable Flag. Override this flag to disable Object.
+     *
+     * {@inheritdoc}
      */
     protected static $DISABLED = false;
+
     /**
-     *  Object Name
+     * {@inheritdoc}
      */
     protected static $NAME = "Customer";
+
     /**
-     *  Object Description
+     * {@inheritdoc}
      */
     protected static $DESCRIPTION = "Mailjet Contact";
+
     /**
-     *  Object Icon (FontAwesome or Glyph ico tag)
+     * {@inheritdoc}
      */
     protected static $ICO = "fa fa-user";
 

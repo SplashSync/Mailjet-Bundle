@@ -42,7 +42,7 @@ abstract class AbstractMailjetType extends AbstractType
             // Mailjet Api Key Option Authentification
             ->add('ApiKey', TextType::class, array(
                 'label' => "var.apikey.label",
-                'help_block' => "var.apikey.desc",
+                //                'help_block' => "var.apikey.desc",
                 'required' => true,
                 'translation_domain' => "MailjetBundle",
             ))
@@ -68,7 +68,7 @@ abstract class AbstractMailjetType extends AbstractType
             // Mailjet Secret Key Option Authentification
             ->add('SecretKey', TextType::class, array(
                 'label' => "var.secretkey.label",
-                'help_block' => "var.secretkey.desc",
+                //                'help_block' => "var.secretkey.desc",
                 'required' => true,
                 'translation_domain' => "MailJetBundle",
             ))
@@ -98,7 +98,7 @@ abstract class AbstractMailjetType extends AbstractType
             // Mailjet List Option Selector
             ->add('ApiList', ChoiceType::class, array(
                 'label' => "var.list.label",
-                'help_block' => "var.list.desc",
+                //                'help_block' => "var.list.desc",
                 'required' => true,
                 'translation_domain' => "MailjetBundle",
                 'choice_translation_domain' => false,

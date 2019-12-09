@@ -22,6 +22,8 @@ trait CoreTrait
 {
     /**
      * Build Core Fields using FieldFactory
+     *
+     * @return void
      */
     protected function buildCoreFields()
     {
@@ -39,6 +41,8 @@ trait CoreTrait
      *
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
+     *
+     * @return void
      */
     protected function getCoreFields($key, $fieldName)
     {
@@ -61,6 +65,8 @@ trait CoreTrait
      *
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
+     *
+     * @return void
      */
     protected function setCoreFields($fieldName, $fieldData)
     {

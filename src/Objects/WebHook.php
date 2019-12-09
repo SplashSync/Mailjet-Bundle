@@ -32,19 +32,24 @@ class WebHook extends AbstractStandaloneObject
     use WebHook\ObjectsListTrait;
 
     /**
-     *  Object Disable Flag. Override this flag to disable Object.
+     * Object Disable Flag. Override this flag to disable Object.
+     *
+     * {@inheritdoc}
      */
     protected static $DISABLED = true;
+
     /**
-     *  Object Name
+     * {@inheritdoc}
      */
     protected static $NAME = "WebHook";
+
     /**
-     *  Object Description
+     * {@inheritdoc}
      */
     protected static $DESCRIPTION = "Mailjet WebHook";
+
     /**
-     *  Object Icon (FontAwesome or Glyph ico tag)
+     * {@inheritdoc}
      */
     protected static $ICO = "fa fa-cogs";
 
