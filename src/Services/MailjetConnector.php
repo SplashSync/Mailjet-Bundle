@@ -101,6 +101,26 @@ class MailjetConnector extends AbstractConnector
      */
     public function informations(ArrayObject  $informations) : ArrayObject
     {
+        //====================================================================//
+        // Server General Description
+        $informations->shortdesc = "Mailjet";
+        $informations->longdesc = "Splash Integration for Mailjet's Api V3.0";
+        //====================================================================//
+        // Server Logo & Ico
+        $informations->icoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Icon.png");
+        $informations->logourl = null;
+        $informations->logoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Logo-Small.png");
+        //====================================================================//
+        // Server Informations
+        $informations->servertype = "Mailjet REST Api V3";
+        $informations->serverurl = API::ENDPOINT;
+        //====================================================================//
+        // Module Informations
+        $informations->moduleauthor = SPLASH_AUTHOR;
+        $informations->moduleversion = "master";
+
+        //====================================================================//
+        // Load API Configurations
         $config = $this->getConfiguration();
         //====================================================================//
         // Safety Check => Verify Selftest Pass
@@ -115,10 +135,6 @@ class MailjetConnector extends AbstractConnector
         }
 
         //====================================================================//
-        // Server General Description
-        $informations->shortdesc = "Mailjet";
-        $informations->longdesc = "Splash Integration for Mailjet's Api V3.0";
-        //====================================================================//
         // Company Informations
         // @codingStandardsIgnoreStart
         $informations->company = $details->Data[0]->CompanyName;
@@ -130,19 +146,6 @@ class MailjetConnector extends AbstractConnector
         $informations->email = " ";
         $informations->phone = $details->Data[0]->ContactPhone;
         // @codingStandardsIgnoreEnd
-        //====================================================================//
-        // Server Logo & Ico
-        $informations->icoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Icon.png");
-        $informations->logourl = null;
-        $informations->logoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Logo-Small.png");
-        //====================================================================//
-        // Server Informations
-        $informations->servertype = "Mailjet REST Api V3";
-        $informations->serverurl = API::ENDPOINT;
-        //====================================================================//
-        // Module Informations
-        $informations->moduleauthor = SPLASH_AUTHOR;
-        $informations->moduleversion = "master";
 
         return $informations;
     }
