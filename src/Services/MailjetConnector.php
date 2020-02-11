@@ -109,7 +109,7 @@ class MailjetConnector extends AbstractConnector
         // Server Logo & Ico
         $informations->icoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Icon.png");
         $informations->logourl = null;
-        $informations->logoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Logo-Small.png");
+        $informations->logoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Logo.png");
         //====================================================================//
         // Server Informations
         $informations->servertype = "Mailjet REST Api V3";
