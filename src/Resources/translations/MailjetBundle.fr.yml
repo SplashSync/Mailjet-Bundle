@@ -24,7 +24,7 @@ profile:
 ## Node Api Actions
 admin:
     selftest:   Configuration du Connecteur Mailjet
-    connect:    Connexion a l'API Mailjet    
+    connect:    Connexion a l'API Mailjet
     webhooks:
         label:  Configuration des WebHooks
         desc:   Détecte et Configure les WebHooks pour Splash Sync

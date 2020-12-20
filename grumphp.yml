@@ -15,15 +15,24 @@
 #
 ################################################################################
 
-#############################################        
-#   Local Config 
+#############################################
+# Override Default Config.
 parameters:
-    
+
+    mode:           "splashsync"
+    # Php Stan
+    stan-config:    "%core_dir%/phpstan/sf.%mode%.neon"
+    # For Building Splash Module
+    mod-enable:     false
     # For Building Splash Documentation
-    doc-enable:     true
-    doc-contents:   ["php-composer", "php-docker", "splash"]
-    
-#############################################        
-# Import Config. from Generic Bundle
+    doc-target:     '/public'
+    doc-contents:   ["php-composer", "php-docker", "splash-faq"]
+    # For Building Splash Manifest
+    yml-enable:     true
+
+#############################################
+# Import Generic + Splash Console Configs
 imports:
-    - { resource: "./vendor/splash/php-bundle/src/Resources/grumphp/grumphp.base.yml" }
+    - { resource: "./vendor/badpixxel/php-sdk/grumphp/generic.yml" }
+    - { resource: "./vendor/badpixxel/php-sdk/grumphp/extras.yml" }
+    - { resource: "./vendor/splash/console/src/Resources/grumphp/*.yml" }

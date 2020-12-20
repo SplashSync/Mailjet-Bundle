@@ -18,12 +18,12 @@
 ################################################################################
 # Docker Compose File
 #
-# This Docker File intend to Create a Complete Dev Envirenement 
+# This Docker File intend to Create a Complete Dev Environment
 # for Splash MailJet Connector
 #
 # For a faster access to you container, you can add this IP to /etc/hosts
 # 
-# 172.111.0.100         docker.mailjet.local
+# 172.111.0.100         toolkit.mailjet.local
 #
 ################################################################################
 

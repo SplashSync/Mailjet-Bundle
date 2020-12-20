@@ -71,32 +71,38 @@ class WebHooksController extends Controller
      * Execute Changes Commits
      *
      * @param AbstractConnector $connector
-     * @param array             $eventData
+     * @param array             $data
      */
-    private function executeCommits(AbstractConnector $connector, $eventData) : void
+    private function executeCommits(AbstractConnector $connector, $data) : void
     {
         //==============================================================================
         // Filter on Unsub Events
-        if (!isset($eventData['event']) || ("unsub" != $eventData['event'])) {
+        if (!isset($data['event']) || ("unsub" != $data['event'])) {
             return;
         }
         //==============================================================================
         // Check is in Selected List
-        if (!isset($eventData['mj_list_id']) || ($eventData['mj_list_id'] != $connector->getParameter('ApiList'))) {
+        if (!isset($data['mj_list_id']) || ($data['mj_list_id'] != $connector->getParameter('ApiList'))) {
             return;
         }
         //==============================================================================
         // Check Contact ID provided & Valid
-        if (!isset($eventData['mj_contact_id']) || empty($eventData['mj_contact_id']) || !is_scalar($eventData['mj_contact_id'])) {
+        if (!isset($data['mj_contact_id']) || empty($data['mj_contact_id']) || !is_scalar($data['mj_contact_id'])) {
             return;
         }
         //==============================================================================
         // Commit Changes to Splash
-        $connector->commit('ThirdParty', (string) $eventData['mj_contact_id'], SPL_A_UPDATE, "Mailjet API", "MailJet Contact has Unsubscribed");
+        $connector->commit(
+            'ThirdParty',
+            (string) $data['mj_contact_id'],
+            SPL_A_UPDATE,
+            "Mailjet API",
+            "MailJet Contact has Unsubscribed"
+        );
     }
 
     /**
-     * Extract Data from Resquest
+     * Extract Data from Request
      *
      * @param Request $request
      *

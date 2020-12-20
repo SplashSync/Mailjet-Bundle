@@ -40,9 +40,9 @@ trait CRUDTrait
         // Execute Read Request
         $mjWebHook = API::get(self::getUri($objectId));
         //====================================================================//
-        // Fatch Object
+        // Fetch Object
         if (null == $mjWebHook) {
-            return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to load WebHook (".$objectId.").");
+            return Splash::log()->errTrace("Unable to load WebHook (".$objectId.").");
         }
         // @codingStandardsIgnoreStart
         return $mjWebHook->Data[0];
@@ -52,7 +52,7 @@ trait CRUDTrait
     /**
      * Create Request Object
      *
-     * @param string $url
+     * @param null|string $url
      *
      * @return false|stdClass New Object
      */
@@ -80,7 +80,7 @@ trait CRUDTrait
         $response = API::post(self::getUri(), $this->object);
         // @codingStandardsIgnoreStart
         if (is_null($response) || !($response->Data[0] instanceof stdClass) || empty($response->Data[0]->ID)) {
-            return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to Create WebHook");
+            return Splash::log()->errTrace("Unable to Create WebHook");
         }
 
         return $response->Data[0];
@@ -105,7 +105,7 @@ trait CRUDTrait
 
         //====================================================================//
         // Update Not Allowed
-        Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " WebHook Update is diasbled.");
+        Splash::log()->errTrace("WebHook Update is disabled.");
 
         return $this->getObjectIdentifier();
     }
@@ -126,7 +126,7 @@ trait CRUDTrait
         // Delete Object
         $response = API::delete(self::getUri($objectId));
         if (null === $response) {
-            return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to Delete Member (".$objectId.").");
+            return Splash::log()->errTrace("Unable to Delete Member (".$objectId.").");
         }
 
         return true;
@@ -147,7 +147,7 @@ trait CRUDTrait
     /**
      * Get Object CRUD Uri
      *
-     * @param string $objectId
+     * @param null|string $objectId
      *
      * @return string
      */

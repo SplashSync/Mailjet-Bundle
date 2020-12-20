@@ -17,6 +17,8 @@ namespace Splash\Connectors\Mailjet\Services;
 
 use ArrayObject;
 use Splash\Bundle\Models\AbstractConnector;
+use Splash\Bundle\Models\Connectors\GenericObjectMapperTrait;
+use Splash\Bundle\Models\Connectors\GenericWidgetMapperTrait;
 use Splash\Connectors\Mailjet\Form\EditFormType;
 use Splash\Connectors\Mailjet\Form\NewFormType;
 use Splash\Connectors\Mailjet\Models\MailjetHelper as API;
@@ -31,8 +33,8 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class MailjetConnector extends AbstractConnector
 {
-    use \Splash\Bundle\Models\Connectors\GenericObjectMapperTrait;
-    use \Splash\Bundle\Models\Connectors\GenericWidgetMapperTrait;
+    use GenericObjectMapperTrait;
+    use GenericWidgetMapperTrait;
 
     /**
      * Objects Type Class Map
@@ -58,7 +60,7 @@ class MailjetConnector extends AbstractConnector
     public function ping() : bool
     {
         //====================================================================//
-        // Safety Check => Verify Selftest Pass
+        // Safety Check => Verify Self test Pass
         if (!$this->selfTest()) {
             return false;
         }
@@ -73,7 +75,7 @@ class MailjetConnector extends AbstractConnector
     public function connect() : bool
     {
         //====================================================================//
-        // Safety Check => Verify Selftest Pass
+        // Safety Check => Verify Self test Pass
         if (!$this->selfTest()) {
             return false;
         }
@@ -107,9 +109,13 @@ class MailjetConnector extends AbstractConnector
         $informations->longdesc = "Splash Integration for Mailjet's Api V3.0";
         //====================================================================//
         // Server Logo & Ico
-        $informations->icoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Icon.png");
+        $informations->icoraw = Splash::file()->readFileContents(
+            dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Icon.png"
+        );
         $informations->logourl = null;
-        $informations->logoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Logo.jpg");
+        $informations->logoraw = Splash::file()->readFileContents(
+            dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Logo.jpg"
+        );
         //====================================================================//
         // Server Informations
         $informations->servertype = "Mailjet REST Api V3";
@@ -123,7 +129,7 @@ class MailjetConnector extends AbstractConnector
         // Load API Configurations
         $config = $this->getConfiguration();
         //====================================================================//
-        // Safety Check => Verify Selftest Pass
+        // Safety Check => Verify Self test Pass
         if (!$this->selfTest() || empty($config["ApiList"])) {
             return $informations;
         }
@@ -198,11 +204,11 @@ class MailjetConnector extends AbstractConnector
     public function getFile(string $filePath, string $fileMd5)
     {
         //====================================================================//
-        // Safety Check => Verify Selftest Pass
+        // Safety Check => Verify Self test Pass
         if (!$this->selfTest()) {
             return false;
         }
-        Splash::log()->err("There are No Files Reading for Mailchime Up To Now!");
+        Splash::log()->err("There are No Files Reading for Mailjet Up To Now!");
 
         return false;
     }
@@ -219,16 +225,16 @@ class MailjetConnector extends AbstractConnector
     public function getProfile() : array
     {
         return array(
-            'enabled' => true,                                   // is Connector Enabled
-            'beta' => false,                                  // is this a Beta release
-            'type' => self::TYPE_ACCOUNT,                     // Connector Type or Mode
-            'name' => 'mailjet',                              // Connector code (lowercase, no space allowed)
-            'connector' => 'splash.connectors.mailjet',            // Connector Symfony Service
-            'title' => 'profile.card.title',                   // Public short name
-            'label' => 'profile.card.label',                   // Public long name
+            'enabled' => true,                                  // is Connector Enabled
+            'beta' => false,                                    // is this a Beta release
+            'type' => self::TYPE_ACCOUNT,                       // Connector Type or Mode
+            'name' => 'mailjet',                                // Connector code (lowercase, no space allowed)
+            'connector' => 'splash.connectors.mailjet',         // Connector Symfony Service
+            'title' => 'profile.card.title',                    // Public short name
+            'label' => 'profile.card.label',                    // Public long name
             'domain' => 'MailjetBundle',                        // Translation domain for names
-            'ico' => '/bundles/mailjet/img/MailJet-Icon.png', // Public Icon path
-            'www' => 'www.mailjet.com',                      // Website Url
+            'ico' => '/bundles/mailjet/img/MailJet-Icon.png',   // Public Icon path
+            'www' => 'www.mailjet.com',                         // Website Url
         );
     }
 

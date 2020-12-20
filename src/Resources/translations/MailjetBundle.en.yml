@@ -3,11 +3,11 @@
 var:
     apikey:
         label:  API Key
-        desc:   "API keys provide full access to your Mailjet account, so keep them safe."
+        desc:   "API key provide full access to your Mailjet account, so keep them safe."
 
     secretkey:
         label:  Secret Key
-        desc:   "API keys provide full access to your Mailjet account, so keep them safe."
+        desc:   "Secret key provide full access to your Mailjet account, so keep them safe."
 
     list:
         label:  List

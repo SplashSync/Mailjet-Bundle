@@ -25,10 +25,8 @@ splash:
             id:                 ThisIsMailjetWsId
             key:                ThisIsNotASecretKeyForMailjet
             name:               Serveur 1 (Mailjet)
-            host:               "%splash_host%/ws/soap"
-            server_host:        "%splash_host%"
             connector:          mailjet
-            config:  
+            config:
                 WsHost:         http://localhost:8000
                 ApiKey:         ThisIsSecretApiKey
                 SecretKey:      ThisIsSecretApiPwd

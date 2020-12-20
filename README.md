@@ -9,7 +9,7 @@ To try it, use [Splash Toolkit](https://github.com/SplashSync/Toolkit)
 
 ## Documentation
 
-For the configuration guide and reference, see: [Mailjet Connector Documentation](https://splashsync.github.io/Mailjet-Bundle/)
+For the configuration guide and reference, see: [Mailjet Connector Documentation](https://splashsync.gitlab.io/Mailjet-Bundle/)
 
 ## Contributing
 

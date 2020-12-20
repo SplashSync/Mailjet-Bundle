@@ -48,7 +48,7 @@ trait CRUDTrait
         // Get Members Core Infos from Api
         $core = API::get(self::getUri($objectId));
         if (null == $core) {
-            return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to load Contact (".$objectId.").");
+            return Splash::log()->errTrace("Unable to load Contact (".$objectId.").");
         }
         /** @codingStandardsIgnoreStart */
         $mjObject = $core->Data[0];
@@ -57,7 +57,7 @@ trait CRUDTrait
         // Get Members Attached Lists from Api
         $lists = API::get(self::getListUri($objectId));
         if (null == $lists) {
-            return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to load Contact Lists Infos (".$objectId.").");
+            return Splash::log()->errTrace("Unable to load Contact Lists Infos (".$objectId.").");
         }
         $this->contactLists = $lists->Data;
         //====================================================================//
@@ -70,7 +70,7 @@ trait CRUDTrait
         // Get Members Properties Infos from Api
         $infos = API::get(self::getDataUri($objectId));
         if (null == $infos) {
-            return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to load Contact Properties (".$objectId.").");
+            return Splash::log()->errTrace("Unable to load Contact Properties (".$objectId.").");
         }
         $this->contactData = $infos->Data[0]->Data;
         // @codingStandardsIgnoreEnd
@@ -106,7 +106,7 @@ trait CRUDTrait
         $response = API::post(self::getUri(), (object) $postData);
         // @codingStandardsIgnoreStart
         if (is_null($response) || empty($response->Data[0]->ID)) {
-            return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to Create Member (".$this->object->Email.").");
+            return Splash::log()->errTrace("Unable to Create Member (".$this->object->Email.").");
         }
         $objectId = $response->Data[0]->ID;
         // @codingStandardsIgnoreEnd
@@ -141,7 +141,7 @@ trait CRUDTrait
             $response = API::put(self::getDataUri($this->object->ID), $data);
             if (is_null($response) || ($response->Data[0]->ID != $this->object->ID)) {
                 // @codingStandardsIgnoreEnd
-                return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to Update Member Properties (".$this->object->Email.").");
+                return Splash::log()->errTrace("Unable to Update Member Properties (".$this->object->Email.").");
             }
         }
 
@@ -157,7 +157,7 @@ trait CRUDTrait
             $response = API::put(self::getUri($this->object->ID), (object) $data);
             // @codingStandardsIgnoreStart
             if (is_null($response) || ($response->Data[0]->ID != $this->object->ID)) {
-                return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to Update Member (".$this->object->Email.").");
+                return Splash::log()->errTrace("Unable to Update Member (".$this->object->Email.").");
             }
             // @codingStandardsIgnoreEnd
         }
@@ -168,7 +168,7 @@ trait CRUDTrait
     /**
      * Delete requested Object
      *
-     * @param int $objectId Object Id
+     * @param string $objectId Object Id
      *
      * @return bool
      */
@@ -202,7 +202,7 @@ trait CRUDTrait
      *
      * @return bool
      */
-    protected function updateListStatus($objectId, $status)
+    protected function updateListStatus($objectId, $status): bool
     {
         if (!in_array($status, array('unsub', 'addforce', 'addnoforce', 'remove'), true)) {
             return false;
@@ -221,7 +221,7 @@ trait CRUDTrait
         // Update Object
         $response = API::post(self::getSubscribeUri($objectId), $body);
         if (null === $response) {
-            return Splash::log()->err("ErrLocalTpl", __CLASS__, __FUNCTION__, " Unable to Change Contact Subscription (".$objectId.").");
+            return Splash::log()->errTrace("Unable to Change Contact Subscription (".$objectId.").");
         }
 
         return true;
@@ -230,9 +230,9 @@ trait CRUDTrait
     /**
      * Verify Contact is In Current Selected List
      *
-     * @return boolean
+     * @return bool
      */
-    protected function isInCurrentList()
+    protected function isInCurrentList(): bool
     {
         if (!isset($this->contactLists) || !is_array($this->contactLists)) {
             return false;
@@ -253,7 +253,7 @@ trait CRUDTrait
     /**
      * Get Object CRUD Base Uri
      *
-     * @param string $objectId
+     * @param null|string $objectId
      *
      * @return string
      */
@@ -282,7 +282,7 @@ trait CRUDTrait
     /**
      * Get Object CRUD Properties Uri
      *
-     * @param string $objectId
+     * @param null|string $objectId
      *
      * @return string
      */
