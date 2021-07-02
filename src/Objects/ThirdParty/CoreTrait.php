@@ -32,41 +32,42 @@ trait CoreTrait
         //====================================================================//
         // Email
         $this->fieldsFactory()->create(SPL_T_EMAIL)
-            ->Identifier("Email")
-            ->Name("Email")
-            ->MicroData("http://schema.org/ContactPoint", "email")
+            ->identifier("Email")
+            ->name("Email")
+            ->microData("http://schema.org/ContactPoint", "email")
             ->isRequired()
-            ->isListed();
-
+            ->isListed()
+        ;
         //====================================================================//
         // Name
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
-            ->Identifier("Name")
-            ->Name("Username")
-            ->MicroData("http://schema.org/Organization", "legalName");
-
+            ->identifier("Name")
+            ->name("Username")
+            ->microData("http://schema.org/Organization", "legalName")
+        ;
         //====================================================================//
         // Subscribed
         $this->fieldsFactory()->create(SPL_T_BOOL)
-            ->Identifier("IsSubscribed")
-            ->Name("Is Subscribed in List")
-            ->MicroData("http://schema.org/Organization", "newsletter");
-
+            ->identifier("IsSubscribed")
+            ->name("Is Subscribed in List")
+            ->microData("http://schema.org/Organization", "newsletter")
+        ;
         //====================================================================//
         // Is Opt In
         $this->fieldsFactory()->create(SPL_T_BOOL)
-            ->Identifier("IsOptInPending")
-            ->Name("Is Opt-In")
-            ->MicroData("http://schema.org/Organization", "advertising")
-            ->isReadOnly();
-
+            ->identifier("IsOptInPending")
+            ->name("Is Opt-In")
+            ->microData("http://schema.org/Organization", "advertising")
+            ->isReadOnly()
+        ;
         //====================================================================//
         // Excluded from Campaigns
         $this->fieldsFactory()->create(SPL_T_BOOL)
-            ->Identifier("IsExcludedFromCampaigns")
-            ->Name("Is Exluded from Campaigns")
-            ->MicroData("http://schema.org/Organization", "excluded")
-            ->isListed();
+            ->identifier("IsExcludedFromCampaigns")
+            ->name("Is Excluded from Campaigns")
+            ->microData("http://schema.org/Organization", "excluded")
+            ->isListed()
+        ;
     }
 
     /**
@@ -77,7 +78,7 @@ trait CoreTrait
      *
      * @return void
      */
-    protected function getCoreFields($key, $fieldName)
+    protected function getCoreFields(string $key, string $fieldName)
     {
         switch ($fieldName) {
             case 'Email':
@@ -110,11 +111,12 @@ trait CoreTrait
      *
      * @return void
      */
-    protected function setCoreFields($fieldName, $data)
+    protected function setCoreFields(string $fieldName, $data)
     {
         switch ($fieldName) {
             case 'Email':
             case 'Name':
+            case 'IsExcludedFromCampaigns':
                 $this->setSimple($fieldName, $data);
 
                 break;
@@ -123,10 +125,6 @@ trait CoreTrait
                     break;
                 }
                 $this->setIsSubscribed($data);
-
-                break;
-            case 'IsExcludedFromCampaigns':
-                $this->setSimple($fieldName, $data);
 
                 break;
             default:
@@ -138,9 +136,9 @@ trait CoreTrait
     /**
      * Check if Member is Part of Current List
      *
-     * @return boolean
+     * @return bool
      */
-    private function isSubscribed()
+    private function isSubscribed(): bool
     {
         $listId = API::getList();
 
@@ -169,9 +167,9 @@ trait CoreTrait
      *
      * @param bool $data
      *
-     * @return boolean
+     * @return bool
      */
-    private function setIsSubscribed($data)
+    private function setIsSubscribed($data): bool
     {
         //====================================================================//
         // If Contact has no Id => Exit

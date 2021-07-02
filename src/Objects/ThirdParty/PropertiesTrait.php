@@ -16,6 +16,7 @@
 namespace Splash\Connectors\Mailjet\Objects\ThirdParty;
 
 use DateTime;
+use Exception;
 use stdClass;
 
 /**
@@ -26,7 +27,7 @@ trait PropertiesTrait
     /**
      * Collection of Known Attributes Names with Spacial Mapping
      *
-     * This Collection is Public to Allow External Additons
+     * This Collection is Public to Allow External Additions
      *
      * @var array
      */
@@ -117,7 +118,7 @@ trait PropertiesTrait
      *
      * @return void
      */
-    protected function getAttributesFields($key, $fieldName)
+    protected function getAttributesFields(string $key, string $fieldName)
     {
         //====================================================================//
         // Field is not an Attribute
@@ -143,7 +144,7 @@ trait PropertiesTrait
      *
      * @return void
      */
-    protected function setAttributesFields($fieldName, $fieldData)
+    protected function setAttributesFields(string $fieldName, $fieldData)
     {
         //====================================================================//
         // Field is not an Attribute
@@ -183,9 +184,11 @@ trait PropertiesTrait
      * @param string $name   Input List Key
      * @param string $format Field Identifier / Name
      *
+     * @throws Exception
+     *
      * @return null|bool|float|int|string
      */
-    private function getAttributeValue($name, $format)
+    private function getAttributeValue(string $name, string $format)
     {
         //====================================================================//
         // Safety Check => Attributes Are Itterable
@@ -230,7 +233,7 @@ trait PropertiesTrait
      *
      * @return void
      */
-    private function setAttributeValue($name, $fieldData)
+    private function setAttributeValue(string $name, $fieldData): void
     {
         //====================================================================//
         // Safety Check => Attributes Are Itterable

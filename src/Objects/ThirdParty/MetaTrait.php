@@ -16,6 +16,7 @@
 namespace Splash\Connectors\Mailjet\Objects\ThirdParty;
 
 use DateTime;
+use Exception;
 
 /**
  * MailJet ThirdParty Meta Fields
@@ -36,20 +37,20 @@ trait MetaTrait
         //====================================================================//
         // Creation Date
         $this->fieldsFactory()->create(SPL_T_DATETIME)
-            ->Identifier("CreatedAt")
-            ->Name("Date Created")
-            ->Group("Meta")
-            ->MicroData("http://schema.org/DataFeedItem", "dateCreated")
+            ->identifier("CreatedAt")
+            ->name("Date Created")
+            ->group("Meta")
+            ->microData("http://schema.org/DataFeedItem", "dateCreated")
             ->isListed()
             ->isReadOnly();
 
         //====================================================================//
         // Last Change Date
         $this->fieldsFactory()->create(SPL_T_DATETIME)
-            ->Identifier("LastUpdateAt")
-            ->Name("Last modification")
-            ->Group("Meta")
-            ->MicroData("http://schema.org/DataFeedItem", "dateModified")
+            ->identifier("LastUpdateAt")
+            ->name("Last modification")
+            ->group("Meta")
+            ->microData("http://schema.org/DataFeedItem", "dateModified")
             ->isListed()
             ->isReadOnly();
     }
@@ -60,9 +61,11 @@ trait MetaTrait
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      *
+     * @throws Exception
+     *
      * @return void
      */
-    protected function getMetaFields($key, $fieldName)
+    protected function getMetaFields(string $key, string $fieldName)
     {
         //====================================================================//
         // Does the Field Exists?
