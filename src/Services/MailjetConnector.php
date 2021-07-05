@@ -166,7 +166,7 @@ class MailjetConnector extends AbstractConnector
         //====================================================================//
         // Verify Api Key is Set
         //====================================================================//
-        if (!isset($config["ApiKey"]) || empty($config["ApiKey"]) || !is_string($config["ApiKey"])) {
+        if (empty($config["ApiKey"]) || !is_string($config["ApiKey"])) {
             Splash::log()->err("Api Key is Invalid");
 
             return false;
@@ -175,7 +175,7 @@ class MailjetConnector extends AbstractConnector
         //====================================================================//
         // Verify Secret Key is Set
         //====================================================================//
-        if (!isset($config["SecretKey"]) || empty($config["SecretKey"]) || !is_string($config["SecretKey"])) {
+        if (empty($config["SecretKey"]) || !is_string($config["SecretKey"])) {
             Splash::log()->err("Secret Key is Invalid");
 
             return false;
