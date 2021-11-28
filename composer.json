@@ -37,7 +37,7 @@
     
     
     "require": {
-        "php":                                          "^7.2",
+        "php":                                          "^7.3|^8.0",
         "splash/php-bundle":                            "dev-master",
         "nategood/httpful":                             "^0.2|^0.3"
     },
@@ -51,7 +51,7 @@
         "symfony/phpunit-bridge":                       "*",
         "monolog/monolog":                              "^1.0",
         
-        "doctrine/doctrine-bundle":                     "^1.6",
+        "doctrine/doctrine-bundle":                     "^2.6",
         "doctrine/orm":                                 "^2.5"
     },
 
