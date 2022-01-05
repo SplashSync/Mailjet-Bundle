@@ -27,6 +27,7 @@ class S01WebHookTest extends TestCase
     const PING_RESPONSE = '{"success":true}';
     const MEMBER = "ThirdParty";
     const FAKE_EMAIL = "fake@exemple.com";
+    const METHOD = "JSON";
 
     /**
      * Test WebHook For Ping
@@ -50,6 +51,7 @@ class S01WebHookTest extends TestCase
         //====================================================================//
         // Ping Action -> POST -> KO
         $this->assertPublicActionFail($connector, null, array(), "POST");
+        $this->assertPublicActionFail($connector, null, array(), self::METHOD);
         //====================================================================//
         // Ping Action -> PUT -> KO
         $this->assertPublicActionFail($connector, null, array(), "PUT");
@@ -74,6 +76,7 @@ class S01WebHookTest extends TestCase
         //====================================================================//
 
         $this->assertPublicActionFail($connector, null, array(), "POST");
+        $this->assertPublicActionFail($connector, null, array(), self::METHOD);
 
         //====================================================================//
         // GOOD LIST ID BUT GET METHOD
@@ -110,6 +113,13 @@ class S01WebHookTest extends TestCase
             "POST"
         );
 
+        $this->assertPublicActionFail(
+            $connector,
+            null,
+            array("mj_list_id" => $connector->getParameter("ApiList")),
+            self::METHOD
+        );
+
         //====================================================================//
         // GOOD LIST ID, GOOD EVENT, BUT NO CONTACT ID
         //====================================================================//
@@ -119,6 +129,14 @@ class S01WebHookTest extends TestCase
             null,
             array("event" => "unsub", "mj_list_id" => "ThisIsWrong"),
             "POST"
+        );
+        $this->assertEquals(self::PING_RESPONSE, $this->getResponseContents());
+
+        $this->assertPublicActionWorks(
+            $connector,
+            null,
+            array("event" => "unsub", "mj_list_id" => "ThisIsWrong"),
+            self::METHOD
         );
         $this->assertEquals(self::PING_RESPONSE, $this->getResponseContents());
     }
@@ -152,15 +170,21 @@ class S01WebHookTest extends TestCase
         );
 
         //====================================================================//
-        // Touch Url
+        // POST MODE
         $this->assertPublicActionWorks($connector, null, $post, "POST");
         $this->assertEquals(
             json_encode(array("success" => true)),
             $this->getResponseContents()
         );
+        $this->assertIsLastCommitted($action, $objectType, $objectId);
 
         //====================================================================//
-        // Verify Response
+        // JSON MODE
+        $this->assertPublicActionWorks($connector, null, $post, self::METHOD);
+        $this->assertEquals(
+            json_encode(array("success" => true)),
+            $this->getResponseContents()
+        );
         $this->assertIsLastCommitted($action, $objectType, $objectId);
     }
 
