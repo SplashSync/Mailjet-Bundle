@@ -115,15 +115,18 @@ class WebHooksController extends Controller
         //==============================================================================
         // Safety Check => Data are here
         if (!$request->isMethod('POST')) {
-            throw new BadRequestHttpException('Malformatted or missing data');
+            throw new BadRequestHttpException('Malformed or missing data');
         }
         //==============================================================================
         // Decode Received Data
-        $requestData = $request->request->all();
+        $requestData = empty($request->request->all())
+            ? json_decode($request->getContent(), true, 512, \JSON_BIGINT_AS_STRING)
+            : $request->request->all()
+        ;
         //==============================================================================
         // Safety Check => Data are here
         if (empty($requestData) || !isset($requestData['event'])) {
-            throw new BadRequestHttpException('Malformatted or missing data');
+            throw new BadRequestHttpException('Malformed or missing data');
         }
         //==============================================================================
         // Return Request Data
