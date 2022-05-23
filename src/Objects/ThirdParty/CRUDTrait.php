@@ -29,16 +29,16 @@ trait CRUDTrait
      *
      * @var array
      */
-    protected $contactLists = array();
+    protected array $contactLists = array();
 
     /**
      * Load Request Object
      *
      * @param string $objectId Object id
      *
-     * @return mixed
+     * @return stdClass|null
      */
-    public function load($objectId)
+    public function load(string $objectId): ?stdClass
     {
         //====================================================================//
         // Stack Trace
@@ -48,7 +48,7 @@ trait CRUDTrait
         // Get Members Core Infos from Api
         $core = API::get(self::getUri($objectId));
         if (null == $core) {
-            return Splash::log()->errTrace("Unable to load Contact (".$objectId.").");
+            return Splash::log()->errNull("Unable to load Contact (".$objectId.").");
         }
         /** @codingStandardsIgnoreStart */
         $mjObject = $core->Data[0];
@@ -57,20 +57,20 @@ trait CRUDTrait
         // Get Members Attached Lists from Api
         $lists = API::get(self::getListUri($objectId));
         if (null == $lists) {
-            return Splash::log()->errTrace("Unable to load Contact Lists Infos (".$objectId.").");
+            return Splash::log()->errNull("Unable to load Contact Lists Infos (".$objectId.").");
         }
         $this->contactLists = $lists->Data;
         //====================================================================//
         // Check Contact is In Current List
         if (!$this->isInCurrentList()) {
-            return false;
+            return null;
         }
 
         //====================================================================//
         // Get Members Properties Infos from Api
         $infos = API::get(self::getDataUri($objectId));
         if (null == $infos) {
-            return Splash::log()->errTrace("Unable to load Contact Properties (".$objectId.").");
+            return Splash::log()->errNull("Unable to load Contact Properties (".$objectId.").");
         }
         $this->contactData = $infos->Data[0]->Data;
         // @codingStandardsIgnoreEnd
@@ -81,9 +81,9 @@ trait CRUDTrait
     /**
      * Create Request Object
      *
-     * @return false|stdClass New Object
+     * @return null|stdClass New Object
      */
-    public function create()
+    public function create(): ?stdClass
     {
         //====================================================================//
         // Stack Trace
@@ -91,29 +91,29 @@ trait CRUDTrait
         //====================================================================//
         // Check Customer Name is given
         if (empty($this->in["Email"])) {
-            return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Email");
+            Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Email");
+
+            return null;
         }
         //====================================================================//
         // Init Object
         $postData = array(
             'Email' => $this->in["Email"],
-            'IsExcludedFromCampaigns' => isset($this->in["IsExcludedFromCampaigns"])
-                ? $this->in["IsExcludedFromCampaigns"]
-                : false,
+            'IsExcludedFromCampaigns' => $this->in["IsExcludedFromCampaigns"] ?? false,
         );
         //====================================================================//
         // Create New Contact
         $response = API::post(self::getUri(), (object) $postData);
         // @codingStandardsIgnoreStart
         if (is_null($response) || empty($response->Data[0]->ID)) {
-            return Splash::log()->errTrace("Unable to Create Member (".$this->object->Email.").");
+            return Splash::log()->errNull("Unable to Create Member (".$this->object->Email.").");
         }
         $objectId = $response->Data[0]->ID;
         // @codingStandardsIgnoreEnd
         //====================================================================//
         // Add Contact to Current List
         if (!$this->updateListStatus($objectId, 'addnoforce')) {
-            return false;
+            return null;
         }
 
         return $this->load($objectId);
@@ -124,9 +124,9 @@ trait CRUDTrait
      *
      * @param bool $needed Is This Update Needed
      *
-     * @return false|string Object Id of False if Failed to Update
+     * @return string|null Object ID of NULL if Failed to Update
      */
-    public function update(bool $needed)
+    public function update(bool $needed): ?string
     {
         //====================================================================//
         // Stack Trace
@@ -141,7 +141,7 @@ trait CRUDTrait
             $response = API::put(self::getDataUri($this->object->ID), $data);
             if (is_null($response) || ($response->Data[0]->ID != $this->object->ID)) {
                 // @codingStandardsIgnoreEnd
-                return Splash::log()->errTrace("Unable to Update Member Properties (".$this->object->Email.").");
+                return Splash::log()->errNull("Unable to Update Member Properties (".$this->object->Email.").");
             }
         }
 
@@ -157,7 +157,7 @@ trait CRUDTrait
             $response = API::put(self::getUri($this->object->ID), (object) $data);
             // @codingStandardsIgnoreStart
             if (is_null($response) || ($response->Data[0]->ID != $this->object->ID)) {
-                return Splash::log()->errTrace("Unable to Update Member (".$this->object->Email.").");
+                return Splash::log()->errNull("Unable to Update Member (".$this->object->Email.").");
             }
             // @codingStandardsIgnoreEnd
         }
@@ -166,13 +166,9 @@ trait CRUDTrait
     }
 
     /**
-     * Delete requested Object
-     *
-     * @param string $objectId Object Id
-     *
-     * @return bool
+     * {@inheritdoc}
      */
-    public function delete($objectId = null)
+    public function delete(string $objectId): bool
     {
         //====================================================================//
         // Stack Trace
@@ -185,10 +181,10 @@ trait CRUDTrait
     /**
      * {@inheritdoc}
      */
-    public function getObjectIdentifier()
+    public function getObjectIdentifier(): ?string
     {
         if (!isset($this->object->ID)) {
-            return false;
+            return null;
         }
 
         return (string) $this->object->ID;
@@ -197,12 +193,12 @@ trait CRUDTrait
     /**
      * Update MailJet Contact Status in a List
      *
-     * @param mixed $objectId
-     * @param mixed $status
+     * @param string $objectId
+     * @param string $status
      *
      * @return bool
      */
-    protected function updateListStatus($objectId, $status): bool
+    protected function updateListStatus(string $objectId, string $status): bool
     {
         if (!in_array($status, array('unsub', 'addforce', 'addnoforce', 'remove'), true)) {
             return false;

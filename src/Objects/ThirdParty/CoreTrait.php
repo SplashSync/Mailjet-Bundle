@@ -27,7 +27,7 @@ trait CoreTrait
      *
      * @return void
      */
-    protected function buildCoreFields()
+    protected function buildCoreFields(): void
     {
         //====================================================================//
         // Email
@@ -78,7 +78,7 @@ trait CoreTrait
      *
      * @return void
      */
-    protected function getCoreFields(string $key, string $fieldName)
+    protected function getCoreFields(string $key, string $fieldName): void
     {
         switch ($fieldName) {
             case 'Email':
@@ -107,24 +107,24 @@ trait CoreTrait
      * Write Given Fields
      *
      * @param string $fieldName Field Identifier / Name
-     * @param mixed  $data      Field Data
+     * @param bool|string|null $fieldData      Field Data
      *
      * @return void
      */
-    protected function setCoreFields(string $fieldName, $data)
+    protected function setCoreFields(string $fieldName, bool|string|null $fieldData): void
     {
         switch ($fieldName) {
             case 'Email':
             case 'Name':
             case 'IsExcludedFromCampaigns':
-                $this->setSimple($fieldName, $data);
+                $this->setSimple($fieldName, $fieldData);
 
                 break;
             case 'IsSubscribed':
-                if ($this->isSubscribed() == $data) {
+                if ($this->isSubscribed() == !empty($fieldData)) {
                     break;
                 }
-                $this->setIsSubscribed($data);
+                $this->setIsSubscribed(!empty($fieldData));
 
                 break;
             default:

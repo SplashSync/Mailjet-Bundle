@@ -39,18 +39,18 @@ class MailjetConnector extends AbstractConnector
     /**
      * Objects Type Class Map
      *
-     * @var array
+     * @var array<string, class-string>
      */
-    protected static $objectsMap = array(
+    protected static array $objectsMap = array(
         "ThirdParty" => "Splash\\Connectors\\Mailjet\\Objects\\ThirdParty",
     );
 
     /**
      * Widgets Type Class Map
      *
-     * @var array
+     * @var array<string, class-string>
      */
-    protected static $widgetsMap = array(
+    protected static array $widgetsMap = array(
         "SelfTest" => "Splash\\Connectors\\Mailjet\\Widgets\\SelfTest",
     );
 
@@ -201,16 +201,16 @@ class MailjetConnector extends AbstractConnector
     /**
      * {@inheritdoc}
      */
-    public function getFile(string $filePath, string $fileMd5)
+    public function getFile(string $filePath, string $fileMd5): ?array
     {
         //====================================================================//
         // Safety Check => Verify Self test Pass
         if (!$this->selfTest()) {
-            return false;
+            return null;
         }
         Splash::log()->err("There are No Files Reading for Mailjet Up To Now!");
 
-        return false;
+        return null;
     }
 
     //====================================================================//
@@ -218,7 +218,7 @@ class MailjetConnector extends AbstractConnector
     //====================================================================//
 
     /**
-     * @abstract   Get Connector Profile Informations
+     * @abstract   Get Connector Profile Information
      *
      * @return array
      */
@@ -273,7 +273,7 @@ class MailjetConnector extends AbstractConnector
     /**
      * {@inheritdoc}
      */
-    public function getMasterAction()
+    public function getMasterAction(): ?string
     {
         return null;
     }
@@ -316,6 +316,7 @@ class MailjetConnector extends AbstractConnector
         }
         //====================================================================//
         // Generate WebHook Url
+        /** @var string $webHookServer */
         $webHookServer = filter_input(INPUT_SERVER, 'SERVER_NAME');
         //====================================================================//
         // When Running on a Local Server
@@ -362,6 +363,7 @@ class MailjetConnector extends AbstractConnector
         }
         //====================================================================//
         // Generate WebHook Url
+        /** @var string $webHookServer */
         $webHookServer = filter_input(INPUT_SERVER, 'SERVER_NAME');
         $webHookUrl = $router->generate(
             'splash_connector_action',

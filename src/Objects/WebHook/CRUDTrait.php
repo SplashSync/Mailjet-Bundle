@@ -27,11 +27,11 @@ trait CRUDTrait
     /**
      * Load Request Object
      *
-     * @param string $objectId Object id
+     * @param string $objectId Object ID
      *
-     * @return mixed
+     * @return stdClass|null
      */
-    public function load($objectId)
+    public function load(string$objectId): ?stdClass
     {
         //====================================================================//
         // Stack Trace
@@ -42,7 +42,7 @@ trait CRUDTrait
         //====================================================================//
         // Fetch Object
         if (null == $mjWebHook) {
-            return Splash::log()->errTrace("Unable to load WebHook (".$objectId.").");
+            return Splash::log()->errNull("Unable to load WebHook (".$objectId.").");
         }
         // @codingStandardsIgnoreStart
         return $mjWebHook->Data[0];
@@ -54,9 +54,9 @@ trait CRUDTrait
      *
      * @param null|string $url
      *
-     * @return false|stdClass New Object
+     * @return null|stdClass New Object
      */
-    public function create(string $url = null)
+    public function create(string $url = null): ?stdClass
     {
         //====================================================================//
         // Stack Trace
@@ -64,7 +64,9 @@ trait CRUDTrait
         //====================================================================//
         // Check Customer Name is given
         if (empty($url) && empty($this->in["Url"])) {
-            return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Url");
+            Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Url");
+
+            return null;
         }
         //====================================================================//
         // Init Object
@@ -80,7 +82,7 @@ trait CRUDTrait
         $response = API::post(self::getUri(), $this->object);
         // @codingStandardsIgnoreStart
         if (is_null($response) || !($response->Data[0] instanceof stdClass) || empty($response->Data[0]->ID)) {
-            return Splash::log()->errTrace("Unable to Create WebHook");
+            return Splash::log()->errNull("Unable to Create WebHook");
         }
 
         return $response->Data[0];
@@ -92,9 +94,9 @@ trait CRUDTrait
      *
      * @param bool $needed Is This Update Needed
      *
-     * @return false|string Object Id of False if Failed to Update
+     * @return null|string Object ID of False if Failed to Update
      */
-    public function update(bool $needed)
+    public function update(bool $needed): ?string
     {
         //====================================================================//
         // Stack Trace
@@ -111,13 +113,9 @@ trait CRUDTrait
     }
 
     /**
-     * Delete requested Object
-     *
-     * @param string $objectId Object Id
-     *
-     * @return bool
+     * {@inheritdoc}
      */
-    public function delete($objectId = null)
+    public function delete(string $objectId): bool
     {
         //====================================================================//
         // Stack Trace
@@ -135,10 +133,10 @@ trait CRUDTrait
     /**
      * {@inheritdoc}
      */
-    public function getObjectIdentifier()
+    public function getObjectIdentifier(): ?string
     {
         if (!isset($this->object->ID)) {
-            return false;
+            return null;
         }
 
         return (string) $this->object->ID;

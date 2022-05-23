@@ -29,9 +29,9 @@ trait PropertiesTrait
      *
      * This Collection is Public to Allow External Additions
      *
-     * @var array
+     * @var array<string, string[]>
      */
-    public static $knowAttributes = array(
+    public static array $knowAttributes = array(
         "firstname" => array("http://schema.org/Person", "familyName"),
         "lastname" => array("http://schema.org/Person", "givenName"),
     );
@@ -41,21 +41,21 @@ trait PropertiesTrait
      *
      * @var array
      */
-    protected $contactData = array();
+    protected array $contactData = array();
 
     /**
      * Base Attributes Metadata Item Name
      *
      * @var string
      */
-    private static $baseProp = "http://meta.schema.org/additionalType";
+    private static string $baseProp = "http://meta.schema.org/additionalType";
 
     /**
      * Attributes Type <> Splash Type Mapping
      *
-     * @var array
+     * @var array<string, string>
      */
-    private static $attrType = array(
+    private static array $attrType = array(
         "str" => SPL_T_VARCHAR,
         "int" => SPL_T_INT,
         "float" => SPL_T_DOUBLE,
@@ -64,16 +64,16 @@ trait PropertiesTrait
     );
 
     /**
-     * @var array
+     * @var null|array
      */
-    private $attrCache;
+    private ?array $attrCache;
 
     /**
      * Build Fields using FieldFactory
      *
      * @return void
      */
-    protected function buildPropertiesFields()
+    protected function buildPropertiesFields(): void
     {
         //====================================================================//
         // Safety Check => Attributes Are Loaded
@@ -90,22 +90,22 @@ trait PropertiesTrait
             // Add Attribute to Fields
             $factory
                 ->create(self::toSplashType($attr))
-                ->Identifier(strtolower($attr->Name))
-                ->Name($attr->Name)
-                ->Group("Attributes");
-
+                ->identifier(strtolower($attr->Name))
+                ->name($attr->Name)
+                ->group("Attributes")
+            ;
             //====================================================================//
             // Add Attribute MicroData
             $attrCode = strtolower($attr->Name);
-            if (isset(static::$knowAttributes[$attrCode])) {
-                $factory->MicroData(
-                    static::$knowAttributes[$attrCode][0],
-                    static::$knowAttributes[$attrCode][1]
+            if (isset(self::$knowAttributes[$attrCode])) {
+                $factory->microData(
+                    self::$knowAttributes[$attrCode][0],
+                    self::$knowAttributes[$attrCode][1]
                 );
 
                 continue;
             }
-            $factory->MicroData(static::$baseProp, strtolower($attr->Name));
+            $factory->microData(self::$baseProp, strtolower($attr->Name));
         }
         // @codingStandardsIgnoreEnd
     }
@@ -113,12 +113,14 @@ trait PropertiesTrait
     /**
      * Read requested Field
      *
-     * @param string $key       Input List Key
+     * @param string $key Input List Key
      * @param string $fieldName Field Identifier / Name
      *
      * @return void
+     *
+     * @throws Exception
      */
-    protected function getAttributesFields(string $key, string $fieldName)
+    protected function getAttributesFields(string $key, string $fieldName): void
     {
         //====================================================================//
         // Field is not an Attribute
@@ -140,22 +142,19 @@ trait PropertiesTrait
      * Write Given Fields
      *
      * @param string $fieldName Field Identifier / Name
-     * @param mixed  $fieldData Field Data
+     * @param string|null $fieldData Field Data
      *
      * @return void
+     *
+     * @throws Exception
      */
-    protected function setAttributesFields(string $fieldName, $fieldData)
+    protected function setAttributesFields(string $fieldName, ?string $fieldData): void
     {
         //====================================================================//
         // Field is not an Attribute
         $attr = $this->isAttribute($fieldName);
         if (is_null($attr) || !isset($this->contactData)) {
             return;
-        }
-        //====================================================================//
-        // Init Attributes Array if Needed
-        if (!isset($this->contactData)) {
-            $this->contactData = array();
         }
         /**
          *====================================================================//
@@ -186,12 +185,12 @@ trait PropertiesTrait
      *
      * @throws Exception
      *
-     * @return null|bool|float|int|string
+     * @return null|bool|string
      */
-    private function getAttributeValue(string $name, string $format)
+    private function getAttributeValue(string $name, string $format): bool|string|null
     {
         //====================================================================//
-        // Safety Check => Attributes Are Itterable
+        // Safety Check => Attributes Are Iterable
         if (!is_iterable($this->contactData)) {
             return null;
         }
@@ -229,14 +228,14 @@ trait PropertiesTrait
      * Write Requested Attribute Data
      *
      * @param string $name      Input List Key
-     * @param mixed  $fieldData Field Data
+     * @param null|string  $fieldData Field Data
      *
      * @return void
      */
-    private function setAttributeValue(string $name, $fieldData): void
+    private function setAttributeValue(string $name, ?string $fieldData): void
     {
         //====================================================================//
-        // Safety Check => Attributes Are Itterable
+        // Safety Check => Attributes Are Iterable
         if (!is_iterable($this->contactData)) {
             return;
         }
@@ -281,10 +280,11 @@ trait PropertiesTrait
         //====================================================================//
         // Safety Check => Attributes Are Loaded
         if (empty($this->attrCache)) {
-            $this->attrCache = $this->getParameter("MembersAttributes");
-            if (empty($this->attrCache) || !is_iterable($this->attrCache)) {
+            $attributes = $this->getParameter("MembersAttributes");
+            if (empty($attributes) || !is_array($attributes)) {
                 return null;
             }
+            $this->attrCache = $attributes;
         }
 
         foreach ($this->attrCache as $attr) {
@@ -305,13 +305,13 @@ trait PropertiesTrait
      *
      * @return string
      */
-    private static function toSplashType($attribute)
+    private static function toSplashType(stdClass $attribute): string
     {
         //====================================================================//
         // From mapping
         // @codingStandardsIgnoreStart
-        if (isset(static::$attrType[$attribute->Datatype])) {
-            return static::$attrType[$attribute->Datatype];
+        if (isset(self::$attrType[$attribute->Datatype])) {
+            return self::$attrType[$attribute->Datatype];
         }
         // @codingStandardsIgnoreEnd
         //====================================================================//

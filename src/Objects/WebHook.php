@@ -19,6 +19,7 @@ use Splash\Bundle\Models\AbstractStandaloneObject;
 use Splash\Connectors\Mailjet\Services\MailjetConnector;
 use Splash\Models\Objects\IntelParserTrait;
 use Splash\Models\Objects\SimpleFieldsTrait;
+use stdClass;
 
 /**
  * Mailjet Implementation of WebHooks
@@ -36,27 +37,32 @@ class WebHook extends AbstractStandaloneObject
      *
      * {@inheritdoc}
      */
-    protected static $DISABLED = true;
+    protected static bool $disabled = true;
 
     /**
      * {@inheritdoc}
      */
-    protected static $NAME = "WebHook";
+    protected static string $name = "WebHook";
 
     /**
      * {@inheritdoc}
      */
-    protected static $DESCRIPTION = "Mailjet WebHook";
+    protected static string $description = "Mailjet WebHook";
 
     /**
      * {@inheritdoc}
      */
-    protected static $ICO = "fa fa-cogs";
+    protected static string $ico = "fa fa-cogs";
+
+    /**
+     * @phpstan-var stdClass
+     */
+    protected object $object;
 
     /**
      * @var MailjetConnector
      */
-    protected $connector;
+    protected MailjetConnector $connector;
 
     /**
      * Class Constructor

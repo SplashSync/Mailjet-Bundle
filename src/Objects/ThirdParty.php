@@ -19,9 +19,10 @@ use Splash\Bundle\Models\AbstractStandaloneObject;
 use Splash\Connectors\Mailjet\Services\MailjetConnector;
 use Splash\Models\Objects\IntelParserTrait;
 use Splash\Models\Objects\SimpleFieldsTrait;
+use stdClass;
 
 /**
- * Mailjet Implementation of ThirParty
+ * Mailjet Implementation of ThirdParty
  */
 class ThirdParty extends AbstractStandaloneObject
 {
@@ -38,27 +39,32 @@ class ThirdParty extends AbstractStandaloneObject
      *
      * {@inheritdoc}
      */
-    protected static $DISABLED = false;
+    protected static bool $disabled = false;
 
     /**
      * {@inheritdoc}
      */
-    protected static $NAME = "Customer";
+    protected static string $name = "Customer";
 
     /**
      * {@inheritdoc}
      */
-    protected static $DESCRIPTION = "Mailjet Contact";
+    protected static string $description = "Mailjet Contact";
 
     /**
      * {@inheritdoc}
      */
-    protected static $ICO = "fa fa-user";
+    protected static string $ico = "fa fa-user";
+
+    /**
+     * @phpstan-var stdClass
+     */
+    protected object $object;
 
     /**
      * @var MailjetConnector
      */
-    protected $connector;
+    protected MailjetConnector $connector;
 
     /**
      * Class Constructor

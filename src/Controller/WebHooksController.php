@@ -17,7 +17,7 @@ namespace Splash\Connectors\Mailjet\Controller;
 
 use Psr\Log\LoggerInterface;
 use Splash\Bundle\Models\AbstractConnector;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -25,7 +25,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 /**
  * Splash Mailjet WebHooks Actions Controller
  */
-class WebHooksController extends Controller
+class WebHooksController extends AbstractController
 {
     //====================================================================//
     //  MAILJET WEBHOOKS MANAGEMENT
@@ -119,6 +119,7 @@ class WebHooksController extends Controller
         }
         //==============================================================================
         // Decode Received Data
+        /** @var array $requestData */
         $requestData = empty($request->request->all())
             ? json_decode($request->getContent(), true, 512, \JSON_BIGINT_AS_STRING)
             : $request->request->all()
@@ -134,7 +135,7 @@ class WebHooksController extends Controller
     }
 
     /**
-     * Preapare REST Json Response
+     * Prepare REST Json Response
      *
      * @param int $status
      *

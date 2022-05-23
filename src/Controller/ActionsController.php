@@ -18,7 +18,7 @@ namespace Splash\Connectors\Mailjet\Controller;
 use Splash\Bundle\Models\AbstractConnector;
 use Splash\Bundle\Models\Local\ActionsTrait;
 use Splash\Connectors\Mailjet\Services\MailjetConnector;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +28,7 @@ use Symfony\Component\Translation\Translator;
 /**
  * Splash Mailjet Connector Actions Controller
  */
-class ActionsController extends Controller
+class ActionsController extends AbstractController
 {
     use ActionsTrait;
 

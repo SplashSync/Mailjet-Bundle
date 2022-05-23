@@ -37,14 +37,14 @@
     
     
     "require": {
-        "php":                                          "^7.3|^8.0",
+        "php":                                          "^8.0",
         "ext-json":                                     "*",
         "splash/php-bundle":                            "dev-master",
         "nategood/httpful":                             "^0.2|^0.3"
     },
     
     "require-dev": {
-        "badpixxel/php-sdk":                            "dev-main",
+        "badpixxel/php-sdk":                            "~2.0",
         "splash/console":                               "dev-master",
 
         "symfony/symfony":                              "^3.4|^4.4",
