@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,7 +36,7 @@ trait CRUDTrait
      *
      * @param string $objectId Object id
      *
-     * @return stdClass|null
+     * @return null|stdClass
      */
     public function load(string $objectId): ?stdClass
     {
@@ -124,7 +124,7 @@ trait CRUDTrait
      *
      * @param bool $needed Is This Update Needed
      *
-     * @return string|null Object ID of NULL if Failed to Update
+     * @return null|string Object ID of NULL if Failed to Update
      */
     public function update(bool $needed): ?string
     {

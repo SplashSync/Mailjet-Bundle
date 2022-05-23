@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -113,12 +113,12 @@ trait PropertiesTrait
     /**
      * Read requested Field
      *
-     * @param string $key Input List Key
+     * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      *
-     * @return void
-     *
      * @throws Exception
+     *
+     * @return void
      */
     protected function getAttributesFields(string $key, string $fieldName): void
     {
@@ -141,12 +141,12 @@ trait PropertiesTrait
     /**
      * Write Given Fields
      *
-     * @param string $fieldName Field Identifier / Name
-     * @param string|null $fieldData Field Data
-     *
-     * @return void
+     * @param string      $fieldName Field Identifier / Name
+     * @param null|string $fieldData Field Data
      *
      * @throws Exception
+     *
+     * @return void
      */
     protected function setAttributesFields(string $fieldName, ?string $fieldData): void
     {
@@ -227,8 +227,8 @@ trait PropertiesTrait
     /**
      * Write Requested Attribute Data
      *
-     * @param string $name      Input List Key
-     * @param null|string  $fieldData Field Data
+     * @param string      $name      Input List Key
+     * @param null|string $fieldData Field Data
      *
      * @return void
      */
