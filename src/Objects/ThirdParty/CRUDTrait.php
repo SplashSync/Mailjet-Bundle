@@ -230,7 +230,7 @@ trait CRUDTrait
      */
     protected function isInCurrentList(): bool
     {
-        if (!isset($this->contactLists) || !is_array($this->contactLists)) {
+        if (!isset($this->contactLists)) {
             return false;
         }
         foreach ($this->contactLists as $list) {

@@ -142,7 +142,7 @@ trait CoreTrait
     {
         $listId = API::getList();
 
-        if (!isset($this->contactLists) || !is_array($this->contactLists)) {
+        if (!isset($this->contactLists)) {
             return false;
         }
 
