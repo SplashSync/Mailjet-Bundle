@@ -19,3 +19,10 @@
 # Include Pipeline Templates
 include:
   - remote: 'https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/gitlab/php/connectors.yaml'
+
+################################################################
+# Functional Tests
+################################################################
+
+functional:php-8.2:
+  when: manual
