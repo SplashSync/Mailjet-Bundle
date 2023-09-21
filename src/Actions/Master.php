@@ -25,7 +25,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 /**
  * Splash Mailjet WebHooks Actions Controller
  */
-class WebHooksController extends AbstractController
+class Master extends AbstractController
 {
     public function __construct(private LoggerInterface $logger)
     {

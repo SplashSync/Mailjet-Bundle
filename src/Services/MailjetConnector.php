@@ -19,6 +19,7 @@ use ArrayObject;
 use Splash\Bundle\Models\AbstractConnector;
 use Splash\Bundle\Models\Connectors\GenericObjectMapperTrait;
 use Splash\Bundle\Models\Connectors\GenericWidgetMapperTrait;
+use Splash\Connectors\Mailjet\Actions;
 use Splash\Connectors\Mailjet\Form\EditFormType;
 use Splash\Connectors\Mailjet\Form\NewFormType;
 use Splash\Connectors\Mailjet\Models\MailjetHelper as API;
@@ -64,6 +65,7 @@ class MailjetConnector extends AbstractConnector
         if (!$this->selfTest()) {
             return false;
         }
+
         //====================================================================//
         // Perform Ping Test
         return API::ping();
@@ -284,7 +286,7 @@ class MailjetConnector extends AbstractConnector
     public function getPublicActions() : array
     {
         return array(
-            "index" => "MailjetBundle:WebHooks:index",
+            "index" => Actions\Master::class,
         );
     }
 
@@ -294,7 +296,7 @@ class MailjetConnector extends AbstractConnector
     public function getSecuredActions() : array
     {
         return array(
-            "webhooks" => "MailjetBundle:Actions:webhooks",
+            "webhooks" => Actions\UpdateWebhooks::class,
         );
     }
 
@@ -342,6 +344,7 @@ class MailjetConnector extends AbstractConnector
                 return true;
             }
         }
+
         //====================================================================//
         // Splash WebHooks was NOT Found
         return false;
@@ -411,6 +414,7 @@ class MailjetConnector extends AbstractConnector
         if ($foundWebHook) {
             return true;
         }
+
         //====================================================================//
         // Add Splash WebHooks
         return (false !== $webHookManager->create($webHookUrl));
