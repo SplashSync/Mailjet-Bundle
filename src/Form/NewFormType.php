@@ -36,6 +36,6 @@ class NewFormType extends AbstractMailjetType
             ->addApiKeyField($builder, $options)
             ->addSecretKeyField($builder, $options)
             ->addApiListField($builder, $options)
-            ;
+        ;
     }
 }

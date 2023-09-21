@@ -1,0 +1,24 @@
+parameters:
+    # Adds a fallback configuration if the env var is not set.
+    env(MJ_API_KEY):        'ThisIsSecretApiKey'
+    env(MJ_SECRET_KEY):     'ThisIsSecretApiPwd'
+    env(MJ_API_LIST):       'ThisIsSecretApiList'
+
+splash:
+    ################################################################################
+    # List of Available Connector Connections
+    ################################################################################
+    connections:
+        
+        ########################################################################
+        # MailJet Default
+        mailjet:
+            id:                 ThisIsMailjetWsId
+            key:                ThisIsNotASecretKeyForMailjet
+            name:               Serveur 1 (Mailjet)
+            connector:          mailjet
+            config:
+                WsHost:         http://localhost:8000
+                ApiKey:         "%env(resolve:MJ_API_KEY)%"
+                SecretKey:      "%env(resolve:MJ_SECRET_KEY)%"
+                ApiList:        "%env(resolve:MJ_API_LIST)%"

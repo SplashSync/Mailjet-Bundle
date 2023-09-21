@@ -44,6 +44,7 @@ trait CRUDTrait
         if (null == $mjWebHook) {
             return Splash::log()->errNull("Unable to load WebHook (".$objectId.").");
         }
+
         // @codingStandardsIgnoreStart
         return $mjWebHook->Data[0];
         // @codingStandardsIgnoreEnd

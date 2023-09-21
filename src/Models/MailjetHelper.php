@@ -69,7 +69,7 @@ class MailjetHelper
             ->sendsJson()
             ->expectsJson()
             ->timeout(3)
-            ;
+        ;
         // Set it as a template
         Request::ini($template);
 
@@ -121,6 +121,7 @@ class MailjetHelper
         //====================================================================//
         // Catch Errors inResponse
         self::catchErrors($response);
+
         //====================================================================//
         // Return Connect Result
         return (200 == $response->code);
@@ -142,6 +143,7 @@ class MailjetHelper
         if (!empty($body)) {
             $uri .= "?".http_build_query($body);
         }
+
         //====================================================================//
         // Perform Request
         try {
@@ -179,6 +181,7 @@ class MailjetHelper
 
             return null;
         }
+
         //====================================================================//
         // Catch Errors inResponse
         return self::catchErrors($response) ? $response->body : null;
@@ -205,6 +208,7 @@ class MailjetHelper
 
             return null;
         }
+
         //====================================================================//
         // Catch Errors inResponse
         return self::catchErrors($response) ? $response->body : null;
@@ -228,6 +232,7 @@ class MailjetHelper
 
             return null;
         }
+
         //====================================================================//
         // Catch Errors in Response
         return self::catchErrors($response) ? true : false;

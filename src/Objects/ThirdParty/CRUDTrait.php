@@ -173,6 +173,7 @@ trait CRUDTrait
         //====================================================================//
         // Stack Trace
         Splash::log()->trace();
+
         //====================================================================//
         // Delete Object
         return $this->updateListStatus($objectId, 'remove');

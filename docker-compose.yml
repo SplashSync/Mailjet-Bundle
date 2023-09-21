@@ -39,13 +39,22 @@ services:
         container_name: mailjet-toolkit
         volumes:
             # Specify Local Configuration File
-            - './docker/toolkit/splash.yml:/app/config/packages/splash.yml:ro'
+            - './config/packages/splash.yaml:/app/config/packages/splash.yaml:ro'
             # Uncomment to use Local Sources instead of Release
             - './src/:/app/vendor/splash/mailjet/src/:ro'
         hostname:           toolkit.mailjet.local
         networks:
             mailjet:        { ipv4_address: 172.111.0.100, aliases: [ toolkit.mailjet.local ] }
             splashsync:     { aliases: [ toolkit.mailjet.local ] }
+
+    ################################################################################
+    # PHP 8.1
+    php-8.1:
+        image:          registry.gitlab.com/badpixxel-projects/php-sdk:php-8.1
+        container_name: mailjet-8.1
+        volumes:
+            - ./:/var/www/html
+            - vendor-php81:/var/www/html/vendor
 
     ################################################################################
     # PHP 8.0
@@ -55,24 +64,6 @@ services:
         volumes:
             - ./:/var/www/html
             - vendor-php80:/var/www/html/vendor
-
-    ################################################################################
-    # PHP 7.4
-    php-7.4:
-        image:          registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
-        container_name: mailjet-7.4
-        volumes:
-            - ./:/var/www/html
-            - vendor-php74:/var/www/html/vendor
-
-    ################################################################################
-    # PHP 7.3
-    php-7.3:
-        image:          registry.gitlab.com/badpixxel-projects/php-sdk:php-7.3
-        container_name: mailjet-7.3
-        volumes:
-            - ./:/var/www/html
-            - vendor-php73:/var/www/html/vendor
 
 networks:
     ################################################################################
@@ -88,6 +79,5 @@ networks:
         external: true
 
 volumes:
+    vendor-php81: ~
     vendor-php80: ~
-    vendor-php74: ~
-    vendor-php73: ~

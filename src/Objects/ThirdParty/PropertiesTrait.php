@@ -313,6 +313,7 @@ trait PropertiesTrait
         if (isset(self::$attrType[$attribute->Datatype])) {
             return self::$attrType[$attribute->Datatype];
         }
+
         // @codingStandardsIgnoreEnd
         //====================================================================//
         // Default Type

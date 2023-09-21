@@ -13,7 +13,7 @@
  *  file that was distributed with this source code.
  */
 
-namespace Splash\Connectors\Mailjet\Controller;
+namespace Splash\Connectors\Mailjet\Actions;
 
 use Psr\Log\LoggerInterface;
 use Splash\Bundle\Models\AbstractConnector;
@@ -27,14 +27,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class WebHooksController extends AbstractController
 {
-    //====================================================================//
-    //  MAILJET WEBHOOKS MANAGEMENT
-    //====================================================================//
+    public function __construct(private LoggerInterface $logger)
+    {
+    }
 
     /**
      * Execute WebHook Actions for A Mailjet Connector
      *
-     * @param LoggerInterface   $logger
      * @param Request           $request
      * @param AbstractConnector $connector
      *
@@ -42,12 +41,12 @@ class WebHooksController extends AbstractController
      *
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
-    public function indexAction(LoggerInterface $logger, Request $request, AbstractConnector $connector)
+    public function __invoke(Request $request, AbstractConnector $connector): JsonResponse
     {
         //====================================================================//
         // For Mailjet ping GET
         if ($request->isMethod('GET')) {
-            $logger->notice(__CLASS__.'::'.__FUNCTION__.' MailJet Ping.', $request->attributes->all());
+            $this->logger->notice(__CLASS__.'::'.__FUNCTION__.' MailJet Ping.', $request->attributes->all());
 
             return $this->prepareResponse(200);
         }
@@ -58,7 +57,7 @@ class WebHooksController extends AbstractController
 
         //====================================================================//
         // Log MailJet Request
-        $logger->info(__CLASS__.'::'.__FUNCTION__.' MailJet WebHook Received ', $eventData);
+        $this->logger->info(__CLASS__.'::'.__FUNCTION__.' MailJet WebHook Received ', $eventData);
 
         //==============================================================================
         // Commit Changes
@@ -129,6 +128,7 @@ class WebHooksController extends AbstractController
         if (empty($requestData) || !isset($requestData['event'])) {
             throw new BadRequestHttpException('Malformed or missing data');
         }
+
         //==============================================================================
         // Return Request Data
         return $requestData;

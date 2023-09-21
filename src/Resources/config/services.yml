@@ -1,4 +1,9 @@
 services:
+
+    _defaults:
+        autowire:           true
+        autoconfigure:      true
+
     ################################################################################
     # SPLASH Mailjet Connector Service
     splash.connectors.mailjet:
@@ -8,8 +13,8 @@ services:
             - { name: "splash.connector"}
 
     ################################################################################
-    # Enables Dependency Injection in Controller Actions
-    Splash\Connectors\Mailjet\Controller\:
-        resource: '../../Controller'
+    # Enables Dependency Injection in Actions
+    Splash\Connectors\Mailjet\Actions\:
+        resource: '../../Actions'
         public: true
         tags: ['controller.service_arguments']
