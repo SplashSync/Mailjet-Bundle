@@ -117,12 +117,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SplashSync/Php-Bundle.git",
-                "reference": "cf1946ce8f043a18eabc66450116cdbc06b3bc65"
+                "reference": "1608eb1c57590e1d81a2f0b6dc61e24c246d349b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SplashSync/Php-Bundle/zipball/cf1946ce8f043a18eabc66450116cdbc06b3bc65",
-                "reference": "cf1946ce8f043a18eabc66450116cdbc06b3bc65",
+                "url": "https://api.github.com/repos/SplashSync/Php-Bundle/zipball/1608eb1c57590e1d81a2f0b6dc61e24c246d349b",
+                "reference": "1608eb1c57590e1d81a2f0b6dc61e24c246d349b",
                 "shasum": ""
             },
             "require": {
@@ -184,7 +184,7 @@
                 "issues": "https://github.com/SplashSync/Php-Bundle/issues",
                 "source": "https://github.com/SplashSync/Php-Bundle/tree/master"
             },
-            "time": "2023-09-20T22:16:02+00:00"
+            "time": "2023-09-22T16:31:48+00:00"
         },
         {
             "name": "splash/phpcore",
@@ -1966,16 +1966,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.6.6",
+            "version": "3.6.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "63646ffd71d1676d2f747f871be31b7e921c7864"
+                "reference": "8e0e268052b4a8974cb00215bb2892787021614f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/63646ffd71d1676d2f747f871be31b7e921c7864",
-                "reference": "63646ffd71d1676d2f747f871be31b7e921c7864",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/8e0e268052b4a8974cb00215bb2892787021614f",
+                "reference": "8e0e268052b4a8974cb00215bb2892787021614f",
                 "shasum": ""
             },
             "require": {
@@ -1991,9 +1991,9 @@
                 "doctrine/coding-standard": "12.0.0",
                 "fig/log-test": "^1",
                 "jetbrains/phpstorm-stubs": "2023.1",
-                "phpstan/phpstan": "1.10.29",
+                "phpstan/phpstan": "1.10.34",
                 "phpstan/phpstan-strict-rules": "^1.5",
-                "phpunit/phpunit": "9.6.9",
+                "phpunit/phpunit": "9.6.12",
                 "psalm/plugin-phpunit": "0.18.4",
                 "slevomat/coding-standard": "8.13.1",
                 "squizlabs/php_codesniffer": "3.7.2",
@@ -2059,7 +2059,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.6.6"
+                "source": "https://github.com/doctrine/dbal/tree/3.6.7"
             },
             "funding": [
                 {
@@ -2075,7 +2075,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-08-17T05:38:17+00:00"
+            "time": "2023-09-19T20:15:41+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -8381,12 +8381,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SplashSync/Toolkit.git",
-                "reference": "f5bfa0d15d6c5562e404ba95aa297d75bc3c22ba"
+                "reference": "6fef1c2d35ce8e02a9589702bdea34d82e95eacb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SplashSync/Toolkit/zipball/f5bfa0d15d6c5562e404ba95aa297d75bc3c22ba",
-                "reference": "f5bfa0d15d6c5562e404ba95aa297d75bc3c22ba",
+                "url": "https://api.github.com/repos/SplashSync/Toolkit/zipball/6fef1c2d35ce8e02a9589702bdea34d82e95eacb",
+                "reference": "6fef1c2d35ce8e02a9589702bdea34d82e95eacb",
                 "shasum": ""
             },
             "require": {
@@ -8438,7 +8438,7 @@
                 "issues": "https://github.com/SplashSync/Toolkit/issues",
                 "source": "https://github.com/SplashSync/Toolkit/tree/master"
             },
-            "time": "2023-09-20T08:08:14+00:00"
+            "time": "2023-09-22T13:24:59+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

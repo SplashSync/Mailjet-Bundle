@@ -29,6 +29,8 @@
         <server name="SERVER_NAME" value="http://localhost:8000"/>        
         <const  name="SPLASH_DEBUG" value="true" />
         <server name="SPLASH_TRAVIS" value="true" />
+
+        <env  name="SPLASH_TYPES" value="ThirdParty" />
     </php>
     
 </phpunit>

@@ -16,16 +16,19 @@
 namespace Splash\Connectors\Mailjet\Services;
 
 use ArrayObject;
+use Psr\Log\LoggerInterface;
 use Splash\Bundle\Models\AbstractConnector;
 use Splash\Bundle\Models\Connectors\GenericObjectMapperTrait;
 use Splash\Bundle\Models\Connectors\GenericWidgetMapperTrait;
+use Splash\Bundle\Models\Connectors\RoutesBuilderAwareTrait;
+use Splash\Bundle\Services\ConnectorRoutesBuilder;
 use Splash\Connectors\Mailjet\Actions;
 use Splash\Connectors\Mailjet\Form\EditFormType;
 use Splash\Connectors\Mailjet\Form\NewFormType;
 use Splash\Connectors\Mailjet\Models\MailjetHelper as API;
-use Splash\Connectors\Mailjet\Objects\WebHook;
+use Splash\Connectors\Mailjet\Objects;
 use Splash\Core\SplashCore as Splash;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Mailjet REST API Connector for Splash
@@ -36,6 +39,7 @@ class MailjetConnector extends AbstractConnector
 {
     use GenericObjectMapperTrait;
     use GenericWidgetMapperTrait;
+    use RoutesBuilderAwareTrait;
 
     /**
      * Objects Type Class Map
@@ -43,7 +47,8 @@ class MailjetConnector extends AbstractConnector
      * @var array<string, class-string>
      */
     protected static array $objectsMap = array(
-        "ThirdParty" => "Splash\\Connectors\\Mailjet\\Objects\\ThirdParty",
+        "ThirdParty" => Objects\ThirdParty::class,
+        "WebHook" => Objects\WebHook::class,
     );
 
     /**
@@ -54,6 +59,18 @@ class MailjetConnector extends AbstractConnector
     protected static array $widgetsMap = array(
         "SelfTest" => "Splash\\Connectors\\Mailjet\\Widgets\\SelfTest",
     );
+
+    /**
+     * Class Constructor
+     */
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        LoggerInterface $logger,
+        ConnectorRoutesBuilder $routesBuilder,
+    ) {
+        parent::__construct($eventDispatcher, $logger);
+        $this->setRouteBuilder($routesBuilder);
+    }
 
     /**
      * {@inheritdoc}
@@ -181,6 +198,13 @@ class MailjetConnector extends AbstractConnector
             Splash::log()->err("Secret Key is Invalid");
 
             return false;
+        }
+
+        //====================================================================//
+        // Extended Mode
+        //====================================================================//
+        if ($this->getParameter("Extended", false)) {
+            Objects\WebHook::setDisabled(false);
         }
 
         //====================================================================//
@@ -318,16 +342,10 @@ class MailjetConnector extends AbstractConnector
         }
         //====================================================================//
         // Generate WebHook Url
-        /** @var string $webHookServer */
-        $webHookServer = filter_input(INPUT_SERVER, 'SERVER_NAME');
-        //====================================================================//
-        // When Running on a Local Server
-        if (false !== strpos("localhost", $webHookServer)) {
-            $webHookServer = "www.splashsync.com";
-        }
+        $webHookUrl = $this->routeBuilder->getMasterActionUrl($this);
         //====================================================================//
         // Create Object Class
-        $webHookManager = new WebHook($this);
+        $webHookManager = new Objects\WebHook($this);
         $webHookManager->configure("webhook", $this->getWebserviceId(), $this->getConfiguration());
         //====================================================================//
         // Get List Of WebHooks for this List
@@ -340,7 +358,12 @@ class MailjetConnector extends AbstractConnector
         foreach ($webHooks as $webHook) {
             //====================================================================//
             // This is a Splash WebHooks
-            if (false !== strpos(trim($webHook['Url']), $webHookServer)) {
+            if (!$this->getRouteBuilder()->isSplashUrl($webHook['Url'])) {
+                continue;
+            }
+            //====================================================================//
+            // This is a Expected WebHooks
+            if (trim($webHook['Url']) == $webHookUrl) {
                 return true;
             }
         }
@@ -352,12 +375,8 @@ class MailjetConnector extends AbstractConnector
 
     /**
      * Check & Update Mailjet Api Account WebHooks.
-     *
-     * @param RouterInterface $router
-     *
-     * @return bool
      */
-    public function updateWebHooks(RouterInterface $router) : bool
+    public function updateWebHooks() : bool
     {
         //====================================================================//
         // Connector SelfTest
@@ -366,25 +385,10 @@ class MailjetConnector extends AbstractConnector
         }
         //====================================================================//
         // Generate WebHook Url
-        /** @var string $webHookServer */
-        $webHookServer = filter_input(INPUT_SERVER, 'SERVER_NAME');
-        $webHookUrl = $router->generate(
-            'splash_connector_action',
-            array(
-                'connectorName' => $this->getProfile()["name"],
-                'webserviceId' => $this->getWebserviceId(),
-            ),
-            RouterInterface::ABSOLUTE_URL
-        );
-        //====================================================================//
-        // When Running on a Local Server
-        if (false !== strpos("localhost", $webHookServer)) {
-            $webHookServer = "www.splashsync.com";
-            $webHookUrl = "https://www.splashsync.com/en/ws/mailjet/123456";
-        }
+        $webHookUrl = $this->getRouteBuilder()->getMasterActionUrl($this);
         //====================================================================//
         // Create Object Class
-        $webHookManager = new WebHook($this);
+        $webHookManager = new Objects\WebHook($this);
         $webHookManager->configure("webhook", $this->getWebserviceId(), $this->getConfiguration());
         //====================================================================//
         // Get List Of WebHooks for this List
@@ -405,7 +409,7 @@ class MailjetConnector extends AbstractConnector
             }
             //====================================================================//
             // This is a Splash WebHooks
-            if (false !== strpos(trim($webHook['Url']), $webHookServer)) {
+            if ($this->getRouteBuilder()->isSplashUrl($webHook['Url'])) {
                 $webHookManager->delete($webHook['id']);
             }
         }
@@ -429,7 +433,7 @@ class MailjetConnector extends AbstractConnector
      *
      * @return bool
      */
-    private function fetchMailingLists()
+    private function fetchMailingLists(): bool
     {
         //====================================================================//
         // Get User Lists from Api
@@ -466,7 +470,7 @@ class MailjetConnector extends AbstractConnector
      *
      * @return bool
      */
-    private function fetchPropertiesLists()
+    private function fetchPropertiesLists(): bool
     {
         //====================================================================//
         // Get User Lists from Api

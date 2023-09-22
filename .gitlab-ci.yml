@@ -25,4 +25,4 @@ include:
 ################################################################
 
 functional:php-8.2:
-  when: manual
+    when: manual

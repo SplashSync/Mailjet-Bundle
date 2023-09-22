@@ -22,7 +22,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -33,8 +32,7 @@ class UpdateWebhooks extends AbstractController
     use ActionsTrait;
 
     public function __construct(
-        private TranslatorInterface $translator,
-        private RouterInterface $router
+        private TranslatorInterface $translator
     ) {
     }
 
@@ -49,7 +47,7 @@ class UpdateWebhooks extends AbstractController
         if (($connector instanceof MailjetConnector) && $connector->selfTest()) {
             //====================================================================//
             // Update WebHooks Config
-            $result = $connector->updateWebHooks($this->router);
+            $result = $connector->updateWebHooks();
         }
         //====================================================================//
         // Inform User

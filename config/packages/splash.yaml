@@ -18,6 +18,7 @@ splash:
             name:               Serveur 1 (Mailjet)
             connector:          mailjet
             config:
+                Extended:       true
                 WsHost:         http://localhost:8000
                 ApiKey:         "%env(resolve:MJ_API_KEY)%"
                 SecretKey:      "%env(resolve:MJ_SECRET_KEY)%"
