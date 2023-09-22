@@ -13,6 +13,7 @@
 /src/.php_cs.cache
 /.gh-pages/
 /.idea/
+!/.idea/icon.svg
 /.phpunit.result.cache
 /.php-cs-fixer.cache
 /tests/public/bundles/
