@@ -33,13 +33,13 @@
     "require": {
         "php":                                          "^8.0",
         "ext-json":                                     "*",
-        "splash/php-bundle":                            "dev-master",
+        "splash/php-bundle":                            "^2.0",
         "nategood/httpful":                             "^0.2|^0.3"
     },
 
     "require-dev": {
-        "badpixxel/php-sdk":                            "~2.0",
-        "splash/toolkit":                               "dev-master"
+        "badpixxel/php-sdk":                            "^2.0",
+        "splash/toolkit":                               "2.5.x-dev"
     },
 
     "scripts": {
