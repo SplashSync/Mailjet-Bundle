@@ -16,7 +16,7 @@
 namespace Splash\Connectors\Mailjet\Objects\ThirdParty;
 
 use Splash\Connectors\Mailjet\Models\MailjetHelper as API;
-use Splash\Core\SplashCore      as Splash;
+use Splash\Core\SplashCore as Splash;
 use stdClass;
 
 /**

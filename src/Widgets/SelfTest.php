@@ -17,7 +17,7 @@ namespace Splash\Connectors\Mailjet\Widgets;
 
 use Splash\Bundle\Models\AbstractStandaloneWidget;
 use Splash\Connectors\Mailjet\Services\MailjetConnector;
-use Splash\Core\SplashCore      as Splash;
+use Splash\Core\SplashCore as Splash;
 
 /**
  * Mailjet Config SelfTest

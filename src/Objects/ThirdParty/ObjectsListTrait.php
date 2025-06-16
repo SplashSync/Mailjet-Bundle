@@ -13,7 +13,7 @@
  *  file that was distributed with this source code.
  */
 
-namespace   Splash\Connectors\Mailjet\Objects\ThirdParty;
+namespace Splash\Connectors\Mailjet\Objects\ThirdParty;
 
 use Splash\Connectors\Mailjet\Models\MailjetHelper as API;
 

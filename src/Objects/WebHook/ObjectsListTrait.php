@@ -13,7 +13,7 @@
  *  file that was distributed with this source code.
  */
 
-namespace   Splash\Connectors\Mailjet\Objects\WebHook;
+namespace Splash\Connectors\Mailjet\Objects\WebHook;
 
 use Splash\Connectors\Mailjet\Models\MailjetHelper as API;
 
