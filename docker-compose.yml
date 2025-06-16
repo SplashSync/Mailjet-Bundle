@@ -27,16 +27,13 @@
 #
 ################################################################################
 
-
-version: '2'
-
 services:
     
     ################################################################################
     # Splash Toolkit Container   
     toolkit:
-        image: 'splashsync/toolkit'
-        container_name: mailjet-toolkit
+        image:              'splashsync/toolkit:2.5'
+        container_name:     mailjet-toolkit
         volumes:
             # Specify Local Configuration File
             - './config/packages/splash.yaml:/app/config/packages/splash.yaml:ro'
@@ -48,22 +45,22 @@ services:
             splashsync:     { aliases: [ toolkit.mailjet.local ] }
 
     ################################################################################
+    # PHP 8.3
+    php-8.3:
+        image:              registry.gitlab.com/badpixxel-projects/php-sdk:php-8.3
+        container_name:     mailjet-8.3
+        volumes:
+            - ./:/var/www/html
+            - vendor-php83:/var/www/html/vendor
+
+    ################################################################################
     # PHP 8.1
     php-8.1:
-        image:          registry.gitlab.com/badpixxel-projects/php-sdk:php-8.1
-        container_name: mailjet-8.1
+        image:              registry.gitlab.com/badpixxel-projects/php-sdk:php-8.1
+        container_name:     mailjet-8.1
         volumes:
             - ./:/var/www/html
             - vendor-php81:/var/www/html/vendor
-
-    ################################################################################
-    # PHP 8.0
-    php-8.0:
-        image:          registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
-        container_name: mailjet-8.0
-        volumes:
-            - ./:/var/www/html
-            - vendor-php80:/var/www/html/vendor
 
 networks:
     ################################################################################
@@ -79,5 +76,5 @@ networks:
         external: true
 
 volumes:
+    vendor-php83: ~
     vendor-php81: ~
-    vendor-php80: ~
