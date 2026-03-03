@@ -16,8 +16,8 @@
 namespace Splash\Connectors\Mailjet\Widgets;
 
 use Splash\Bundle\Models\AbstractStandaloneWidget;
-use Splash\Connectors\Mailjet\Services\MailjetConnector;
-use Splash\Core\SplashCore as Splash;
+use Splash\Connectors\Mailjet\Connectors\MailjetConnector;
+use Splash\Core\Client\Splash;
 
 /**
  * Mailjet Config SelfTest
@@ -66,7 +66,7 @@ class SelfTest extends AbstractStandaloneWidget
     /**
      * {@inheritdoc}
      *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("UnusedFormalParameter")
      */
     public function get(array $parameters = array()): ?array
     {
