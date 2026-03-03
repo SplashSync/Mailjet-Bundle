@@ -16,7 +16,7 @@
     </li>
     
     <li>
-        {% if connector.verifyWebHooks %}
+        {% if connector.locator.webHookManager.verify %}
         <h4 class="font-md text-success">
             <i class="fa fa-check"></i>&nbsp;{{ 'admin.webhooks.msg'| trans }}
         </h4>
