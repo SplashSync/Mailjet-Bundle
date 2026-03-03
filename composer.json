@@ -31,20 +31,23 @@
     },
 
     "require": {
-        "php":                                          "^8.0",
+        "php":                                          "^8.3",
         "ext-json":                                     "*",
-        "splash/php-bundle":                            "^2.0",
-        "nategood/httpful":                             "^0.2|^0.3"
+        "splash/php-bundle":                            "^3.0",
+        "nategood/httpful":                             "^1.0"
     },
 
     "require-dev": {
-        "badpixxel/php-sdk":                            "^2.0",
-        "splash/toolkit":                               "2.5.x-dev"
+        "badpixxel/php-sdk":                            "^3.0",
+        "splash/toolkit":                               "^3.0",
+
+        "api-platform/core":                            "*"
     },
 
     "scripts": {
         "auto-scripts": [
             "php bin/console cache:clear --no-debug",
+            "php bin/console importmap:install",
             "php bin/console assets:install --relative",
             "php bin/console doctrine:schema:update --force --complete --no-interaction --no-debug",
             "find var/cache/dev/*.xml | while read -r i; do cp \"$i\" var/cache/dev/testContainer.xml; done"
@@ -63,8 +66,10 @@
 
     "config": {
         "allow-plugins": {
-            "phpro/grumphp":    true,
-            "symfony/runtime":  true
+            "phpro/grumphp":            true,
+            "symfony/runtime":          true,
+            "phpro/grumphp-shim":       true,
+            "php-http/discovery":       true
         }
     },
     "extra": {
