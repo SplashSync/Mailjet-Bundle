@@ -28,7 +28,7 @@ class MailjetExtension extends Extension
     /**
      * {@inheritdoc}
      *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("UnusedFormalParameter")
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
