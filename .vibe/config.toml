@@ -1,0 +1,120 @@
+[[mcp_servers]]
+name = "toolkit-cli"
+transport = "stdio"
+command = "php"
+args = ["bin/console", "mcp:dev-server"]
+
+[[mcp_servers]]
+name = "toolkit-web"
+transport = "http"
+url = "http://172.111.0.100/_mcp"
+
+# ======================================================================
+# Toolkit CLI - Auto-approve all tools
+# ======================================================================
+
+[tools.toolkit_cli_ping]
+permission = "always"
+
+[tools.toolkit_cli_reboot]
+permission = "always"
+
+[tools.toolkit_cli_getFile]
+permission = "always"
+
+[tools.toolkit_cli_getServerConfiguration]
+permission = "always"
+
+[tools.toolkit_cli_getServerObjects]
+permission = "always"
+
+[tools.toolkit_cli_getServerPing]
+permission = "always"
+
+[tools.toolkit_cli_getServerConnect]
+permission = "always"
+
+[tools.toolkit_cli_getServerInformations]
+permission = "always"
+
+[tools.toolkit_cli_getServerSelfTest]
+permission = "always"
+
+[tools.toolkit_cli_getFieldTemplate]
+permission = "always"
+
+[tools.toolkit_cli_getObjectDescription]
+permission = "always"
+
+[tools.toolkit_cli_getObjectFields]
+permission = "always"
+
+[tools.toolkit_cli_getObjectList]
+permission = "always"
+
+[tools.toolkit_cli_getObject]
+permission = "always"
+
+[tools.toolkit_cli_setObject]
+permission = "always"
+
+[tools.toolkit_cli_deleteObject]
+permission = "always"
+
+[tools.toolkit_cli_getObjectIdByPrimary]
+permission = "always"
+
+# ======================================================================
+# Toolkit Web - Auto-approve all tools
+# ======================================================================
+
+[tools.toolkit_web_ping]
+permission = "always"
+
+[tools.toolkit_web_reboot]
+permission = "always"
+
+[tools.toolkit_web_getFile]
+permission = "always"
+
+[tools.toolkit_web_getServerConfiguration]
+permission = "always"
+
+[tools.toolkit_web_getServerObjects]
+permission = "always"
+
+[tools.toolkit_web_getServerPing]
+permission = "always"
+
+[tools.toolkit_web_getServerConnect]
+permission = "always"
+
+[tools.toolkit_web_getServerInformations]
+permission = "always"
+
+[tools.toolkit_web_getServerSelfTest]
+permission = "always"
+
+[tools.toolkit_web_getFieldTemplate]
+permission = "always"
+
+[tools.toolkit_web_getObjectDescription]
+permission = "always"
+
+[tools.toolkit_web_getObjectFields]
+permission = "always"
+
+[tools.toolkit_web_getObjectList]
+permission = "always"
+
+[tools.toolkit_web_getObject]
+permission = "always"
+
+[tools.toolkit_web_setObject]
+permission = "always"
+
+[tools.toolkit_web_deleteObject]
+permission = "always"
+
+[tools.toolkit_web_getObjectIdByPrimary]
+permission = "always"
