@@ -24,6 +24,7 @@
 # For a faster access to you container, you can add this IP to /etc/hosts
 # 
 # 172.111.0.100         toolkit.mailjet.local
+# 172.111.0.101         sandbox.mailjet.local
 #
 ################################################################################
 
@@ -32,17 +33,36 @@ services:
     ################################################################################
     # Splash Toolkit Container   
     toolkit:
-        image:              'splashsync/toolkit:2.5'
+        image:              'splashsync/toolkit:3.0'
         container_name:     mailjet-toolkit
         volumes:
             # Specify Local Configuration File
             - './config/packages/splash.yaml:/app/config/packages/splash.yaml:ro'
             # Uncomment to use Local Sources instead of Release
-            - './src/:/app/vendor/splash/mailjet/src/:ro'
+            - './src/:/app/connectors/Mailjet/:ro'
         hostname:           toolkit.mailjet.local
+        env_file:           .env
         networks:
             mailjet:        { ipv4_address: 172.111.0.100, aliases: [ toolkit.mailjet.local ] }
             splashsync:     { aliases: [ toolkit.mailjet.local ] }
+
+    ################################################################################
+    # Mailjet API SandBox
+    sandbox:
+        build:
+            context: ./docker/sandbox
+            dockerfile: Dockerfile
+        container_name:     sandbox.mailjet.local
+        hostname:           sandbox.mailjet.local
+        tty:                true
+        volumes:
+            - './docker/sandbox/Entity/:/app/src/Entity/:ro'
+            - './docker/sandbox/Controller/:/app/src/Controller/:ro'
+            - './docker/sandbox/Command/:/app/src/Command/:ro'
+            - './docker/sandbox/Serializer/:/app/src/Serializer/:ro'
+            - './docker/sandbox/config.yaml:/app/config/packages/config.yaml:ro'
+        networks:
+            mailjet:     { ipv4_address: 172.111.0.101, aliases: [ sandbox.mailjet.local ] }
 
     ################################################################################
     # PHP 8.3
@@ -52,6 +72,8 @@ services:
         volumes:
             - ./:/var/www/html
             - vendor-php83:/var/www/html/vendor
+        networks:
+            mailjet:     { }
 
     ################################################################################
     # PHP 8.1
@@ -61,6 +83,8 @@ services:
         volumes:
             - ./:/var/www/html
             - vendor-php81:/var/www/html/vendor
+        networks:
+            mailjet:     { }
 
 networks:
     ################################################################################
