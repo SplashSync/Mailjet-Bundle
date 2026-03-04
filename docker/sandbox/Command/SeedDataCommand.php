@@ -204,6 +204,7 @@ class SeedDataCommand extends Command
                 'email' => 'test1@example.com',
                 'name' => 'John Doe',
                 'isExcludedFromCampaigns' => false,
+                'contactListIds' => array(1, 2, 4),
                 'contactData' => array(
                     //====================================================================//
                     // String Properties
@@ -234,6 +235,7 @@ class SeedDataCommand extends Command
                 'email' => 'test2@example.com',
                 'name' => 'Jane Smith',
                 'isExcludedFromCampaigns' => true,
+                'contactListIds' => array(1, 3),
                 'contactData' => array(
                     //====================================================================//
                     // String Properties
@@ -267,6 +269,7 @@ class SeedDataCommand extends Command
             $contact->name = $data['name'];
             $contact->isExcludedFromCampaigns = $data['isExcludedFromCampaigns'];
             $contact->contactData = $data['contactData'];
+            $contact->contactListIds = $data['contactListIds'] ?? array();
 
             $this->em->persist($contact);
         }

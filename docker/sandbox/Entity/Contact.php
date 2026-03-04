@@ -18,8 +18,11 @@ namespace App\Entity;
 use ApiPlatform\Metadata as API;
 use App\Controller\ContactData\GetController as ContactDataGet;
 use App\Controller\ContactData\UpdateController as ContactDataUpdate;
+use App\Controller\ContactList\GetContactListsController;
+use App\Controller\ContactList\UpdateContactListController;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 /**
@@ -41,7 +44,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
     uriTemplate: '/v3/REST/contact/{id}',
     operations: array(
         new API\Get(),
-        new API\Put(),
+        new API\Put(extraProperties: array('standard_put' => false)),
         new API\Delete(status: 204, output: false),
     )
 )]
@@ -50,6 +53,18 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
     operations: array(
         new API\Get(controller: ContactDataGet::class, read: false),
         new API\Put(controller: ContactDataUpdate::class, read: false),
+    )
+)]
+#[API\ApiResource(
+    uriTemplate: '/v3/REST/contact/{id}/getcontactslists',
+    operations: array(
+        new API\Get(controller: GetContactListsController::class, read: false),
+    )
+)]
+#[API\ApiResource(
+    uriTemplate: '/v3/REST/contact/{id}/managecontactslists',
+    operations: array(
+        new API\Post(controller: UpdateContactListController::class, read: false, write: false),
     )
 )]
 class Contact
@@ -92,7 +107,18 @@ class Contact
      * @var array<int, array{Name: string, Value: ?string}>
      */
     #[ORM\Column(type: Types::JSON)]
+    #[Ignore]
     public array $contactData = array();
+
+    /**
+     * Contact list IDs (subscribed lists).
+     * Managed via /contact/{id}/managecontactslists endpoint only.
+     *
+     * @var int[]
+     */
+    #[ORM\Column(type: Types::JSON)]
+    #[Ignore]
+    public array $contactListIds = array();
 
     public function __construct()
     {
