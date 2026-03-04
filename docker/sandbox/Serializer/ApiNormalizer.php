@@ -49,7 +49,7 @@ final class ApiNormalizer implements NormalizerInterface, DenormalizerInterface,
     /**
      * {@inheritDoc}
      */
-    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = array()): bool
     {
         //====================================================================//
         // Always handle Paginator collections
@@ -103,7 +103,7 @@ final class ApiNormalizer implements NormalizerInterface, DenormalizerInterface,
         mixed $data,
         string $type,
         ?string $format = null,
-        array $context = []
+        array $context = array()
     ): bool {
         return $this->decorated->supportsDenormalization($data, $type, $format, $context);
     }

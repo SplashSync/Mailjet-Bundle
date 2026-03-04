@@ -56,7 +56,7 @@ class SeedDataCommand extends Command
      * This method orchestrates the seeding process by calling
      * individual seed methods for each entity type.
      *
-     * @param InputInterface $input Command input
+     * @param InputInterface  $input  Command input
      * @param OutputInterface $output Command output
      *
      * @return int Command exit code

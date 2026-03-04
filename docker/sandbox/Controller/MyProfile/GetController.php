@@ -28,19 +28,21 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 #[AsController]
 class GetController
 {
-    public function __construct(private EntityManagerInterface $em) {}
+    public function __construct(private EntityManagerInterface $em)
+    {
+    }
 
     public function __invoke(): JsonResponse
     {
         // Get or create profile (singleton pattern)
         $profile = $this->em->getRepository(MyProfile::class)->findOneBy(array());
-        
+
         if (!$profile) {
             $profile = new MyProfile();
             $this->em->persist($profile);
             $this->em->flush();
         }
-        
+
         // Return response with data in Mailjet API format
         return new JsonResponse(array('Data' => array($profile->toArray())));
     }

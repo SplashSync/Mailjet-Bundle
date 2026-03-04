@@ -37,8 +37,8 @@ class GetCollectionController extends AbstractController
     /**
      * Handle contact list listing request.
      *
-     * @param Request $request The HTTP request with pagination parameters
-     * @param EntityManagerInterface $em Doctrine entity manager
+     * @param Request                $request The HTTP request with pagination parameters
+     * @param EntityManagerInterface $em      Doctrine entity manager
      *
      * @return JsonResponse Response with paginated contact list data
      */
