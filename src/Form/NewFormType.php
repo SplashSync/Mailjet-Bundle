@@ -33,8 +33,8 @@ class NewFormType extends AbstractMailjetType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addApiKeyField($builder, $options)
-            ->addSecretKeyField($builder, $options)
+            ->addApiKeyField($builder)
+            ->addSecretKeyField($builder)
             ->addApiListField($builder, $options)
         ;
     }

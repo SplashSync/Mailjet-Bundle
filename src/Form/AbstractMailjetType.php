@@ -27,15 +27,8 @@ abstract class AbstractMailjetType extends AbstractType
 {
     /**
      * Add Api Key Field to FormBuilder
-     *
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     *
-     * @return $this
-     *
-     * @SuppressWarnings("UnusedFormalParameter")
      */
-    public function addApiKeyField(FormBuilderInterface $builder, array $options): static
+    public function addApiKeyField(FormBuilderInterface $builder): static
     {
         $builder
             //==============================================================================
@@ -53,15 +46,8 @@ abstract class AbstractMailjetType extends AbstractType
 
     /**
      * Add Secret Key Field to FormBuilder
-     *
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     *
-     * @return self
-     *
-     * @SuppressWarnings("UnusedFormalParameter")
      */
-    public function addSecretKeyField(FormBuilderInterface $builder, array $options): static
+    public function addSecretKeyField(FormBuilderInterface $builder): static
     {
         $builder
             //==============================================================================
@@ -79,11 +65,6 @@ abstract class AbstractMailjetType extends AbstractType
 
     /**
      * Add List Selector Field to FormBuilder
-     *
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     *
-     * @return $this
      */
     public function addApiListField(FormBuilderInterface $builder, array $options): static
     {
