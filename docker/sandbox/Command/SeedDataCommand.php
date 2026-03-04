@@ -17,6 +17,7 @@ namespace App\Command;
 
 use App\Entity\Contact;
 use App\Entity\ContactList;
+use App\Entity\ContactMetadata;
 use App\Entity\WebHook;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -115,24 +116,48 @@ class SeedDataCommand extends Command
         $output->writeln(sprintf('✓ %d ContactLists seeded.', count($lists)));
     }
 
+    /**
+     * Seed contact metadata with all supported data types.
+     *
+     * Creates custom contact properties covering all Mailjet data types:
+     * str, int, float, bool and datetime.
+     */
     private function seedContactMetadata(OutputInterface $output): void
     {
-        if ($this->em->getRepository(\App\Entity\ContactMetadata::class)->count(array()) > 0) {
+        if ($this->em->getRepository(ContactMetadata::class)->count(array()) > 0) {
             $output->writeln('ContactMetadata already exists, skipping.');
 
             return;
         }
 
         $metadata = array(
+            //====================================================================//
+            // String Properties
             array('name' => 'NOM', 'dataType' => 'str'),
             array('name' => 'PRENOM', 'dataType' => 'str'),
             array('name' => 'SMS', 'dataType' => 'str'),
             array('name' => 'CIVILITE', 'dataType' => 'str'),
+            array('name' => 'COMPANY', 'dataType' => 'str'),
+            //====================================================================//
+            // Integer Properties
+            array('name' => 'AGE', 'dataType' => 'int'),
+            array('name' => 'LOYALTY_POINTS', 'dataType' => 'int'),
+            //====================================================================//
+            // Float Properties
+            array('name' => 'SCORE', 'dataType' => 'float'),
+            array('name' => 'REVENUE', 'dataType' => 'float'),
+            //====================================================================//
+            // Boolean Properties
+            array('name' => 'VIP', 'dataType' => 'bool'),
+            array('name' => 'OPTIN', 'dataType' => 'bool'),
+            //====================================================================//
+            // Datetime Properties
             array('name' => 'DATE_NAISSANCE', 'dataType' => 'datetime'),
+            array('name' => 'LAST_PURCHASE', 'dataType' => 'datetime'),
         );
 
         foreach ($metadata as $data) {
-            $meta = new \App\Entity\ContactMetadata();
+            $meta = new ContactMetadata();
             $meta->name = $data['name'];
             $meta->dataType = $data['dataType'];
 
@@ -142,6 +167,9 @@ class SeedDataCommand extends Command
         $output->writeln('ContactMetadata seeded.');
     }
 
+    /**
+     * Seed a default webhook configuration.
+     */
     private function seedWebHook(OutputInterface $output): void
     {
         if ($this->em->getRepository(WebHook::class)->count(array()) > 0) {
@@ -160,6 +188,9 @@ class SeedDataCommand extends Command
         $output->writeln('WebHook seeded.');
     }
 
+    /**
+     * Seed sample contacts with properties for all data types.
+     */
     private function seedContacts(OutputInterface $output): void
     {
         if ($this->em->getRepository(Contact::class)->count(array()) > 0) {
@@ -171,24 +202,71 @@ class SeedDataCommand extends Command
         $contacts = array(
             array(
                 'email' => 'test1@example.com',
+                'name' => 'John Doe',
                 'isExcludedFromCampaigns' => false,
-                'properties' => array('firstname' => 'John', 'lastname' => 'Doe'),
-                'contactLists' => array(1, 2),
+                'contactData' => array(
+                    //====================================================================//
+                    // String Properties
+                    array('Name' => 'NOM', 'Value' => 'Doe'),
+                    array('Name' => 'PRENOM', 'Value' => 'John'),
+                    array('Name' => 'SMS', 'Value' => '+33612345678'),
+                    array('Name' => 'CIVILITE', 'Value' => 'Mr'),
+                    array('Name' => 'COMPANY', 'Value' => 'Acme Corp'),
+                    //====================================================================//
+                    // Integer Properties
+                    array('Name' => 'AGE', 'Value' => '35'),
+                    array('Name' => 'LOYALTY_POINTS', 'Value' => '1250'),
+                    //====================================================================//
+                    // Float Properties
+                    array('Name' => 'SCORE', 'Value' => '8.5'),
+                    array('Name' => 'REVENUE', 'Value' => '15420.75'),
+                    //====================================================================//
+                    // Boolean Properties
+                    array('Name' => 'VIP', 'Value' => 'true'),
+                    array('Name' => 'OPTIN', 'Value' => 'true'),
+                    //====================================================================//
+                    // Datetime Properties
+                    array('Name' => 'DATE_NAISSANCE', 'Value' => '1990-06-15T00:00:00Z'),
+                    array('Name' => 'LAST_PURCHASE', 'Value' => '2025-12-01T14:30:00Z'),
+                ),
             ),
             array(
                 'email' => 'test2@example.com',
+                'name' => 'Jane Smith',
                 'isExcludedFromCampaigns' => true,
-                'properties' => array('firstname' => 'Jane', 'lastname' => 'Smith'),
-                'contactLists' => array(1, 3),
+                'contactData' => array(
+                    //====================================================================//
+                    // String Properties
+                    array('Name' => 'NOM', 'Value' => 'Smith'),
+                    array('Name' => 'PRENOM', 'Value' => 'Jane'),
+                    array('Name' => 'CIVILITE', 'Value' => 'Mrs'),
+                    array('Name' => 'COMPANY', 'Value' => 'Globex Inc'),
+                    //====================================================================//
+                    // Integer Properties
+                    array('Name' => 'AGE', 'Value' => '28'),
+                    array('Name' => 'LOYALTY_POINTS', 'Value' => '430'),
+                    //====================================================================//
+                    // Float Properties
+                    array('Name' => 'SCORE', 'Value' => '6.2'),
+                    array('Name' => 'REVENUE', 'Value' => '3200.00'),
+                    //====================================================================//
+                    // Boolean Properties
+                    array('Name' => 'VIP', 'Value' => 'false'),
+                    array('Name' => 'OPTIN', 'Value' => 'true'),
+                    //====================================================================//
+                    // Datetime Properties
+                    array('Name' => 'DATE_NAISSANCE', 'Value' => '1997-03-22T00:00:00Z'),
+                    array('Name' => 'LAST_PURCHASE', 'Value' => '2026-01-15T09:00:00Z'),
+                ),
             ),
         );
 
         foreach ($contacts as $data) {
             $contact = new Contact();
             $contact->email = $data['email'];
+            $contact->name = $data['name'];
             $contact->isExcludedFromCampaigns = $data['isExcludedFromCampaigns'];
-            $contact->properties = $data['properties'];
-            $contact->setContactLists($data['contactLists']);
+            $contact->contactData = $data['contactData'];
 
             $this->em->persist($contact);
         }

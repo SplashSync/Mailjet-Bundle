@@ -82,13 +82,4 @@ class WebHook
     #[ORM\Column(length: 20)]
     #[Serializer\SerializedName("Status")]
     public string $status = 'alive';
-
-    /**
-     * Constructor.
-     * Initializes audit trail for the entity.
-     */
-    public function __construct()
-    {
-        $this->initAudit();
-    }
 }
