@@ -43,7 +43,7 @@ class S01WebHookTest extends ConnectorTestCase
     {
         //====================================================================//
         // Load Connector
-        $connector = $this->getConnector("mailjet");
+        $connector = $this->getConnector("sandbox");
         $this->assertInstanceOf(MailjetConnector::class, $connector);
 
         //====================================================================//
@@ -71,7 +71,7 @@ class S01WebHookTest extends ConnectorTestCase
     {
         //====================================================================//
         // Load Connector
-        $connector = $this->getConnector("mailjet");
+        $connector = $this->getConnector("sandbox");
         $this->assertInstanceOf(MailjetConnector::class, $connector);
 
         //====================================================================//
@@ -162,7 +162,7 @@ class S01WebHookTest extends ConnectorTestCase
     {
         //====================================================================//
         // Load Connector
-        $connector = $this->getConnector("mailjet");
+        $connector = $this->getConnector("sandbox");
         $this->assertInstanceOf(MailjetConnector::class, $connector);
 
         //====================================================================//

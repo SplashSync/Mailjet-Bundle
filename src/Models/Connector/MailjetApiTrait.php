@@ -70,7 +70,7 @@ trait MailjetApiTrait
         );
         //====================================================================//
         // Setup Rate Limiter
-        //        $connexion->setRateLimiter($this->getLocator()->getRateLimiter());
+        $connexion->setRateLimiter($this->getLocator()->getRateLimiter());
         //====================================================================//
         // Setup Error Parser
         $connexion->setErrorParser(new MailjetErrorParser());

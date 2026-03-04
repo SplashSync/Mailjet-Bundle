@@ -35,6 +35,7 @@ class MailjetLocator implements ServiceSubscriberInterface
             Managers\ListsManager::class,
             Managers\PropertiesManager::class,
             Managers\WebHookManager::class,
+            Connexion\MailjetRateLimiter::class,
         );
     }
 
@@ -79,5 +80,18 @@ class MailjetLocator implements ServiceSubscriberInterface
         );
 
         return $service->configure($this->connector);
+    }
+
+    /**
+     * Get Mailjet Rate Limiter
+     */
+    public function getRateLimiter(): Connexion\MailjetRateLimiter
+    {
+        Assert::isInstanceOf(
+            $service = $this->locator->get(Connexion\MailjetRateLimiter::class),
+            Connexion\MailjetRateLimiter::class
+        );
+
+        return $service;
     }
 }

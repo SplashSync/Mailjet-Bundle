@@ -16,6 +16,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata as API;
+use App\Controller\Contact\GetController as ContactGet;
 use App\Controller\ContactData\GetController as ContactDataGet;
 use App\Controller\ContactData\UpdateController as ContactDataUpdate;
 use App\Controller\ContactList\GetContactListsController;
@@ -43,7 +44,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 #[API\ApiResource(
     uriTemplate: '/v3/REST/contact/{id}',
     operations: array(
-        new API\Get(),
+        new API\Get(controller: ContactGet::class, read: false),
         new API\Put(extraProperties: array('standard_put' => false)),
         new API\Delete(status: 204, output: false),
     )
