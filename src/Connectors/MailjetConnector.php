@@ -227,9 +227,10 @@ class MailjetConnector extends AbstractConnector implements PrimaryKeysInterface
         }
 
         //====================================================================//
-        // Extended Mode
+        // Sandbox Mode
         //====================================================================//
-        if ($this->getParameter("Extended", false)) {
+        if ($this->isSandbox()) {
+            Objects\ThirdParty::setSandboxMode();
             Objects\Webhook::setDisabled(false);
         }
 

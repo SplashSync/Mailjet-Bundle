@@ -33,6 +33,8 @@ use Symfony\Component\Serializer\Attribute as Serializer;
     name: "Customer",
     description: "Mailjet Contact",
     ico: "fa fa-user",
+    allowPushDeleted: null,
+    enablePushDeleted: null
 )]
 #[RestResource(
     collectionUri: "/contact",

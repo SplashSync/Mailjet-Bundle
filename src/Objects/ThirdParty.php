@@ -26,6 +26,7 @@ use Splash\OpenApi\Models\Objects\AbstractRestAndMetadataObject;
  */
 class ThirdParty extends AbstractRestAndMetadataObject implements PrimaryKeysAwareInterface
 {
+    use ThirdParty\CRUDTrait;
     use ThirdParty\ContactListTrait;
     use ThirdParty\PropertiesTrait;
 
@@ -38,6 +39,16 @@ class ThirdParty extends AbstractRestAndMetadataObject implements PrimaryKeysAwa
      * @var MailjetConnector
      */
     protected MailjetConnector $connector;
+
+    /**
+     * @inheritDoc
+     */
+    protected static bool $allowPushDeleted = false;
+
+    /**
+     * @inheritDoc
+     */
+    protected static bool $enablePushDeleted = false;
 
     /**
      * Class Constructor
@@ -55,8 +66,12 @@ class ThirdParty extends AbstractRestAndMetadataObject implements PrimaryKeysAwa
         Splash::translator()->load('local');
     }
 
-    public function getByPrimary(array $keys): ?string
+    /**
+     * Override Default Modes for Sandbox
+     */
+    public static function setSandboxMode(): void
     {
-        return null;
+        static::$enablePushDeleted = true;
+        static::$allowPushDeleted = true;
     }
 }

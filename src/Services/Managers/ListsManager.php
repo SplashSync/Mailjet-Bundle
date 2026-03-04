@@ -127,9 +127,6 @@ class ListsManager
     public function getDefaultListName(): ?string
     {
         $index = $this->getConnector()->getParameter(self::DEFAULT_INDEX);
-        if (!is_numeric($index)) {
-            return null;
-        }
 
         return $this->getName((int) $index);
     }

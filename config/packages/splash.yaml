@@ -37,4 +37,4 @@ splash:
                 WsHost:         http://sandbox.mailjet.local
                 ApiKey:         "ThisIsSecretApiKey"
                 SecretKey:      "ThisIsSecretApiPwd"
-                ApiList:        "%env(resolve:MJ_API_LIST)%"
+                ApiList:        "3"
