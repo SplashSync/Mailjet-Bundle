@@ -15,49 +15,22 @@
 
 namespace Splash\Connectors\Mailjet\Objects;
 
-use Splash\Bundle\Models\AbstractStandaloneObject;
-use Splash\Connectors\Mailjet\Services\MailjetConnector;
-use Splash\Models\Objects\IntelParserTrait;
-use Splash\Models\Objects\SimpleFieldsTrait;
-use stdClass;
+use Splash\Connectors\Mailjet\Connectors\MailjetConnector;
+use Splash\Connectors\Mailjet\Models\Api\Contact as ContactModel;
+use Splash\Core\Client\Splash;
+use Splash\Core\Interfaces\Object\PrimaryKeysAwareInterface;
+use Splash\OpenApi\Models\Objects\AbstractRestAndMetadataObject;
 
 /**
  * Mailjet Implementation of ThirdParty
  */
-class ThirdParty extends AbstractStandaloneObject
+class ThirdParty extends AbstractRestAndMetadataObject implements PrimaryKeysAwareInterface
 {
-    use IntelParserTrait;
-    use SimpleFieldsTrait;
-    use ThirdParty\CRUDTrait;
-    use ThirdParty\ObjectsListTrait;
-    use ThirdParty\CoreTrait;
+    use ThirdParty\ContactListTrait;
     use ThirdParty\PropertiesTrait;
-    use ThirdParty\MetaTrait;
 
     /**
-     * Object Disable Flag. Override this flag to disable Object.
-     *
-     * {@inheritdoc}
-     */
-    protected static bool $disabled = false;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected static string $name = "Customer";
-
-    /**
-     * {@inheritdoc}
-     */
-    protected static string $description = "Mailjet Contact";
-
-    /**
-     * {@inheritdoc}
-     */
-    protected static string $ico = "fa fa-user";
-
-    /**
-     * @phpstan-var stdClass
+     * @var ContactModel
      */
     protected object $object;
 
@@ -68,11 +41,22 @@ class ThirdParty extends AbstractStandaloneObject
 
     /**
      * Class Constructor
-     *
-     * @param MailjetConnector $parentConnector
      */
-    public function __construct(MailjetConnector $parentConnector)
+    public function __construct(MailjetConnector $connector)
     {
-        $this->connector = $parentConnector;
+        parent::__construct(
+            $visitor = $connector->getVisitor(ContactModel::class),
+            $visitor->getMetadataAdapter(),
+            ContactModel::class
+        );
+        $this->connector = $connector;
+        //====================================================================//
+        //  Load Translation File
+        Splash::translator()->load('local');
+    }
+
+    public function getByPrimary(array $keys): ?string
+    {
+        return null;
     }
 }

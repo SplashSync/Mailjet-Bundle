@@ -15,6 +15,7 @@
 
 namespace Splash\Connectors\Mailjet\Services\Managers;
 
+use Splash\Connectors\Mailjet\Models\Api\Contact;
 use Splash\Connectors\Mailjet\Models\MailjetConnectorAwareTrait;
 use Webmozart\Assert\Assert;
 
@@ -71,6 +72,53 @@ class ListsManager
         $this->getConnector()->updateConfiguration();
 
         return true;
+    }
+
+    /**
+     * Load Contact Mailing Lists from API
+     *
+     * @return null|array<int, string> List of active list names indexed by list ID
+     */
+    public function loadContactLists(Contact $contact): ?array
+    {
+        //====================================================================//
+        // Already Loaded
+        if (!empty($contact->listIds)) {
+            return $contact->listIds;
+        }
+        //====================================================================//
+        // Load Contact Lists from API
+        $response = $this->getConnexion()->get(
+            sprintf('/contact/%d/getcontactslists', $contact->ID)
+        );
+        if (is_null($response) || empty($response["Data"]) || !is_array($response["Data"])) {
+            return null;
+        }
+        //====================================================================//
+        // Parse Active & Subscribed Lists
+        $listNames = array();
+        foreach ($response["Data"] as $list) {
+            if (!is_array($list)) {
+                continue;
+            }
+            //====================================================================//
+            // Skip Unsubscribed or Inactive Lists
+            if (!empty($list["IsUnsub"])) {
+                continue;
+            }
+            //====================================================================//
+            // Resolve List Name
+            $listId = (int) ($list["ListID"] ?? 0);
+            $name = $this->getName($listId);
+            if ($name) {
+                $listNames[$listId] = $name;
+            }
+        }
+        //====================================================================//
+        // Store on Contact
+        $contact->listIds = $listNames;
+
+        return $contact->listIds;
     }
 
     /**

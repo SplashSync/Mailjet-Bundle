@@ -92,7 +92,7 @@ trait MailjetProfileTrait
     public function getSecuredActions() : array
     {
         return array(
-            "webhooks" => Actions\UpdateWebhooks::class,
+            "webhooks" => Actions\Webhooks\Update::class,
         );
     }
 }
