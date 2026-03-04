@@ -51,12 +51,12 @@ trait CRUDTrait
     public function create(): ?Contact
     {
         //====================================================================//
-        // Add Contact to Default List
-        if ($listName = $this->connector->getLocator()->getListsManager()->getDefaultListName()) {
-            $current = InlineHelper::toArray($this->in["lists"] ?? null);
-            $current[] = $listName;
-            $this->in["lists"] = InlineHelper::fromArray(array_unique($current));
-            $this->needUpdate();
+        // Add Contact to Default List (only if no lists provided)
+        if (empty($this->in["lists"] ?? null)) {
+            if ($listName = $this->connector->getLocator()->getListsManager()->getDefaultListName()) {
+                $this->in["lists"] = InlineHelper::fromArray(array($listName));
+                $this->needUpdate();
+            }
         }
         //====================================================================//
         // Execute Core Create
