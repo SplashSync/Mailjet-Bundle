@@ -16,8 +16,11 @@
 namespace Splash\Connectors\Mailjet\Models\Api\Action;
 
 use Splash\OpenApi\ApiResponse;
+use Splash\OpenApi\Dictionary\ExtendedActionsTypes;
+use Splash\OpenApi\Interfaces\ConnexionInterface;
 use Splash\OpenApi\Interfaces\Visitor\VisitorInterface;
 use Splash\OpenApi\Models\Action\AbstractUpdateAction;
+use Splash\OpenApi\Models\Mutation;
 use Splash\OpenApi\Models\Visitor\AbstractRestVisitor;
 use Webmozart\Assert\Assert;
 
@@ -43,6 +46,7 @@ class PutAction extends AbstractUpdateAction
         if (!$itemUri) {
             return new ApiResponse($visitor);
         }
+
         //====================================================================//
         // Execute PUT Request
         $rawResponse = $visitor->getConnexion()->put(
@@ -53,6 +57,23 @@ class PutAction extends AbstractUpdateAction
             return new ApiResponse($visitor);
         }
 
+        //====================================================================//
+        // Execute Post-Update Actions
+        $this->executeExtendedActions($visitor, ExtendedActionsTypes::POST_UPDATE);
+
         return new ApiResponse($visitor, true, $rawResponse);
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * Use PUT Method for Update
+     */
+    protected function executeUpdateMutation(ConnexionInterface $connexion, Mutation $mutation): bool
+    {
+        /** @var array<string, array|int|string> $data */
+        $data = $mutation->getInputData();
+
+        return null !== $connexion->put($mutation->getResourceName(), $data);
     }
 }

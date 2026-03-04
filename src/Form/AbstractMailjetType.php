@@ -33,9 +33,9 @@ abstract class AbstractMailjetType extends AbstractType
      *
      * @return $this
      *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("UnusedFormalParameter")
      */
-    public function addApiKeyField(FormBuilderInterface $builder, array $options)
+    public function addApiKeyField(FormBuilderInterface $builder, array $options): static
     {
         $builder
             //==============================================================================
@@ -59,9 +59,9 @@ abstract class AbstractMailjetType extends AbstractType
      *
      * @return self
      *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("UnusedFormalParameter")
      */
-    public function addSecretKeyField(FormBuilderInterface $builder, array $options)
+    public function addSecretKeyField(FormBuilderInterface $builder, array $options): static
     {
         $builder
             //==============================================================================
@@ -85,7 +85,7 @@ abstract class AbstractMailjetType extends AbstractType
      *
      * @return $this
      */
-    public function addApiListField(FormBuilderInterface $builder, array $options)
+    public function addApiListField(FormBuilderInterface $builder, array $options): static
     {
         //==============================================================================
         // Check Mailjet Lists are Available
