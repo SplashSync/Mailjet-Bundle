@@ -13,11 +13,11 @@
  *  file that was distributed with this source code.
  */
 
-namespace Splash\Connectors\Mailjet\Actions;
+namespace Splash\Connectors\Mailjet\Actions\Webhooks;
 
 use Splash\Bundle\Models\AbstractConnector;
 use Splash\Bundle\Models\Local\ActionsTrait;
-use Splash\Connectors\Mailjet\Services\MailjetConnector;
+use Splash\Connectors\Mailjet\Connectors\MailjetConnector;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,9 +25,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Splash Mailjet Connector Actions Controller
+ * Splash Mailjet Connector - Update WebHooks Action
  */
-class UpdateWebhooks extends AbstractController
+class Update extends AbstractController
 {
     use ActionsTrait;
 

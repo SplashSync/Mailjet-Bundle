@@ -17,6 +17,7 @@ namespace Splash\Connectors\Mailjet\Actions;
 
 use Psr\Log\LoggerInterface;
 use Splash\Bundle\Models\AbstractConnector;
+use Splash\Core\Dictionary\SplOperations;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +40,7 @@ class Master extends AbstractController
      *
      * @return JsonResponse
      *
-     * @SuppressWarnings(PHPMD.ElseExpression)
+     * @SuppressWarnings("ElseExpression")
      */
     public function __invoke(Request $request, AbstractConnector $connector): JsonResponse
     {
@@ -94,7 +95,7 @@ class Master extends AbstractController
         $connector->commit(
             'ThirdParty',
             (string) $data['mj_contact_id'],
-            SPL_A_UPDATE,
+            SplOperations::UPDATE,
             "Mailjet API",
             "MailJet Contact has Unsubscribed"
         );
