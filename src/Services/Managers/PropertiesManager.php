@@ -147,6 +147,7 @@ class PropertiesManager
         if (empty($raw) || !is_array($raw)) {
             return array();
         }
+
         //====================================================================//
         // Ensure stdClass format (serialization may convert to arrays)
         return array_filter(array_map(

@@ -47,6 +47,7 @@ class PropertiesHelper
         if (isset(self::$attrType[$attribute->Datatype])) {
             return self::$attrType[$attribute->Datatype];
         }
+
         //====================================================================//
         // Default Type
         return SplFields::VARCHAR;

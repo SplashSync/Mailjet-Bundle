@@ -59,7 +59,7 @@ trait MailjetApiTrait
         $connexion = new JsonConnexion(
             MailjetEndpoints::getEndpoint($this->isSandbox()),
             array(),
-            function(Request $request) use ($config) {
+            function (Request $request) use ($config) {
                 $request
                     ->authenticateWith($config["ApiKey"], $config["SecretKey"])
                     ->sendsJson()
@@ -68,9 +68,9 @@ trait MailjetApiTrait
                 ;
             }
         );
-//        //====================================================================//
-//        // Setup Rate Limiter
-//        $connexion->setRateLimiter($this->getLocator()->getRateLimiter());
+        //====================================================================//
+        // Setup Rate Limiter
+        //        $connexion->setRateLimiter($this->getLocator()->getRateLimiter());
         //====================================================================//
         // Setup Error Parser
         $connexion->setErrorParser(new MailjetErrorParser());

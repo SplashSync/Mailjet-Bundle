@@ -16,8 +16,6 @@
 namespace Splash\Connectors\Mailjet\Services;
 
 use Psr\Container\ContainerInterface;
-use Splash\Connectors\Mailjet\Services\Connexion;
-use Splash\Connectors\Mailjet\Services\Managers;
 use Splash\Connectors\Mailjet\Models\MailjetConnectorAwareTrait;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Webmozart\Assert\Assert;
