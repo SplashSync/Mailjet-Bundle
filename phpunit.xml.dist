@@ -17,20 +17,31 @@
 
     <testsuites>
         <testsuite name="All">
-            <directory>vendor/splash/phpcore/Tests/*</directory>
+            <directory>vendor/splash/validator/phpunit</directory>
+            <directory>tests</directory>
+        </testsuite>
+        <testsuite name="Local">
+            <directory>tests</directory>
+        </testsuite>
+        <testsuite name="Validator">
+            <directory>vendor/splash/validator/phpunit</directory>
+        </testsuite>
+        <testsuite name="Bundle">
             <directory>vendor/splash/php-bundle/phpunit/*</directory>
-            <directory>tests/Controller</directory>
         </testsuite>
     </testsuites>
 
     <php>
         <server name="KERNEL_CLASS" value="Splash\Toolkit\Kernel" />
+        <env    name="APP_SECRET" value="ThisIsNotSecretForBrevo" />
         <env    name="SYMFONY_DEPRECATIONS_HELPER" value="disabled" />
-        <server name="SERVER_NAME" value="http://localhost:8000"/>        
+        <server name="SERVER_NAME" value="http://localhost:8000"/>
         <const  name="SPLASH_DEBUG" value="true" />
-        <server name="SPLASH_TRAVIS" value="true" />
+        <server name="SPLASH_CI" value="true" />
 
-        <env  name="SPLASH_TYPES" value="ThirdParty" />
+        <!-- <env  name="SPLASH_TYPES" value="ThirdParty" />-->
+<!--        <env  name="SPLASH_SEQUENCE" value="Mailjet - Staging" />-->
+<!--        <env  name="SPLASH_SEQUENCE" value="Mailjet - Sandbox" />-->
     </php>
     
 </phpunit>

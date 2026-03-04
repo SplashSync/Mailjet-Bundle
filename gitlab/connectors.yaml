@@ -1,0 +1,72 @@
+################################################################################
+#
+#  This file is part of SplashSync Project.
+#
+#  Copyright (C) Splash Sync <www.splashsync.com>
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#
+#  For the full copyright and license information, please view the LICENSE
+#  file that was distributed with this source code.
+#
+#  @author Bernard Paquier <contact@splashsync.com>
+#
+################################################################################
+
+################################################################
+# Include Pipeline Templates
+include:
+  - remote: 'https://raw.githubusercontent.com/BadPixxel/Php-Sdk/3.0/gitlab/php/defaults.yaml'
+  - remote: 'https://raw.githubusercontent.com/BadPixxel/Php-Sdk/3.0/gitlab/pages.yaml'
+
+################################################################
+# Quality Tests
+################################################################
+
+################################################################################
+# PHP 8.3
+quality:php-8.3:
+    extends:    .quality
+    image:      registry.gitlab.com/badpixxel-projects/php-sdk:php-8.3
+
+################################################################
+# Functional Tests - Sandbox
+################################################################
+
+functional-sandbox:
+    extends:    .functional
+    image:      registry.gitlab.com/badpixxel-projects/php-sdk:php-8.3
+    needs:
+        - job:  docker:sandbox
+          optional: true
+    services:
+        - name:     $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+          alias:    sandbox.mailjet.local
+    variables:
+        SPLASH_SEQUENCE:    "Mailjet - Sandbox"
+    ################################################################################
+    # Run Test Script
+    script:
+        # Wait for Sandbox to Start
+        - sleep 5
+        - curl -f http://sandbox.mailjet.local/ || true
+        # Execute PhpUnit Tests
+        - php vendor/bin/phpunit --log-junit $CI_PROJECT_DIR/full-report.xml
+
+################################################################
+# Functional Tests - Staging (Manual)
+################################################################
+
+functional-staging:
+    extends:    .functional
+    image:      registry.gitlab.com/badpixxel-projects/php-sdk:php-8.3
+    when:       manual
+    variables:
+        SPLASH_SEQUENCE:    "Mailjet - Staging"
+    ################################################################################
+    # Run Test Script
+    script:
+        # Execute PhpUnit Tests against Staging (Real Mailjet API)
+        - php vendor/bin/phpunit --log-junit $CI_PROJECT_DIR/full-report.xml

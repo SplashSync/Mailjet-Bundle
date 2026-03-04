@@ -1,0 +1,47 @@
+################################################################################
+#
+#  This file is part of SplashSync Project.
+#
+#  Copyright (C) Splash Sync <www.splashsync.com>
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#
+#  For the full copyright and license information, please view the LICENSE
+#  file that was distributed with this source code.
+#
+#  @author Bernard Paquier <contact@splashsync.com>
+#
+################################################################################
+
+################################################################
+# Docker Build & Push
+################################################################
+
+################################################################################
+# Build Mailjet Sandbox Image
+docker:sandbox:
+    image:      docker:latest
+    stage:      Docker
+    tags:       ['Dedicated-Docker']
+    services:
+        - docker:dind
+    variables:
+        DOCKER_TAG:     $CI_COMMIT_REF_SLUG
+    before_script:
+        - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    script:
+        # Build Docker Image
+        - docker build -t $CI_REGISTRY_IMAGE:$DOCKER_TAG docker/sandbox/
+        # Push to Registry
+        - docker push $CI_REGISTRY_IMAGE:$DOCKER_TAG
+        # Push latest only if on default branch
+        - |
+            if [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
+                docker tag $CI_REGISTRY_IMAGE:$DOCKER_TAG $CI_REGISTRY_IMAGE:latest
+                docker push $CI_REGISTRY_IMAGE:latest
+            fi
+    rules:
+        - changes:
+              - docker/sandbox/**/*
