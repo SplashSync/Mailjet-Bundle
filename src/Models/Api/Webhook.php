@@ -26,6 +26,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Json Metadata Model for Mailjet WebHooks (EventCallbackUrl).
+ *
+ * @SuppressWarnings(CamelCasePropertyName)
+ * @SuppressWarnings(ShortVariable)
  */
 #[SPL\SplashObject(
     type: "Webhook",
@@ -42,20 +45,25 @@ class Webhook
     /**
      * WebHook ID on API
      */
+    /** @codingStandardsIgnoreStart */
     #[Serializer\SerializedName("ID")]
     #[Serializer\Groups(SplGroups::READ)]
     public int $ID;
+    /** @codingStandardsIgnoreEnd */
 
     /**
      * WebHook ID for Splash
      */
+    /** @codingStandardsIgnoreStart */
     #[Serializer\Groups(array(SplGroups::LIST))]
     #[Serializer\SerializedName("id")]
     public int $id;
+    /** @codingStandardsIgnoreEnd */
 
     /**
      * WebHook Endpoint URL
      */
+    /** @codingStandardsIgnoreStart */
     #[Assert\NotBlank]
     #[Assert\Url]
     #[SPL\Field(
@@ -67,10 +75,12 @@ class Webhook
     #[Serializer\Groups(SplGroups::ALL)]
     #[Serializer\SerializedName("Url")]
     public string $Url = '';
+    /** @codingStandardsIgnoreEnd */
 
     /**
      * WebHook Event Type
      */
+    /** @codingStandardsIgnoreStart */
     #[SPL\Field(
         type: SplFields::VARCHAR,
         name: "Event Type",
@@ -81,10 +91,12 @@ class Webhook
     #[Serializer\SerializedName("EventType")]
     #[SPL\Flags(required:true, listed: true)]
     public ?string $EventType = null;
+    /** @codingStandardsIgnoreEnd */
 
     /**
      * WebHook Is Backup
      */
+    /** @codingStandardsIgnoreStart */
     #[SPL\Field(
         type: SplFields::BOOL,
         name: "Is Backup",
@@ -93,13 +105,16 @@ class Webhook
     #[Serializer\Groups(SplGroups::DEFAULT)]
     #[Serializer\SerializedName("IsBackup")]
     public bool $IsBackup = false;
+    /** @codingStandardsIgnoreEnd */
 
     /**
      * WebHook Status (raw value from API)
      */
+    /** @codingStandardsIgnoreStart */
     #[Serializer\Groups(SplGroups::DEFAULT)]
     #[Serializer\SerializedName("Status")]
     public ?string $Status = null;
+    /** @codingStandardsIgnoreEnd */
 
     /**
      * WebHook Is Alive

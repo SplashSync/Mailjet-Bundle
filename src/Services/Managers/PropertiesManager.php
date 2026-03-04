@@ -49,11 +49,12 @@ class PropertiesManager
         if (is_null($response) || empty($response["Data"]) || !is_array($response["Data"])) {
             return false;
         }
-
+        /** @var array[] $data */
+        $data = $response["Data"];
         //====================================================================//
         // Filter to keep only static properties
         $propertiesDetails = array_values(array_filter(
-            $response["Data"],
+            $data,
             static fn (array $property) => self::isStaticProperty($property)
         ));
         //====================================================================//
@@ -89,12 +90,14 @@ class PropertiesManager
         if (is_null($response) || empty($response["Data"]) || !is_array($response["Data"])) {
             return null;
         }
+        /** @var array[] $data */
+        $data = $response["Data"];
         //====================================================================//
         // Parse Properties as Key => Value
         $properties = array();
-        foreach ($response["Data"][0]["Data"] ?? array() as $property) {
-            if (is_array($property) && isset($property["Name"])) {
-                $properties[strtolower($property["Name"])] = $property["Value"] ?? null;
+        foreach ($data[0]["Data"] ?? array() as $property) {
+            if (is_array($property) && is_scalar($property["Name"] ?? null)) {
+                $properties[strtolower((string) $property["Name"])] = $property["Value"] ?? null;
             }
         }
         //====================================================================//

@@ -16,13 +16,16 @@
 namespace Splash\Connectors\Mailjet\Test\Controller;
 
 use Exception;
-use Splash\Connectors\Mailjet\Services\MailjetConnector;
-use Splash\Tests\Tools\TestCase;
+use Splash\Bundle\Phpunit\Assertions\ConnectorValidator;
+use Splash\Bundle\Phpunit\ConnectorTestCase;
+use Splash\Connectors\Mailjet\Connectors\MailjetConnector;
+use Splash\Core\Dictionary\SplOperations;
+use Splash\Validator\Assertions\Objects\CommitValidator;
 
 /**
  * Test of Mailjet Connector WebHook Controller
  */
-class S01WebHookTest extends TestCase
+class S01WebHookTest extends ConnectorTestCase
 {
     const PING_RESPONSE = '{"success":true}';
     const MEMBER = "ThirdParty";
@@ -45,16 +48,16 @@ class S01WebHookTest extends TestCase
 
         //====================================================================//
         // Ping Action -> GET -> OK
-        $this->assertPublicActionWorks($connector);
-        $this->assertEquals(self::PING_RESPONSE, $this->getResponseContents());
+        ConnectorValidator::assertPublicActionWorks($connector);
+        $this->assertEquals(self::PING_RESPONSE, ConnectorValidator::getResponseContents());
 
         //====================================================================//
         // Ping Action -> POST -> KO
-        $this->assertPublicActionFail($connector, null, array(), "POST");
-        $this->assertPublicActionFail($connector, null, array(), self::METHOD);
+        ConnectorValidator::assertPublicActionFail($connector, null, array(), "POST");
+        ConnectorValidator::assertPublicActionFail($connector, null, array(), self::METHOD);
         //====================================================================//
         // Ping Action -> PUT -> KO
-        $this->assertPublicActionFail($connector, null, array(), "PUT");
+        ConnectorValidator::assertPublicActionFail($connector, null, array(), "PUT");
     }
 
     /**
@@ -75,45 +78,45 @@ class S01WebHookTest extends TestCase
         // Empty Contents
         //====================================================================//
 
-        $this->assertPublicActionFail($connector, null, array(), "POST");
-        $this->assertPublicActionFail($connector, null, array(), self::METHOD);
+        ConnectorValidator::assertPublicActionFail($connector, null, array(), "POST");
+        ConnectorValidator::assertPublicActionFail($connector, null, array(), self::METHOD);
 
         //====================================================================//
         // GOOD LIST ID BUT GET METHOD
         //====================================================================//
 
-        $this->assertPublicActionWorks(
+        ConnectorValidator::assertPublicActionWorks(
             $connector,
             null,
             array("event" => "unsub", "mj_list_id" => $connector->getParameter("ApiList")),
             "GET"
         );
-        $this->assertEquals(self::PING_RESPONSE, $this->getResponseContents());
+        $this->assertEquals(self::PING_RESPONSE, ConnectorValidator::getResponseContents());
 
         //====================================================================//
         // WRONG LIST ID
         //====================================================================//
 
-        $this->assertPublicActionWorks(
+        ConnectorValidator::assertPublicActionWorks(
             $connector,
             null,
             array("event" => "unsub", "mj_list_id" => "ThisIsWrong"),
             "GET"
         );
-        $this->assertEquals(self::PING_RESPONSE, $this->getResponseContents());
+        $this->assertEquals(self::PING_RESPONSE, ConnectorValidator::getResponseContents());
 
         //====================================================================//
         // GOOD LIST ID BUT NO EVENT TYPE
         //====================================================================//
 
-        $this->assertPublicActionFail(
+        ConnectorValidator::assertPublicActionFail(
             $connector,
             null,
             array("mj_list_id" => $connector->getParameter("ApiList")),
             "POST"
         );
 
-        $this->assertPublicActionFail(
+        ConnectorValidator::assertPublicActionFail(
             $connector,
             null,
             array("mj_list_id" => $connector->getParameter("ApiList")),
@@ -124,21 +127,21 @@ class S01WebHookTest extends TestCase
         // GOOD LIST ID, GOOD EVENT, BUT NO CONTACT ID
         //====================================================================//
 
-        $this->assertPublicActionWorks(
+        ConnectorValidator::assertPublicActionWorks(
             $connector,
             null,
             array("event" => "unsub", "mj_list_id" => "ThisIsWrong"),
             "POST"
         );
-        $this->assertEquals(self::PING_RESPONSE, $this->getResponseContents());
+        $this->assertEquals(self::PING_RESPONSE, ConnectorValidator::getResponseContents());
 
-        $this->assertPublicActionWorks(
+        ConnectorValidator::assertPublicActionWorks(
             $connector,
             null,
             array("event" => "unsub", "mj_list_id" => "ThisIsWrong"),
             self::METHOD
         );
-        $this->assertEquals(self::PING_RESPONSE, $this->getResponseContents());
+        $this->assertEquals(self::PING_RESPONSE, ConnectorValidator::getResponseContents());
     }
 
     /**
@@ -171,21 +174,21 @@ class S01WebHookTest extends TestCase
 
         //====================================================================//
         // POST MODE
-        $this->assertPublicActionWorks($connector, null, $post, "POST");
+        ConnectorValidator::assertPublicActionWorks($connector, null, $post, "POST");
         $this->assertEquals(
             json_encode(array("success" => true)),
-            $this->getResponseContents()
+            ConnectorValidator::getResponseContents()
         );
-        $this->assertIsLastCommitted($action, $objectType, $objectId);
+        CommitValidator::assertIsLastCommitted($action, $objectType, $objectId);
 
         //====================================================================//
         // JSON MODE
-        $this->assertPublicActionWorks($connector, null, $post, self::METHOD);
+        ConnectorValidator::assertPublicActionWorks($connector, null, $post, self::METHOD);
         $this->assertEquals(
             json_encode(array("success" => true)),
-            $this->getResponseContents()
+            ConnectorValidator::getResponseContents()
         );
-        $this->assertIsLastCommitted($action, $objectType, $objectId);
+        CommitValidator::assertIsLastCommitted($action, $objectType, $objectId);
     }
 
     /**
@@ -212,7 +215,7 @@ class S01WebHookTest extends TestCase
                     "email" => $randEmail,
                 ),
                 self::MEMBER,
-                SPL_A_UPDATE,
+                SplOperations::UPDATE,
                 md5($randEmail),
             );
         }

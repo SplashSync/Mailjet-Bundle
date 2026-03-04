@@ -42,7 +42,7 @@ trait CRUDTrait
         // Clean Splash Log
         Splash::log()->cleanLog();
 
-        return $contact ? $contact->getId() : null;
+        return $contact instanceof Contact ? ((string) $contact->getId()) : null;
     }
 
     /**

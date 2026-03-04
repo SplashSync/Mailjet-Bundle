@@ -45,17 +45,17 @@ class WebHookManager
         //====================================================================//
         // Search for Expected WebHook
         foreach ($webHooks as $webHook) {
-            if (!is_array($webHook) || empty($webHook['Url'])) {
+            if (!is_array($webHook) || empty($webHook['Url']) || !is_scalar($webHook['Url'])) {
                 continue;
             }
             //====================================================================//
             // This is NOT a Splash WebHook
-            if (!$this->routesBuilder->isSplashUrl($webHook['Url'])) {
+            if (!$this->routesBuilder->isSplashUrl((string) $webHook['Url'])) {
                 continue;
             }
             //====================================================================//
             // This is the Expected WebHook
-            if (trim($webHook['Url']) == $webHookUrl) {
+            if (trim((string) $webHook['Url']) == $webHookUrl) {
                 return true;
             }
         }
@@ -83,19 +83,19 @@ class WebHookManager
         // Filter & Clean List Of WebHooks
         $foundWebHook = false;
         foreach ($webHooks as $webHook) {
-            if (!is_array($webHook) || empty($webHook['Url'])) {
+            if (!is_array($webHook) || empty($webHook['Url']) || !is_scalar($webHook['Url'])) {
                 continue;
             }
             //====================================================================//
             // This is the Current Node WebHook
-            if (trim($webHook['Url']) == $webHookUrl) {
+            if (trim((string) $webHook['Url']) == $webHookUrl) {
                 $foundWebHook = true;
 
                 continue;
             }
             //====================================================================//
             // This is an Old Splash WebHook => Delete
-            if ($this->routesBuilder->isSplashUrl($webHook['Url'])) {
+            if ($this->routesBuilder->isSplashUrl((string) $webHook['Url'])) {
                 $webHookObject->delete((string) $webHook['id']);
             }
         }

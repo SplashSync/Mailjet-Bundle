@@ -108,6 +108,7 @@ class ListsManager
             }
             //====================================================================//
             // Resolve List Name
+            Assert::numeric($list["ListID"] ?? 0, "ListID must be numeric");
             $listId = (int) ($list["ListID"] ?? 0);
             $name = $this->getName($listId);
             if ($name) {
@@ -127,6 +128,7 @@ class ListsManager
     public function getDefaultListName(): ?string
     {
         $index = $this->getConnector()->getParameter(self::DEFAULT_INDEX);
+        Assert::numeric($index, "Default index must be numeric");
 
         return $this->getName((int) $index);
     }

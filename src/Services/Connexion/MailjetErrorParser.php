@@ -60,7 +60,7 @@ class MailjetErrorParser implements ErrorParserInterface
     protected function extractResponseBody(Response $response): void
     {
         //====================================================================//
-        // Try to decode response body as Json
+        // Try to decode response body as JSON
         $decoded = json_decode($response->raw_body, true);
         //====================================================================//
         // Unable to decode => Store Raw Response
@@ -72,10 +72,10 @@ class MailjetErrorParser implements ErrorParserInterface
         //====================================================================//
         // Store Decoded Error Response
         // Mailjet specific error handling
-        if (isset($decoded['ErrorMessage'])) {
-            Splash::log()->err($decoded['ErrorMessage']);
-        } elseif (isset($decoded['ErrorInfo'])) {
-            Splash::log()->err($decoded['ErrorInfo']);
+        if (isset($decoded['ErrorMessage']) && is_scalar($decoded['ErrorMessage'])) {
+            Splash::log()->err((string) $decoded['ErrorMessage']);
+        } elseif (isset($decoded['ErrorInfo']) && is_scalar($decoded['ErrorInfo'])) {
+            Splash::log()->err((string) $decoded['ErrorInfo']);
         } else {
             Splash::log()->err(print_r($decoded, true));
         }

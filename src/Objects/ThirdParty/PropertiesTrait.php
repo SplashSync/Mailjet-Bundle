@@ -132,7 +132,7 @@ trait PropertiesTrait
         return Mutation::update(
             Contact::class,
             sprintf("/contactdata/%s", $this->object->getId()),
-            $this->object->getId(),
+            (string) $this->object->getId(),
         )->withData(array("Data" => array(array(
             "Name" => $fieldName,
             "Value" => $mailjetValue,
