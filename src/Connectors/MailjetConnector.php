@@ -27,7 +27,7 @@ use Splash\Bundle\Models\Connectors\RoutesBuilderAwareTrait;
 use Splash\Bundle\Services\ConnectorRoutesBuilder;
 use Splash\Connectors\Mailjet\Models\Connector\MailjetApiTrait;
 use Splash\Connectors\Mailjet\Models\Connector\MailjetProfileTrait;
-use Splash\Connectors\Mailjet\Models\MailjetHelper as API;
+use Splash\Connectors\Mailjet\Dictionary\MailjetEndpoints;
 use Splash\Connectors\Mailjet\Objects;
 use Splash\Connectors\Mailjet\Services\MailjetLocator;
 use Splash\Core\Client\Splash;
@@ -162,11 +162,11 @@ class MailjetConnector extends AbstractConnector implements PrimaryKeysInterface
             dirname(dirname(__FILE__))."/Resources/public/img/MailJet-Logo.jpg"
         );
         //====================================================================//
-        // Server Informations
+        // Server Information
         $informations->servertype = "Mailjet REST Api V3";
-        $informations->serverurl = API::ENDPOINT;
+        $informations->serverurl = MailjetEndpoints::LIVE;
         //====================================================================//
-        // Module Informations
+        // Module Information
         $informations->moduleauthor = "Splash Sync";
         $informations->moduleversion = SplDefinition::VERSION;
 
