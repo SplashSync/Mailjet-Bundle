@@ -1,0 +1,13 @@
+{
+    "mcpServers": {
+        "toolkit-cli": {
+            "type": "stdio",
+            "command": "php",
+            "args": ["bin/console", "mcp:dev-server"]
+        },
+        "toolkit-web": {
+            "type": "http",
+            "url": "http://172.111.0.100/_mcp"
+        }
+    }
+}
