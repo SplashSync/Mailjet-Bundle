@@ -33,8 +33,7 @@
     "require": {
         "php":                                          "^8.3",
         "ext-json":                                     "*",
-        "splash/php-bundle":                            "^3.0",
-        "nategood/httpful":                             "^1.0"
+        "splash/php-bundle":                            "^3.0"
     },
 
     "require-dev": {
