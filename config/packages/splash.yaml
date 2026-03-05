@@ -9,7 +9,22 @@ splash:
     # List of Available Connector Connections
     ################################################################################
     connections:
-        
+
+        ########################################################################
+        # MailJet Sandbox
+        sandbox:
+            id: ThisIsMailjetSandboxWsId
+            key: ThisIsNotASecretKeyForMailjetSandbox
+            name: Mailjet - Sandbox
+            connector: mailjet
+            config:
+                Extended: true
+                isSandbox: true
+                WsHost: http://sandbox.mailjet.local
+                ApiKey: "ThisIsSecretApiKey"
+                SecretKey: "ThisIsSecretApiPwd"
+                ApiList: "3"
+
         ########################################################################
         # MailJet Staging / Real Connexion
         staging:
@@ -24,17 +39,4 @@ splash:
                 SecretKey:      "%env(resolve:MJ_SECRET_KEY)%"
                 ApiList:        "%env(resolve:MJ_API_LIST)%"
 
-        ########################################################################
-        # MailJet Sandbox
-        sandbox:
-            id:                 ThisIsMailjetSandboxWsId
-            key:                ThisIsNotASecretKeyForMailjetSandbox
-            name:               Mailjet - Sandbox
-            connector:          mailjet
-            config:
-                Extended:       true
-                isSandbox:      true
-                WsHost:         http://sandbox.mailjet.local
-                ApiKey:         "ThisIsSecretApiKey"
-                SecretKey:      "ThisIsSecretApiPwd"
-                ApiList:        "3"
+

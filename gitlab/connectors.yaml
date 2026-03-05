@@ -35,7 +35,7 @@ quality:php-8.3:
 # Functional Tests - Sandbox
 ################################################################
 
-functional-sandbox:
+functional:sandbox:
     extends:    .functional
     image:      registry.gitlab.com/badpixxel-projects/php-sdk:php-8.3
     needs:
@@ -59,7 +59,7 @@ functional-sandbox:
 # Functional Tests - Staging (Manual)
 ################################################################
 
-functional-staging:
+functional:staging:
     extends:    .functional
     image:      registry.gitlab.com/badpixxel-projects/php-sdk:php-8.3
     when:       manual
