@@ -9540,12 +9540,12 @@
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/SplashTools/Validator.git",
-                "reference": "70c2b898f2153fc5258bc8cb1e36bce0cba5a30e"
+                "reference": "a97b2fff6ac14c1fa2f90198a736e293808936af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/SplashTools%2FValidator/repository/archive.zip?sha=70c2b898f2153fc5258bc8cb1e36bce0cba5a30e",
-                "reference": "70c2b898f2153fc5258bc8cb1e36bce0cba5a30e",
+                "url": "https://gitlab.com/api/v4/projects/SplashTools%2FValidator/repository/archive.zip?sha=a97b2fff6ac14c1fa2f90198a736e293808936af",
+                "reference": "a97b2fff6ac14c1fa2f90198a736e293808936af",
                 "shasum": ""
             },
             "require": {
@@ -9588,7 +9588,7 @@
                 "issues": "https://gitlab.com/SplashTools/Validator/-/issues",
                 "source": "https://gitlab.com/SplashTools/Validator/-/tree/1.0"
             },
-            "time": "2026-02-27T19:16:05+00:00"
+            "time": "2026-03-05T01:33:05+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

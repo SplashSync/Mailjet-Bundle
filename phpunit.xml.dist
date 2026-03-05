@@ -40,8 +40,8 @@
         <server name="SPLASH_CI" value="true" />
 
         <!-- <env  name="SPLASH_TYPES" value="ThirdParty" />-->
-<!--        <env  name="SPLASH_SEQUENCE" value="Mailjet - Staging" />-->
-<!--        <env  name="SPLASH_SEQUENCE" value="Mailjet - Sandbox" />-->
+        <!-- <env  name="SPLASH_SEQUENCE" value="Mailjet - Staging" />-->
+        <!-- <env  name="SPLASH_SEQUENCE" value="Mailjet - Sandbox" />-->
     </php>
     
 </phpunit>
