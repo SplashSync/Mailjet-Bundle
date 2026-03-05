@@ -36,6 +36,9 @@ trait ContactListTrait
     {
         $listManager = $this->connector->getLocator()->getListsManager();
         //====================================================================//
+        // Refresh List of Available Contact Lists
+        $listManager->fetchMailingLists();
+        //====================================================================//
         // Contact Mailing Lists (Comma-Separated Names)
         $this->fieldsFactory()->create(SplFields::INLINE, "lists")
             ->name("Lists")
