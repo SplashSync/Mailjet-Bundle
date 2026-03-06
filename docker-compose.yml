@@ -28,6 +28,8 @@
 #
 ################################################################################
 
+name: "splash-mailjet"
+
 services:
     
     ################################################################################
@@ -40,6 +42,7 @@ services:
             - './config/packages/splash.yaml:/app/config/packages/splash.yaml:ro'
             # Uncomment to use Local Sources instead of Release
             - './src/:/app/connectors/Mailjet/:ro'
+            - '/mnt/data/WebDesign/GitHub/Splash/Php-Bundle:/app/vendor/splash/php-bundle/:ro'
         hostname:           toolkit.mailjet.local
         env_file:           .env
         networks:

@@ -27,17 +27,16 @@ splash:
         ########################################################################
         # MailJet Sandbox
         sandbox:
-            id: ThisIsMailjetSandboxWsId
-            key: ThisIsNotASecretKeyForMailjetSandbox
-            name: Mailjet - Sandbox
-            connector: mailjet
+            id:                 ThisIsMailjetSandboxWsId
+            key:                ThisIsNotASecretKeyForMailjetSandbox
+            name:               Mailjet - Sandbox
+            connector:          mailjet
             config:
-                Extended: true
-                isSandbox: true
-                WsHost: http://sandbox.mailjet.local
-                ApiKey: "ThisIsSecretApiKey"
-                SecretKey: "ThisIsSecretApiPwd"
-                ApiList: "3"
+                isSandbox:      true
+                WsHost:         http://sandbox.mailjet.local
+                ApiKey:         "ThisIsSecretApiKey"
+                SecretKey:      "ThisIsSecretApiPwd"
+                ApiList:        "3"
 
 
 

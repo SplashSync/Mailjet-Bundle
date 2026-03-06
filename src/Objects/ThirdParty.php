@@ -36,11 +36,6 @@ class ThirdParty extends AbstractRestAndMetadataObject implements PrimaryKeysAwa
     protected object $object;
 
     /**
-     * @var MailjetConnector
-     */
-    protected MailjetConnector $connector;
-
-    /**
      * @inheritDoc
      */
     protected static bool $allowPushDeleted = false;
@@ -53,14 +48,14 @@ class ThirdParty extends AbstractRestAndMetadataObject implements PrimaryKeysAwa
     /**
      * Class Constructor
      */
-    public function __construct(MailjetConnector $connector)
-    {
+    public function __construct(
+        protected readonly MailjetConnector $connector
+    ) {
         parent::__construct(
             $visitor = $connector->getVisitor(ContactModel::class),
             $visitor->getMetadataAdapter(),
             ContactModel::class
         );
-        $this->connector = $connector;
         //====================================================================//
         //  Load Translation File
         Splash::translator()->load('local');
