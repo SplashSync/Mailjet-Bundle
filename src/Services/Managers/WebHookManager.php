@@ -95,7 +95,7 @@ class WebHookManager
             }
             //====================================================================//
             // This is an Old Splash WebHook => Delete
-            if ($this->routesBuilder->isSplashUrl((string) $webHook['Url'])) {
+            if ($this->routesBuilder->isSplashUrl((string) $webHook['Url']) && is_scalar($webHook['id'] ?? null)) {
                 $webHookObject->delete((string) $webHook['id']);
             }
         }
