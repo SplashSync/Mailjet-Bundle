@@ -4,6 +4,7 @@
 /public/bundles/
 /var/
 /vendor/
+/dist/
 ###< symfony/framework-bundle ###
 /.php_cs.cache
 /.web-server-pid
@@ -19,3 +20,5 @@
 /tests/public/bundles/
 /config/reference.php
 /assets/vendor/
+/bridges/*.phar
+/bridges/*.splx

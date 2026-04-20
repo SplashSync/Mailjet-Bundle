@@ -38,6 +38,20 @@ splash:
                 SecretKey:      "ThisIsSecretApiPwd"
                 ApiList:        "3"
 
+        ########################################################################
+        # MailJet Bridge Sandbox (Standalone Connector for testing)
+        bridge:
+            id:                 ThisIsMailjetBridgeWsId
+            key:                ThisIsNotASecretKeyForMailjetBridge
+            name:               "Mailjet - Bridge"
+            connector:          "3.0@mailjet"
+            config:
+                isSandbox:      true
+                WsHost:         'http://172.111.0.101'
+                ApiKey:         'ThisIsSecretApiKey'
+                SecretKey:      'ThisIsSecretApiPwd'
+                ApiList:        '3'
+
 
 
 

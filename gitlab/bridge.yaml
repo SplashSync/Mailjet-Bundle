@@ -15,17 +15,20 @@
 #
 ################################################################################
 
-################################################################
-# Define Stages
-stages:
-  - Docker
-  - Quality
-  - Functional
-  - Builds
 
 ################################################################
-# Include Pipeline Templates
-include:
-  - local: 'gitlab/docker.yaml'
-  - local: 'gitlab/connectors.yaml'
-  - local: 'gitlab/bridge.yaml'
+# Build Splx Bridge via Bridge Builder
+build:bridge:
+    image:          registry.gitlab.com/badpixxel-projects/php-sdk:php-8.3
+    stage:          Builds
+    tags:
+        - Dedicated
+    before_script:
+        - composer update
+    script:
+        - php -d phar.readonly=0 vendor/bin/bridge-builder --native
+        - php -d phar.readonly=0 vendor/bin/bridge-builder
+    artifacts:
+        paths:
+            - dist/
+        expire_in:  1 week

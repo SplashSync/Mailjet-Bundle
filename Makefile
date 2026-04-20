@@ -43,6 +43,10 @@ test: 	## Execute Functional Test in All Containers
 	docker compose exec toolkit php bin/console cache:clear --env=test --no-debug
 	docker compose exec toolkit php vendor/bin/phpunit --testdox
 
+.PHONY: bridge
+bridge: 	## Build Standalone Bridge Connector (.splx)
+	php vendor/bin/bridge-builder
+
 .PHONY: all
 all: # Execute a Command in All Containers
 	@$(foreach service,$(shell docker compose config --services | sort), \
