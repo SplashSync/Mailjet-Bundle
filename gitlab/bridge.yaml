@@ -27,7 +27,7 @@ build:bridge:
         - composer update
     script:
         - php -d phar.readonly=0 vendor/bin/bridge-builder --native
-        - php -d phar.readonly=0 vendor/bin/bridge-builder
+        - php -d phar.readonly=0 vendor/bin/bridge-builder --publish
     artifacts:
         paths:
             - dist/
