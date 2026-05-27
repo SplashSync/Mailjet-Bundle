@@ -34,7 +34,7 @@
         "php":                                          "^8.0",
         "ext-json":                                     "*",
         "splash/php-bundle":                            "^2.0",
-        "nategood/httpful":                             "^0.2|^0.3"
+        "nategood/httpful":                             "^1.0"
     },
 
     "require-dev": {
