@@ -47,6 +47,11 @@ test: 	## Execute Functional Test in All Containers
 bridge: 	## Build Standalone Bridge Connector (.splx)
 	php vendor/bin/bridge-builder
 
+.PHONY: manifest
+manifest: 	## Build Connector Manifests (splash.json / splash.yml / swagger.json)
+	php bin/console splash:server:manifest
+	php bin/console splash:server:swagger
+
 .PHONY: all
 all: # Execute a Command in All Containers
 	@$(foreach service,$(shell docker compose config --services | sort), \
